@@ -1,10 +1,52 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای شاد | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../shad-guide/">راهنمای شاد</a></nav></header>
-<main class="container"><p class="eyebrow">SHAD API</p><h1>مرجع متدهای شاد</h1><p>متدهای ارائه‌شده در کلاینت شاد IRubix نسخه 0.6.0. این API در منابع عمومی غیررسمی مستند شده است.</p>
-<h2>اتصال و دریافت</h2><ul><li><code>request(method, payload=None)</code></li><li><code>get_me()</code></li><li><code>get_updates(limit=10, offset_id=None)</code></li><li><code>start(limit=10, retry_delay=2)</code>، <code>run(...)</code>، <code>stop()</code></li></ul>
-<h2>پیام‌ها</h2><ul><li><code>send_message(chat_id, text, **kwargs)</code></li><li><code>forward_message(from_chat_id, message_id, to_chat_id, **kwargs)</code></li><li><code>edit_message_text(chat_id, message_id, text)</code></li><li><code>delete_message(chat_id, message_id)</code></li><li><code>send_poll(chat_id, question, options, **kwargs)</code></li><li><code>send_location(chat_id, latitude, longitude, **kwargs)</code></li><li><code>send_sticker(chat_id, sticker_id, **kwargs)</code></li><li><code>send_contact(chat_id, first_name, last_name, phone_number, **kwargs)</code></li><li><code>send_file(chat_id, file_id, **kwargs)</code></li></ul>
-<h2>فایل‌ها و گفتگو</h2><ul><li><code>request_send_file(file_type)</code></li><li><code>get_file(file_id)</code></li><li><code>get_chat(chat_id)</code></li></ul>
-<h2>کیبورد و تنظیمات</h2><ul><li><code>edit_message_keypad(chat_id, message_id, inline_keypad)</code></li><li><code>edit_chat_keypad(chat_id, chat_keypad)</code></li><li><code>remove_chat_keypad(chat_id)</code></li><li><code>set_commands(bot_commands)</code></li><li><code>update_bot_endpoints(url, endpoint_type)</code></li></ul>
-<h2>Handlerها و کلاس‌ها</h2><ul><li><code>command(names)</code> و <code>message(flt=None)</code></li><li><code>shad.IRubix</code> و نام جایگزین <code>shad.Bot</code></li><li><code>shad.Event</code> و <code>shad.ShadAPIError</code></li><li><code>event.reply(text, **kwargs)</code></li></ul>
-<p><a href="../shad-guide/">راهنمای شروع سریع شاد</a> · <a href="https://github.com/HoseanRC/shad-api">منبع غیررسمی متدها</a></p></main></body></html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای حساب کاربری شاد | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body>
+<header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../shad-guide/">راهنمای شاد</a></nav></header>
+<main class="container">
+<p class="eyebrow">SHAD USER CLIENT</p><h1>مرجع کلاس Shad</h1>
+<p>کلاس <code>shad.Shad</code> از پیاده‌سازی حساب کاربری MAXRubika ارث‌بری می‌کند. این کلاس Bot API نیست و با نشست حساب کاربری کار می‌کند.</p>
+<h2>سازنده</h2>
+<pre><code>shad.Shad(
+    session=None,
+    string_session=None,
+    password=None,
+    auth=None,
+    private_key=None,
+    timeout=30,
+    proxy=None,
+    logger=None,
+    platform="shad_web",
+    api_version=6,
+    max_retries=5,
+    stop_on_first_match=False,
+    run_all_handlers=None,
+    continue_on_error=True,
+    as_dict=False,
+    show_welcome=False
+)</code></pre>
+<h2>پلتفرم‌ها</h2><ul><li><code>shad_web</code> — نسخه وب</li><li><code>shad_pwa</code> — نسخه PWA</li><li><code>shad_android</code> — نسخه اندروید</li></ul>
+<h2>دسته‌بندی قابلیت‌های به‌ارث‌رسیده</h2>
+<ul>
+<li>اتصال، شروع و قطع اتصال: <code>connect()</code>، <code>start()</code>، <code>run()</code>، <code>stop()</code>، <code>close()</code></li>
+<li>رویدادها: <code>on_message()</code>، <code>on_new_message()</code>، <code>on_edit_message()</code>، <code>on_delete_message()</code></li>
+<li>پیام‌ها: ارسال، ویرایش، حذف، پاسخ و فوروارد پیام</li>
+<li>رسانه: ارسال و دریافت فایل، تصویر، ویدئو، صدا و فایل‌های رسانه‌ای</li>
+<li>گفتگوها، گروه‌ها و کانال‌ها: مدیریت گفتگوها، اعضا و اطلاعات آن‌ها</li>
+<li>کاربران و حساب: اطلاعات کاربر، تنظیمات حساب و نشست</li>
+<li>فیلترها: فیلتر متن، فرستنده، نوع گفتگو و رسانه</li>
+</ul>
+<h2>نمونه</h2>
+<pre><code>from irubix import shad
+
+app = shad.Shad(session="my_shad_session", platform="shad_web")
+
+@app.on_new_message()
+async def handler(event):
+    print(event.text)
+    await event.reply("دریافت شد")
+
+app.run()</code></pre>
+<p><strong>توجه:</strong> وجود یک متد در کلاس پایه تضمین نمی‌کند که endpoint متناظر در سرور شاد فعال باشد. پشتیبانی هر متد باید با حساب آزمایشی بررسی شود. برای فهرست کامل متدها و پارامترها به <a href="https://MEH2RAB.GitHub.io/maxrubika">مستندات MAXRubika</a> مراجعه کنید.</p>
+<p>منبع پیاده‌سازی: <a href="https://github.com/MEH2RAB/maxrubika">MEH2RAB/maxrubika</a> (MIT).</p>
+</main></body></html>
