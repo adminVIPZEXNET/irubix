@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>راهنمای سروش‌پلاس | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bot-guide/">روبیکا</a><a href="../bale-guide/">بله</a><a href="../soroush-methods/">متدهای سروش‌پلاس</a></nav></header>
+<main class="container"><p class="eyebrow">SOROUSH PLUS BOT API</p><h1>ساخت ربات سروش‌پلاس با IRubix</h1>
+<p>از نسخه 0.5.0 می‌توانید با ماژول مستقل سروش‌پلاس، ربات خود را با رابط async و decorator بسازید. توکن ربات را از <a href="https://splus.ir/botfather">BotFather سروش‌پلاس</a> دریافت کنید.</p>
+<h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
+<h2>اولین ربات</h2><pre><code>from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! به ربات من خوش اومدی ❤️")
+
+bot.run()</code></pre>
+<h2>دریافت همه پیام‌ها</h2><pre><code>@bot.message()
+async def all_messages(bot, event):
+    print(event.text, event.chat_id)
+    await event.reply("پیامت دریافت شد.")</code></pre>
+<h2>ارسال پیام به یک چت</h2><pre><code>await bot.send_message(chat_id, "سلام از IRubix")</code></pre>
+<h2>دکمه‌های callback</h2><pre><code>@bot.callback()
+async def buttons(bot, event):
+    print(event.button_id)
+    await bot.answer_callback_query(event.callback_query["id"])</code></pre>
+<h2>دریافت اطلاعات بات</h2><pre><code>me = await bot.get_me()
+print(me)</code></pre>
+<h2>Webhook</h2><pre><code>await bot.set_webhook("https://example.com/webhook/SECRET_PATH")
+info = await bot.get_webhook_info()
+await bot.delete_webhook()</code></pre>
+<h2>نکته‌های مهم</h2><ul><li>توکن را در کد عمومی یا مخزن Git قرار ندهید.</li><li>برای استفاده از long polling، webhook فعال را حذف کنید.</li><li>سروش‌پلاس به آدرس API مستقل <code>https://api.splus.ir</code> متصل می‌شود.</li><li>فایل‌های ارسالی با URL یا file_id قابل استفاده‌اند؛ محدودیت‌های آپلود و دانلود را در مستندات رسمی بررسی کنید.</li></ul>
+<p><a href="../soroush-methods/">مرجع متدهای سروش‌پلاس</a> · <a href="https://soroushplus.com/p/documents">مستندات رسمی سروش‌پلاس</a></p></main></body></html>
