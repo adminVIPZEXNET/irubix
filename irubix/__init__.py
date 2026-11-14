@@ -14,5 +14,5 @@ __all__ = [
     "__author__",
 ]
 
-print("Welcome to  library for irubix")
+print("Welcome to the IRubix library")
 print("Channel https://Rubika.ir/Liberyirubix")
