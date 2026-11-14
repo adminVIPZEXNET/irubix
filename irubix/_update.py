@@ -14,7 +14,7 @@ _TIMEOUT = 3.0
 
 def _version_key(version: str) -> tuple[int, ...]:
     """Compare ordinary numeric release versions without extra dependencies."""
-    parts = tuple(int(part) for part in re.findall(r"\\d+", str(version)))
+    parts = tuple(int(part) for part in re.findall(r"\d+", str(version)))
     return parts or (0,)
 
 
