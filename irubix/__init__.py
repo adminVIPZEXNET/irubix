@@ -6,6 +6,9 @@ from .bot import IRubix, Bot, Event, RubikaAPIError
 
 __author__ = "mahdishami"
 __version__ = "0.8.1"
+from ._update import check_for_updates
+check_for_updates(__version__)
+
 __all__ = [
     "IRubix", "Bot", "Event", "RubikaAPIError",
     "bale", "soroush", "shad", "__version__", "__author__",
