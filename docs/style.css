@@ -115,3 +115,9 @@ code:not(.code code){font-family:ui-monospace,Consolas,monospace}
  .nav .brand{grid-column:1;grid-row:1}
  .grid .card>a{display:flex;align-items:center;justify-content:center;min-height:52px;margin-top:14px;padding:10px 18px;border-radius:999px;background:#399c4b;color:#081b0d;font-weight:800;text-align:center}
 }
+
+/* Homepage hero banner */
+.hero-banner{margin:34px 0 42px;overflow:hidden;border:1px solid #203b5b;border-radius:22px;background:#071426;box-shadow:0 18px 48px rgba(0,0,0,.28)}
+.hero-banner img{display:block;width:100%;height:auto;aspect-ratio:8/3;object-fit:cover}
+@media(max-width:820px){.hero-banner{margin:22px 0 30px;border-radius:16px}.hero-banner img{aspect-ratio:16/8}}
+@media(max-width:480px){.hero-banner img{aspect-ratio:4/3;object-fit:cover;object-position:center}}
