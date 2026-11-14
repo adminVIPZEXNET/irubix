@@ -1,1 +1,50 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="مستندات رسمی کتابخانه پایتون IRubix برای ساخت ربات روبیکا؛ نصب، آموزش و مرجع متدها."><title>IRubix | کتابخانه پایتون روبیکا</title><link rel="stylesheet" href="/irubix/style.css"></head><body><header class="top"><nav class="nav"><a class="brand" href="/irubix/"><img src="/irubix/assets/irubix-logo.svg" alt="IRubix"><span>IRubix <small class="muted">Docs</small></span></a><button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button><div class="links"><a class="active" href="/irubix/">خانه</a><a href="/irubix/bot-guide/">شروع سریع</a><a href="/irubix/bot-methods/">مرجع متدها</a><a href="/irubix/faq/">سؤالات متداول</a><a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></div></nav></header><main class="wrap"><section class="hero-banner"><img src="/irubix/assets/irubix-hero.svg" alt="IRubix — کتابخانه پایتون برای ساخت ربات روبیکا"></section><section class="grid"><article class="card"><h3>⚡ شروع سریع</h3><p class="muted">از نصب کتابخانه تا اجرای اولین ربات، قدم‌به‌قدم.</p><a href="/irubix/bot-guide/">رفتن به راهنما ←</a></article><article class="card"><h3>📚 مرجع متدها</h3><p class="muted">امضا، کاربرد و مثال متدهای عمومی نسخه فعلی.</p><a href="/irubix/bot-methods/">دیدن متدها ←</a></article><article class="card"><h3>🧩 نمونه‌های کاربردی</h3><p class="muted">کدها را کپی کن، توکن خودت را بگذار و اجرا کن.</p><a href="/irubix/bot-guide/#create">اولین ربات ←</a></article></section><section class="card"><h2>در کمتر از یک دقیقه شروع کن</h2><p class="muted">دستور نصب برای Pydroid 3 و محیط‌های بدون Git:</p><div class="install"><code>pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip</code><button onclick="copyText('pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip',this)">کپی دستور</button></div><p class="muted">بعد از نصب، توکن ربات را در نمونه‌کد راهنما قرار بده. توکن را در هیچ مخزن عمومی منتشر نکن.</p><div class="notice">IRubix در زمان اجرا به پکیج جانبی نیاز ندارد. قابلیت‌های پیاده‌سازی‌نشده در مستندات صریحاً مشخص شده‌اند.</div></section><section class="card"><h2>لینک‌های مهم</h2><p><a href="https://github.com/adminVIPZEXNET/irubix">مخزن GitHub</a> · <a href="https://pypi.org/project/irubix/">صفحه PyPI</a> · <a href="https://rubika.ir/botapi/methods">مستندات رسمی Bot API روبیکا</a> · <a href="https://Rubika.ir/Liberyirubix">کانال IRubix</a></p></section></main><footer class="foot">IRubix · مستندات فارسی · <a href="https://github.com/adminVIPZEXNET/irubix">مشاهده سورس در GitHub</a></footer><script>function copyText(t,b){if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>{b.textContent='کپی شد ✓';setTimeout(()=>b.textContent='کپی دستور',1600)}).catch(()=>{b.textContent='کپی نشد'})}}</script><script>const menuButton=document.querySelector(".menu-toggle");const nav=document.querySelector(".nav");if(menuButton&&nav){menuButton.addEventListener("click",()=>{const opened=nav.classList.toggle("menu-open");menuButton.setAttribute("aria-expanded",String(opened));menuButton.setAttribute("aria-label",opened?"بستن منو":"باز کردن منو");menuButton.textContent=opened?"×":"☰"});document.querySelectorAll(".links a").forEach(link=>link.addEventListener("click",()=>{nav.classList.remove("menu-open");menuButton.setAttribute("aria-expanded","false");menuButton.textContent="☰"}))}</script></body></html>
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="مستندات رسمی کتابخانه پایتون IRubix برای ساخت ربات روبیکا؛ آموزش، متدها و نمونه‌کدها.">
+<title>مستندات IRubix | کتابخانه ربات روبیکا</title>
+<link rel="stylesheet" href="/irubix/style.css">
+</head>
+<body>
+<header class="top"><nav class="nav">
+<a class="brand" href="/irubix/"><img src="/irubix/assets/irubix-logo.svg" alt="IRubix"><span>مستندات کتابخانه IRubix</span></a>
+<button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button>
+<div class="links">
+<a class="active" href="/irubix/">خانه</a>
+<a href="/irubix/bot-guide/">راهنمای ربات</a>
+<a href="/irubix/bot-methods/">متدها</a>
+<a href="/irubix/outputs/">تصاویر خروجی</a>
+<a href="/irubix/faq/">سؤالات متداول</a>
+<a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a>
+</div>
+</nav></header>
+<main class="wrap home-wrap">
+<section class="home-intro">
+<img src="/irubix/assets/irubix-logo.svg" alt="لوگوی IRubix">
+<h1>مستندات کتابخانه ربات روبیکا</h1>
+<p>برای شروع، یکی از بخش‌های زیر را انتخاب کنید:</p>
+</section>
+<section class="home-menu">
+<a href="/irubix/bot-methods/">متدها</a>
+<a href="/irubix/bot-guide/">راهنمای استفاده از ربات</a>
+<a href="/irubix/outputs/">تصاویر خروجی متدها</a>
+<a href="/irubix/faq/">سؤالات متداول</a>
+<a href="https://github.com/adminVIPZEXNET/irubix">مخزن گیت‌هاب</a>
+<a href="https://Rubika.ir/Liberyirubix">کانال پشتیبانی روبیکا</a>
+</section>
+<section class="card home-install">
+<h2>نصب کتابخانه</h2>
+<p>برای نصب آخرین نسخه از دستور زیر استفاده کنید:</p>
+<div class="install"><code>pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip</code><button onclick="copyText('pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip',this)">کپی</button></div>
+<p class="muted">پس از نصب، راهنمای شروع را باز کنید و اولین ربات خود را بسازید.</p>
+</section>
+</main>
+<footer class="foot">IRubix · مستندات فارسی · <a href="https://github.com/adminVIPZEXNET/irubix">مشاهده سورس در GitHub</a></footer>
+<script>
+function copyText(t,b){navigator.clipboard.writeText(t).then(()=>{b.textContent='کپی شد ✓';setTimeout(()=>b.textContent='کپی',1500)}).catch(()=>{b.textContent='کپی نشد'})}
+const menuButton=document.querySelector(".menu-toggle"),nav=document.querySelector(".nav");
+if(menuButton&&nav){menuButton.addEventListener("click",()=>{const opened=nav.classList.toggle("menu-open");menuButton.setAttribute("aria-expanded",String(opened));menuButton.textContent=opened?"×":"☰"});document.querySelectorAll(".links a").forEach(link=>link.addEventListener("click",()=>{nav.classList.remove("menu-open");menuButton.setAttribute("aria-expanded","false");menuButton.textContent="☰"}))}
+</script>
+</body></html>
