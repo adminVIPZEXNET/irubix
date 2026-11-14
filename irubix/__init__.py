@@ -1,10 +1,10 @@
-"""IRubix: one Python package for Rubika, Bale, Soroush Plus and Shad bots."""
+"""IRubix: Python clients for Rubika, Bale, Soroush Plus and Shad accounts."""
 
 from .bot import IRubix, Bot, Event, RubikaAPIError
 from . import bale, soroush, shad
 
 __author__ = "mahdishami"
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 
 __all__ = ["IRubix", "Bot", "Event", "RubikaAPIError", "bale", "soroush", "shad",
            "__version__", "__author__"]
