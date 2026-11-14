@@ -5,9 +5,9 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 setup(
     name="irubix",
-    version="0.5.0",
+    version="0.6.0",
     author="mahdishami",
-    description="A lightweight Python bot library for Rubika, Bale and Soroush Plus",
+    description="A lightweight Python bot library for Rubika, Bale, Soroush Plus and Shad",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/adminVIPZEXNET/irubix",
