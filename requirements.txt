@@ -1,2 +1,1 @@
-# هسته IRubix فقط از کتابخانه استاندارد پایتون استفاده می‌کند.
-# برای قابلیت حساب کاربری شاد: pip install 'irubix[shad]'
+# IRubix core uses only the Python standard library.

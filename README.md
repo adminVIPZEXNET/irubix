@@ -1,9 +1,9 @@
 # IRubix
 
-کتابخانه پایتون برای ساخت کلاینت روبیکا، بله، سروش‌پلاس و حساب کاربری شاد.
+کتابخانه پایتون برای ساخت ربات در روبیکا، بله و سروش‌پلاس.
 
-- کلاینت ربات برای Rubika، Bale و Soroush Plus
-- کلاینت مستقل حساب کاربری Shad
+- کلاینت ربات برای Rubika
+- پشتیبانی از ربات‌های Bale و Soroush Plus
 - پشتیبانی از async/await و handlerهای رویداد
 - مستندات فارسی
 
@@ -11,41 +11,30 @@
 
 ## مستندات
 - [وب‌سایت](https://adminvipzexnet.github.io/irubix/)
-- [راهنمای شاد](https://adminvipzexnet.github.io/irubix/shad-guide/)
-- [متدهای شاد](https://adminvipzexnet.github.io/irubix/shad-methods/)
+- [راهنمای روبیکا](https://adminvipzexnet.github.io/irubix/bot-guide/)
+- [متدهای روبیکا](https://adminvipzexnet.github.io/irubix/bot-methods/)
+- [راهنمای بله](https://adminvipzexnet.github.io/irubix/bale-guide/)
+- [متدهای بله](https://adminvipzexnet.github.io/irubix/bale-methods/)
+- [راهنمای سروش‌پلاس](https://adminvipzexnet.github.io/irubix/soroush-guide/)
+- [متدهای سروش‌پلاس](https://adminvipzexnet.github.io/irubix/soroush-methods/)
 
 ## نصب
 ```bash
 pip install --upgrade irubix
-
-# فقط برای استفاده از حساب کاربری شاد
-pip install --upgrade "irubix[shad]"
 ```
 
-## حساب کاربری شاد
-ماژول شاد یک کلاینت حساب کاربری است، نه ربات. در این نسخه باید نشست API v6 موجود را به‌صورت فایل JSON شامل کلیدهای `auth` و `private_key` (و ترجیحاً `guid`) در اختیار کلاینت قرار دهید.
-
+## نمونه استفاده
 ```python
-from irubix import shad
+from irubix import IRubix
 
-app = shad.Shad(session="my_shad_session.json", platform="shad_web")
+bot = IRubix("BOT_TOKEN")
 
-@app.on_new_message()
-async def on_message(event):
-    print(event.text)
-    await event.reply("سلام ❤️")
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! خوش اومدی ❤️")
 
-app.run()
+bot.run()
 ```
-
-ارسال پیام:
-```python
-await app.send_message("CHAT_GUID", "سلام")
-```
-
-پلتفرم‌ها: `shad_web`، `shad_pwa` و `shad_android`.
-
-**محدودیت فعلی:** ورود اولیه با شماره تلفن و کد تأیید و متدهای پیشرفته رسانه‌ای/مدیریتی هنوز پیاده‌سازی نشده‌اند. فایل نشست و کلید خصوصی را محرمانه نگه دارید.
 
 ## مجوز
 IRubix تحت مجوز MIT منتشر می‌شود.

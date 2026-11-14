@@ -1,6 +1,6 @@
 """IRubix: lightweight Python clients for Iranian messaging platforms.
 
-Optional platform modules are imported only when requested.
+Optional bot platform modules are imported only when requested.
 """
 from .bot import IRubix, Bot, Event, RubikaAPIError
 
@@ -11,13 +11,13 @@ check_for_updates(__version__)
 
 __all__ = [
     "IRubix", "Bot", "Event", "RubikaAPIError",
-    "bale", "soroush", "shad", "__version__", "__author__",
+    "bale", "soroush", "__version__", "__author__",
 ]
 
 
 def __getattr__(name):
-    """Load optional platform modules on first access."""
-    if name in {"bale", "soroush", "shad"}:
+    """Load optional bot platform modules on first access."""
+    if name in {"bale", "soroush"}:
         from importlib import import_module
         module = import_module(f".{name}", __name__)
         globals()[name] = module
