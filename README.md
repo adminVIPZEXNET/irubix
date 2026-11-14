@@ -1,6 +1,6 @@
-# irubix
+# IRubix
 
-کتابخانه‌ای ساده برای ساخت ربات روبیکا با متدهای کوتاه و خوانا. این پکیج روی [maxrubika](https://github.com/MEH2RAB/maxrubika) ساخته شده و به‌عنوان وابستگی از آن استفاده می‌کند.
+کتابخانه پایتون برای ساخت ربات روبیکا؛ مستقل و بدون وابستگی به پکیج‌های جانبی. ارتباط HTTP، JSON، آپلود فایل و دریافت رویدادها با کتابخانه استاندارد پایتون انجام می‌شود.
 
 ## نصب
 
@@ -8,33 +8,56 @@
 pip install git+https://github.com/adminVIPZEXNET/irubix.git
 ```
 
-## نمونه سریع
+در Pydroid، اگر Git نصب نیست:
+
+```bash
+pip install https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip
+```
+
+## نمونه ربات
 
 ```python
 from irubix import IRubix
 
-bot = IRubix("TOKEN")
+bot = IRubix("YOUR_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
-    await event.reply("سلام!")
+    await event.reply("سلام! ربات من با IRubix مستقل اجرا می‌شود.")
+
+@bot.message()
+async def echo(bot, event):
+    if event.text:
+        await event.reply("شما گفتید: " + event.text)
 
 bot.run()
 ```
 
-## متدهای اصلی
+## ارسال پیام
 
-- `send_text(chat_id, text)` ارسال متن
-- `send_file(chat_id, path, text=None, file_type="File")` ارسال فایل
-- `send_poll(chat_id, question, options)` ارسال نظرسنجی
-- `send_quiz(chat_id, question, options, correct_option)` ارسال آزمون
-- `command(names)` دکوراتور دستور
-- `callback()` دکوراتور دکمه‌های inline
-- `message(flt=None)` دکوراتور پیام
-- `run()` اجرای ربات
+```python
+import asyncio
+from irubix import IRubix
 
-هر متد دیگری از maxrubika هم به‌صورت خودکار در دسترس است.
+bot = IRubix("YOUR_BOT_TOKEN")
 
-## لایسنس
+async def main():
+    await bot.send_text("CHAT_ID", "سلام از IRubix")
+    await bot.send_message("CHAT_ID", "پیام دوم")
 
-MIT. این پروژه از maxrubika (MIT) استفاده می‌کند؛ جزئیات در فایل LICENSE آمده است.
+asyncio.run(main())
+```
+
+## ارسال فایل، نظرسنجی و آزمون
+
+```python
+await bot.send_file("CHAT_ID", "photo.jpg", text="تصویر", file_type="Image")
+await bot.send_poll("CHAT_ID", "رنگ مورد علاقه؟", ["آبی", "قرمز"])
+await bot.send_quiz("CHAT_ID", "۲ + ۲؟", ["۳", "۴"], correct_option=1)
+```
+
+متدهای شبکه‌ای async هستند؛ در هندلرها از `await` استفاده کنید. این نسخه از Bot API روبیکا در آدرس `https://botapi.rubika.ir/v3` استفاده می‌کند.
+
+## وابستگی‌ها
+
+هیچ وابستگی زمان اجرایی خارجی ندارد. فقط کتابخانه‌های استاندارد پایتون استفاده می‌شوند.
