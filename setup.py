@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 setup(
     name="irubix",
-    version="0.7.0",
+    version="0.7.1",
     author="mahdishami",
     description="Python clients for Rubika, Bale, Soroush Plus bots and Shad user accounts",
     long_description=long_description,
@@ -13,7 +13,7 @@ setup(
     url="https://github.com/adminVIPZEXNET/irubix",
     packages=find_packages(),
     python_requires=">=3.10",
-    install_requires=["maxrubika>=1.18.1"],
+    install_requires=[],
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
