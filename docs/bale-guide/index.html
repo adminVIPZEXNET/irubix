@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>شروع سریع بله | IRubix</title><link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bot-guide/">روبیکا</a><a href="../bot-methods/">متدهای روبیکا</a></nav></header>
+<main class="container">
+<p class="eyebrow">BALE BOT API</p><h1>ساخت ربات بله با IRubix</h1>
+<p>از نسخه 0.4.0 می‌توانید با همان سبک ساده، برای پیام‌رسان بله ربات بسازید. بخش بله مستقل از کلاینت روبیکاست.</p>
+<h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
+<h2>اولین ربات</h2><pre><code>from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! خوش اومدی ❤️")
+
+bot.run()</code></pre>
+<h2>دریافت همه پیام‌ها</h2><pre><code>@bot.message()
+async def all_messages(bot, event):
+    print(event.text, event.chat_id)
+    await event.reply("پیامت دریافت شد.")</code></pre>
+<h2>ارسال پیام</h2><pre><code>await bot.send_message(chat_id, "سلام از IRubix")</code></pre>
+<h2>نکته‌ها</h2><ul><li>توکن را داخل کد عمومی یا مخزن Git قرار ندهید.</li><li>برای polling، ربات نباید هم‌زمان webhook فعال داشته باشد.</li><li>این نسخه از long polling و متدهای پایه پیام پشتیبانی می‌کند؛ قابلیت‌های پیشرفته‌تر در حال توسعه‌اند.</li></ul>
+<p><a href="../">بازگشت به مستندات</a> · <a href="https://docs.bale.ai/">مستندات رسمی API بله</a></p>
+</main></body></html>
