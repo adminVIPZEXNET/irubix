@@ -1,52 +1,20 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای حساب کاربری شاد | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body>
-<header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../shad-guide/">راهنمای شاد</a></nav></header>
-<main class="container">
-<p class="eyebrow">SHAD USER CLIENT</p><h1>مرجع کلاس Shad</h1>
-<p>کلاس <code>shad.Shad</code> از پیاده‌سازی حساب کاربری MAXRubika ارث‌بری می‌کند. این کلاس Bot API نیست و با نشست حساب کاربری کار می‌کند.</p>
-<h2>سازنده</h2>
-<pre><code>shad.Shad(
-    session=None,
-    string_session=None,
-    password=None,
-    auth=None,
-    private_key=None,
-    timeout=30,
-    proxy=None,
-    logger=None,
-    platform="shad_web",
-    api_version=6,
-    max_retries=5,
-    stop_on_first_match=False,
-    run_all_handlers=None,
-    continue_on_error=True,
-    as_dict=False,
-    show_welcome=False
-)</code></pre>
-<h2>پلتفرم‌ها</h2><ul><li><code>shad_web</code> — نسخه وب</li><li><code>shad_pwa</code> — نسخه PWA</li><li><code>shad_android</code> — نسخه اندروید</li></ul>
-<h2>دسته‌بندی قابلیت‌های به‌ارث‌رسیده</h2>
-<ul>
-<li>اتصال، شروع و قطع اتصال: <code>connect()</code>، <code>start()</code>، <code>run()</code>، <code>stop()</code>، <code>close()</code></li>
-<li>رویدادها: <code>on_message()</code>، <code>on_new_message()</code>، <code>on_edit_message()</code>، <code>on_delete_message()</code></li>
-<li>پیام‌ها: ارسال، ویرایش، حذف، پاسخ و فوروارد پیام</li>
-<li>رسانه: ارسال و دریافت فایل، تصویر، ویدئو، صدا و فایل‌های رسانه‌ای</li>
-<li>گفتگوها، گروه‌ها و کانال‌ها: مدیریت گفتگوها، اعضا و اطلاعات آن‌ها</li>
-<li>کاربران و حساب: اطلاعات کاربر، تنظیمات حساب و نشست</li>
-<li>فیلترها: فیلتر متن، فرستنده، نوع گفتگو و رسانه</li>
-</ul>
-<h2>نمونه</h2>
-<pre><code>from irubix import shad
-
-app = shad.Shad(session="my_shad_session", platform="shad_web")
-
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای حساب کاربری شاد | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../shad-guide/">راهنمای شاد</a></nav></header>
+<main class="container"><p class="eyebrow">SHAD USER CLIENT</p><h1>مرجع کلاس Shad</h1>
+<p>کلاس <code>shad.Shad</code> برای حساب کاربری و نشست API v6 طراحی شده است.</p>
+<h2>سازنده</h2><pre><code>shad.Shad(session=None, auth=None, private_key=None, platform="shad_web", timeout=30, proxy=None, api_version=6, max_retries=3, logger=None)</code></pre>
+<h2>متدها</h2><ul>
+<li><code>connect()</code> — دریافت نشانی‌های API</li><li><code>close()</code> — بستن اتصال</li>
+<li><code>request(method, input={})</code> — درخواست رمزنگاری‌شده API v6</li><li><code>get_me()</code> — دریافت اطلاعات حساب</li>
+<li><code>send_message(chat, text, reply_to_message_id=None)</code> — ارسال پیام متنی</li>
+<li><code>on_new_message()</code> — ثبت handler پیام جدید</li><li><code>run()</code> — دریافت رویدادها از WebSocket</li><li><code>stop()</code> — توقف حلقه دریافت</li></ul>
+<h2>نمونه</h2><pre><code>from irubix import shad
+app = shad.Shad(session="my_shad_session.json")
 @app.on_new_message()
 async def handler(event):
     print(event.text)
     await event.reply("دریافت شد")
-
 app.run()</code></pre>
-<p><strong>توجه:</strong> وجود یک متد در کلاس پایه تضمین نمی‌کند که endpoint متناظر در سرور شاد فعال باشد. پشتیبانی هر متد باید با حساب آزمایشی بررسی شود. برای فهرست کامل متدها و پارامترها به <a href="https://MEH2RAB.GitHub.io/maxrubika">مستندات MAXRubika</a> مراجعه کنید.</p>
-<p>منبع پیاده‌سازی: <a href="https://github.com/MEH2RAB/maxrubika">MEH2RAB/maxrubika</a> (MIT).</p>
+<p><strong>توجه:</strong> این نسخه بر API v6 و نشست موجود متمرکز است. احراز هویت اولیه با شماره تلفن، ارسال رسانه و مدیریت گروه/کانال هنوز پیاده‌سازی نشده‌اند.</p>
 </main></body></html>

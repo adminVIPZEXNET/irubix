@@ -1,37 +1,18 @@
 <!doctype html>
-<html lang="fa" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>حساب کاربری شاد | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body>
-<header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bot-guide/">روبیکا</a><a href="../bale-guide/">بله</a><a href="../soroush-guide/">سروش‌پلاس</a><a href="../shad-methods/">متدهای شاد</a></nav></header>
-<main class="container">
-<p class="eyebrow">SHAD USER CLIENT</p>
-<h1>کار با حساب کاربری شاد</h1>
-<p>ماژول شاد برای اتصال به حساب کاربری طراحی شده است، نه ساخت ربات. این ماژول از کلاس Shad کتابخانه MAXRubika استفاده می‌کند و رابط آن را در فضای نام IRubix ارائه می‌دهد.</p>
-<h2>نصب</h2><pre><code>pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip</code></pre>
-<p>وابستگی MAXRubika به‌صورت خودکار همراه IRubix نصب می‌شود.</p>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>حساب کاربری شاد | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../shad-methods/">متدهای شاد</a></nav></header>
+<main class="container"><p class="eyebrow">SHAD USER CLIENT</p><h1>کار با حساب کاربری شاد</h1>
+<p>ماژول شاد یک کلاینت مستقل حساب کاربری است و به توکن ربات نیاز ندارد.</p>
+<h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
 <h2>ساخت کلاینت</h2><pre><code>from irubix import shad
-
-app = shad.Shad(
-    session="my_shad_session",
-    platform="shad_web"
-)</code></pre>
+app = shad.Shad(session="my_shad_session.json", platform="shad_web")</code></pre>
+<p>فایل نشست JSON باید شامل <code>auth</code> و <code>private_key</code> باشد. مقدار <code>guid</code> نیز در صورت دسترس قابل ذخیره است.</p>
 <h2>دریافت پیام‌ها</h2><pre><code>@app.on_new_message()
 async def handler(event):
     print(event.text)
     await event.reply("سلام ❤️")
-
 app.run()</code></pre>
-<h2>انتخاب پلتفرم</h2><pre><code># نسخه وب
-app = shad.Shad(session="shad_session", platform="shad_web")
-
-# نسخه PWA
-app = shad.Shad(session="shad_session", platform="shad_pwa")
-
-# نسخه اندروید
-app = shad.Shad(session="shad_session", platform="shad_android")</code></pre>
-<h2>ورود و نشست</h2>
-<p>پارامتر <code>session</code> مسیر فایل نشست است. در صورت نداشتن نشست معتبر، متد <code>start()</code> فرایند احراز هویت را آغاز می‌کند و ممکن است شماره تلفن و کد تأیید بخواهد. از انتشار فایل نشست، auth و کلید خصوصی خودداری کنید.</p>
-<h2>متدها</h2>
-<p>کلاس Shad متدهای حساب کاربری و handlerهای MAXRubika را به ارث می‌برد. فهرست متدهای پایه را در <a href="https://MEH2RAB.GitHub.io/maxrubika">مستندات MAXRubika</a> ببینید. همه متدهای روبیکا الزاماً از طرف سرور شاد پشتیبانی نمی‌شوند.</p>
-<p><a href="../shad-methods/">مرجع شاد در IRubix</a> · <a href="https://github.com/MEH2RAB/maxrubika">کد منبع MAXRubika</a></p>
-</main></body></html>
+<h2>ارسال پیام</h2><pre><code>await app.send_message("CHAT_GUID", "سلام از IRubix")</code></pre>
+<h2>پلتفرم‌ها</h2><ul><li><code>shad_web</code></li><li><code>shad_pwa</code></li><li><code>shad_android</code></li></ul>
+<h2>محدودیت نسخه</h2><p>این نسخه API v6 و نشست موجود را پشتیبانی می‌کند. ورود اولیه با شماره تلفن و کد تأیید و متدهای پیشرفته رسانه‌ای و مدیریتی هنوز پیاده‌سازی نشده‌اند.</p>
+<p>فایل نشست و کلید خصوصی را در مخزن عمومی قرار ندهید.</p></main></body></html>
