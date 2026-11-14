@@ -1,22 +1,21 @@
 # IRubix
 
-کتابخانه پایتون برای ساخت ربات در روبیکا، بله و سروش‌پلاس
+کتابخانه پایتون برای ساخت کلاینت روبیکا، بله، سروش‌پلاس و حساب کاربری شاد.
 
-- سه کلاینت مستقل برای Rubika، Bale و Soroush Plus
-- بدون وابستگی خارجی در زمان اجرا
-- پشتیبانی از async/await و decorator
-- مناسب Pydroid 3 و محیط‌های معمول پایتون
+- کلاینت ربات برای Rubika، Bale و Soroush Plus
+- کلاینت حساب کاربری Shad بر پایه MAXRubika
+- پشتیبانی از async/await و handlerهای رویداد
+- مستندات فارسی
 
-سازنده: [mahdishami](https://github.com/mahdishami)
+سازنده IRubix: [mahdishami](https://github.com/mahdishami)
 
 ## مستندات
 - [وب‌سایت مستندات](https://adminvipzexnet.github.io/irubix/)
 - [راهنمای روبیکا](https://adminvipzexnet.github.io/irubix/bot-guide/)
-- [متدهای روبیکا](https://adminvipzexnet.github.io/irubix/bot-methods/)
 - [راهنمای بله](https://adminvipzexnet.github.io/irubix/bale-guide/)
-- [متدهای بله](https://adminvipzexnet.github.io/irubix/bale-methods/)
 - [راهنمای سروش‌پلاس](https://adminvipzexnet.github.io/irubix/soroush-guide/)
-- [متدهای سروش‌پلاس](https://adminvipzexnet.github.io/irubix/soroush-methods/)
+- [راهنمای حساب کاربری شاد](https://adminvipzexnet.github.io/irubix/shad-guide/)
+- [متدهای حساب کاربری شاد](https://adminvipzexnet.github.io/irubix/shad-methods/)
 
 ## نصب
 ```bash
@@ -62,10 +61,31 @@ async def start(bot, event):
 bot.run()
 ```
 
-کلاینت سروش‌پلاس از API رسمی `https://api.splus.ir` استفاده می‌کند و شامل long polling، فرمان‌ها، handler پیام و callback، ارسال/ویرایش/حذف پیام، فوروارد پیام و مدیریت webhook است.
+## حساب کاربری شاد (User Client)
+شاد در IRubix از حساب کاربری و نشست استفاده می‌کند؛ توکن ربات شاد در این ماژول کاربرد ندارد. پیاده‌سازی حساب کاربری بر پایه کتابخانه [MAXRubika](https://github.com/MEH2RAB/maxrubika) و مجوز MIT آن است.
 
-## امنیت
-توکن ربات را در سورس عمومی یا مخزن Git قرار ندهید. برای پروژه واقعی از متغیرهای محیطی استفاده کنید.
+```python
+from irubix import shad
+
+app = shad.Shad(
+    session="my_shad_session",
+    platform="shad_web"
+)
+
+@app.on_new_message()
+async def on_message(event):
+    print(event.text)
+    await event.reply("سلام ❤️")
+
+app.run()
+```
+
+پلتفرم‌های پشتیبانی‌شده:
+- `shad_web`
+- `shad_pwa`
+- `shad_android`
+
+برای ورود اولیه، می‌توان از شماره تلفن و کد تأیید در فرایند `start()` استفاده کرد. نشست حساب را محرمانه نگه دارید و آن را در مخزن عمومی قرار ندهید.
 
 ## مجوز
-MIT
+IRubix تحت MIT منتشر می‌شود. ماژول Shad از MAXRubika استفاده می‌کند؛ اطلاعیه مجوز MIT و حق نشر آن پروژه در مخزن بالادستی موجود است.
