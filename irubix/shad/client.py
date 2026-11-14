@@ -142,7 +142,7 @@ class Shad:
    if accepted:
     result=func(event)
     if inspect.isawaitable(result): await result
- async def run(self):
+ async def run_async(self):
   await self.connect(); await self.get_me(); self._running=True
   while self._running:
    try:
@@ -160,4 +160,9 @@ class Shad:
    except (aiohttp.ClientError,asyncio.TimeoutError) as exc:
     self.logger.warning("اتصال شاد قطع شد؛ تلاش مجدد: %s",exc); await asyncio.sleep(3)
   await self.close()
+ def run(self):
+  """Run the client; returns a task when called inside an active event loop."""
+  try: loop=asyncio.get_running_loop()
+  except RuntimeError: return asyncio.run(self.run_async())
+  return loop.create_task(self.run_async())
  def stop(self): self._running=False
