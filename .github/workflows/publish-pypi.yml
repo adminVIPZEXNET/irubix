@@ -9,6 +9,11 @@ permissions:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/irubix/
+    permissions:
+      id-token: write
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -27,7 +32,5 @@ jobs:
       - name: Check distributions
         run: python -m twine check --strict dist/*
 
-      - name: Publish to PyPI
+      - name: Publish to PyPI using Trusted Publishing
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
