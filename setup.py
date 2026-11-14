@@ -5,15 +5,15 @@ with open("README.md", "r", encoding="utf-8") as file:
 
 setup(
     name="irubix",
-    version="0.6.0",
+    version="0.7.0",
     author="mahdishami",
-    description="A lightweight Python bot library for Rubika, Bale, Soroush Plus and Shad",
+    description="Python clients for Rubika, Bale, Soroush Plus bots and Shad user accounts",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/adminVIPZEXNET/irubix",
     packages=find_packages(),
-    python_requires=">=3.9",
-    install_requires=[],
+    python_requires=">=3.10",
+    install_requires=["maxrubika>=1.18.1"],
     license="MIT",
     classifiers=[
         "Programming Language :: Python :: 3",
