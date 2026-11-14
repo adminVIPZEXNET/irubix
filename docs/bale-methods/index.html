@@ -1,0 +1,11 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای بله | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bale-guide/">راهنمای بله</a></nav></header>
+<main class="container"><p class="eyebrow">BALE API</p><h1>مرجع متدهای بله</h1>
+<p>متدهای موجود در کلاینت بله نسخه 0.4.0</p>
+<h2>مدیریت و دریافت رویداد</h2><ul><li><code>get_me()</code> — دریافت اطلاعات ربات</li><li><code>get_updates(offset=None, limit=100, timeout=30)</code> — دریافت به‌روزرسانی‌ها</li><li><code>command(names)</code> — ثبت دستور</li><li><code>message(flt=None)</code> — ثبت handler پیام</li><li><code>callback()</code> — ثبت handler دکمه callback</li><li><code>start(timeout=30)</code> / <code>run(timeout=30)</code> — اجرای polling</li><li><code>stop()</code> — توقف polling</li></ul>
+<h2>پیام‌ها</h2><ul><li><code>send_message(chat_id, text, **kwargs)</code></li><li><code>send_photo(chat_id, photo, caption=None)</code></li><li><code>send_document(chat_id, document, caption=None)</code></li><li><code>edit_message_text(chat_id, message_id, text)</code></li><li><code>delete_message(chat_id, message_id)</code></li><li><code>event.reply(text, **kwargs)</code></li></ul>
+<h2>خطاها</h2><p>خطاهای ارتباطی یا پاسخ ناموفق API با <code>BaleAPIError</code> گزارش می‌شوند.</p>
+<p><a href="../bale-guide/">راهنمای شروع سریع</a> · <a href="https://docs.bale.ai/">مستندات رسمی بله</a></p>
+</main></body></html>
