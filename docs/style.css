@@ -103,3 +103,15 @@ code:not(.code code){font-family:ui-monospace,Consolas,monospace}
  .install{align-items:flex-start;flex-direction:column}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+.menu-toggle{display:none;border:0;border-radius:10px;background:#1d5686;color:#fff;font-size:25px;line-height:1;padding:7px 13px;cursor:pointer}
+@media(max-width:820px){
+ .nav{position:relative;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px}
+ .menu-toggle{display:block;grid-column:2;grid-row:1}
+ .links{display:none;position:absolute;top:100%;right:0;left:0;width:100%;padding:10px 14px 16px;background:#111a23;border:1px solid #2d3a48;border-top:0;box-shadow:0 15px 24px #0008;z-index:50;flex-direction:column;align-items:stretch;gap:4px}
+ .nav.menu-open .links{display:flex}
+ .links a{display:block;padding:10px 13px;border-radius:10px;background:transparent;color:#e6edf4;font-size:14px}
+ .links a:hover,.links a.active{background:#203d59;color:#8dccff}
+ .nav .brand{grid-column:1;grid-row:1}
+ .grid .card>a{display:flex;align-items:center;justify-content:center;min-height:52px;margin-top:14px;padding:10px 18px;border-radius:999px;background:#399c4b;color:#081b0d;font-weight:800;text-align:center}
+}
