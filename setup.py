@@ -1,13 +1,13 @@
 from setuptools import setup, find_packages
 
-with open("README.md", "r", encoding="utf-8") as f:
-    long_description = f.read()
+with open("README.md", "r", encoding="utf-8") as file:
+    long_description = file.read()
 
 setup(
     name="irubix",
-    version="0.2.0",
-    author="",
-    description="Independent Python library for Rubika bots with zero third-party dependencies",
+    version="0.3.0",
+    author="mahdishami",
+    description="Fast, dependency-free Python library for the Rubika Bot API",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/adminVIPZEXNET/irubix",
@@ -18,5 +18,6 @@ setup(
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
     ],
 )
