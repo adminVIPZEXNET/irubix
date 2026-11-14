@@ -16,6 +16,14 @@
 
 **کانال:** https://Rubika.ir/Liberyirubix
 
+## مستندات آنلاین
+
+- [وب‌سایت رسمی مستندات](https://adminvipzexnet.github.io/irubix/)
+- [راهنمای شروع و آموزش ساخت ربات](https://adminvipzexnet.github.io/irubix/bot-guide/)
+- [مرجع کامل متدها و نمونه‌کدها](https://adminvipzexnet.github.io/irubix/bot-methods/)
+- [سؤالات متداول](https://adminvipzexnet.github.io/irubix/faq/)
+
+
 ## نصب
 
 در Pydroid 3 (بدون نیاز به Git):
