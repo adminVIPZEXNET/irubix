@@ -16,7 +16,7 @@
 <body>
 <header class="top"><nav class="nav">
 <a class="brand" href="/irubix/"><img src="/irubix/assets/irubix-logo.svg" alt="IRubix"><span>IRubix <small class="muted">Docs</small></span></a>
-<div class="links"><a href="/irubix/">خانه</a><a href="/irubix/bot-guide/">راهنمای شروع</a><a href="/irubix/bot-methods/">مرجع متدها</a><a href="/irubix/outputs/">تصاویر خروجی</a><a href="/irubix/faq/">سؤالات متداول</a><a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></div>
+<button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button><div class="links"><a href="/irubix/">خانه</a><a href="/irubix/bot-guide/">راهنمای شروع</a><a href="/irubix/bot-methods/">مرجع متدها</a><a href="/irubix/outputs/">تصاویر خروجی</a><a href="/irubix/faq/">سؤالات متداول</a><a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></div>
 </nav></header>
 <main class="wrap">
 <div class="pagehead"><span class="tag">Output Gallery</span><h1>گالری تمام تصاویر خروجی IRubix</h1><p class="muted">تصاویر نمونه برای مشاهده شکل خروجی متدها و handlerهای کتابخانه.</p></div>
@@ -46,4 +46,5 @@
 <p style="margin-top:24px"><a href="/irubix/bot-methods/">بازگشت به مرجع متدها ←</a></p>
 </main>
 <footer class="foot">کتابخانه IRubix · <a href="https://Rubika.ir/Liberyirubix">کانال روبیکا</a> · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></footer>
+<script>const menuButton=document.querySelector(".menu-toggle");const nav=document.querySelector(".nav");if(menuButton&&nav){menuButton.addEventListener("click",()=>{const opened=nav.classList.toggle("menu-open");menuButton.setAttribute("aria-expanded",String(opened));menuButton.setAttribute("aria-label",opened?"بستن منو":"باز کردن منو");menuButton.textContent=opened?"×":"☰"});document.querySelectorAll(".links a").forEach(link=>link.addEventListener("click",()=>{nav.classList.remove("menu-open");menuButton.setAttribute("aria-expanded","false");menuButton.textContent="☰"}))}</script>
 </body></html>
