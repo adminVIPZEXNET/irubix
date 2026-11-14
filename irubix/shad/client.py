@@ -4,12 +4,18 @@ import asyncio, base64, inspect, json, logging, random, re, string
 from datetime import datetime
 from pathlib import Path
 from typing import Any
-import aiohttp
-from Crypto.Cipher import AES
-from Crypto.Hash import SHA256
-from Crypto.PublicKey import RSA
-from Crypto.Signature import pkcs1_15
-from Crypto.Util.Padding import pad, unpad
+try:
+ import aiohttp
+ from Crypto.Cipher import AES
+ from Crypto.Hash import SHA256
+ from Crypto.PublicKey import RSA
+ from Crypto.Signature import pkcs1_15
+ from Crypto.Util.Padding import pad, unpad
+except ImportError as exc:
+ raise ImportError(
+  "برای استفاده از حساب کاربری شاد، وابستگی‌های اختیاری را نصب کنید: "
+  "pip install 'irubix[shad]'"
+ ) from exc
 
 PLATFORMS = {
  "shad_web": ("Web", "web.shad.ir", "https://web.shad.ir", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/120.0 Safari/537.36"),
@@ -52,7 +58,7 @@ class Shad:
   if self.auth and not re.fullmatch(r"[a-z]{32}",self.auth): raise ShadAuthError("auth باید شامل ۳۲ حرف کوچک انگلیسی باشد.")
   if bool(self.auth)!=bool(self.private_key): raise ShadAuthError("برای ورود API v6 باید auth و private_key را با هم بدهید.")
   if not self.auth: raise ShadAuthError("نشست معتبر یا هر دو مقدار auth و private_key لازم است.")
-  try: RSA.import_key(self.private_key.encode())
+  try: self._rsa_key = RSA.import_key(self.private_key.encode())
   except (ValueError,TypeError) as exc: raise ShadAuthError("کلید خصوصی RSA معتبر نیست.") from exc
   self.decode_auth=self._decode_auth(self.auth); self.key=self._passphrase(self.auth)
 
@@ -79,7 +85,14 @@ class Shad:
   if self._http and not self._http.closed: return self
   headers={"content-type":"application/json","user-agent":self.user_agent}
   if self.origin: headers.update({"origin":self.origin,"referer":self.origin+"/"})
-  self._http=aiohttp.ClientSession(headers=headers,timeout=aiohttp.ClientTimeout(total=self.timeout))
+  connector = aiohttp.TCPConnector(
+   limit=100, ttl_dns_cache=300, keepalive_timeout=30,
+   enable_cleanup_closed=True
+  )
+  self._http=aiohttp.ClientSession(
+   connector=connector, headers=headers,
+   timeout=aiohttp.ClientTimeout(total=self.timeout)
+  )
   try:
    async with self._http.get("https://shgetdcmess.iranlms.ir/",proxy=self.proxy) as res:
     res.raise_for_status(); payload=await res.json()
@@ -101,7 +114,7 @@ class Shad:
   if not self._http or self._http.closed: await self.connect()
   client={"app_name":"Main","app_version":datetime.now().strftime("%y.%m.%d"),"platform":self.platform_name,"package":self.package,"lang_code":"fa"}
   encrypted=self._encrypt({"method":method,"input":input or {},"client":client},self.key)
-  signature=pkcs1_15.new(RSA.import_key(self.private_key.encode())).sign(SHA256.new(encrypted.encode()))
+  signature=pkcs1_15.new(self._rsa_key).sign(SHA256.new(encrypted.encode()))
   payload={"api_version":"6","auth":self.decode_auth,"data_enc":encrypted,"sign":base64.b64encode(signature).decode()}
   last=None
   for attempt in range(self.max_retries+1):
@@ -122,7 +135,7 @@ class Shad:
  async def send_message(self,chat,text,reply_to_message_id=None):
   if not isinstance(text,str) or not text.strip(): raise ValueError("متن پیام نمی‌تواند خالی باشد.")
   if len(text)>4096: raise ValueError("حداکثر طول پیام ۴۰۹۶ نویسه است.")
-  target=self.guid if chat.lower() in {"me","self","myself","cloud"} else chat
+  target=self.guid if isinstance(chat, str) and chat.lower() in {"me","self","myself","cloud"} else chat
   if not target: raise ShadAPIError("شناسه گفتگو مشخص نیست.")
   data={"object_guid":target,"text":text.strip(),"rnd":random.randint(100000,999999)}
   if reply_to_message_id: data["reply_to_message_id"]=reply_to_message_id

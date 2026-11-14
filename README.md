@@ -17,6 +17,9 @@
 ## نصب
 ```bash
 pip install --upgrade irubix
+
+# فقط برای استفاده از حساب کاربری شاد
+pip install --upgrade "irubix[shad]"
 ```
 
 ## حساب کاربری شاد

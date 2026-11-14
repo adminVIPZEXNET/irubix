@@ -3,7 +3,7 @@
 <body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../shad-methods/">متدهای شاد</a></nav></header>
 <main class="container"><p class="eyebrow">SHAD USER CLIENT</p><h1>کار با حساب کاربری شاد</h1>
 <p>ماژول شاد یک کلاینت مستقل حساب کاربری است و به توکن ربات نیاز ندارد.</p>
-<h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
+<h2>نصب</h2><pre><code>pip install --upgrade "irubix[shad]"</code></pre>
 <h2>ساخت کلاینت</h2><pre><code>from irubix import shad
 app = shad.Shad(session="my_shad_session.json", platform="shad_web")</code></pre>
 <p>فایل نشست JSON باید شامل <code>auth</code> و <code>private_key</code> باشد. مقدار <code>guid</code> نیز در صورت دسترس قابل ذخیره است.</p>
