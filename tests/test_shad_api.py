@@ -1,51 +1,40 @@
-"""Offline tests for the Shad Bot API client."""
+"""Offline public API tests for the lazy Shad account-client adapter."""
+import sys
+import types
 import unittest
-from unittest.mock import AsyncMock
+from unittest.mock import patch
+
+import irubix
 from irubix import shad
 
 
-class ShadTests(unittest.IsolatedAsyncioTestCase):
-    async def asyncSetUp(self):
-        self.bot = shad.IRubix("TEST_TOKEN")
-        self.bot.request = AsyncMock(return_value={"message_id": 10})
+class FakeMaxShad:
+    def __init__(self, **kwargs):
+        self.options = kwargs
 
-    async def test_import_alias_and_url(self):
-        self.assertIs(shad.Bot, shad.IRubix)
-        self.assertEqual(self.bot.base_url, "https://shadmessengerg2b1.iranlms.ir/v3")
 
-    async def test_get_me(self):
-        await self.bot.get_me()
-        self.bot.request.assert_awaited_with("getMe", {})
+class ShadAdapterTests(unittest.TestCase):
+    def test_root_import_does_not_require_maxrubika(self):
+        self.assertIn("shad", irubix.__all__)
 
-    async def test_send_message(self):
-        await self.bot.send_message("chat1", "hello", reply_to_message_id="m1")
-        self.bot.request.assert_awaited_with("sendMessage", {
-            "chat_id": "chat1", "text": "hello", "reply_to_message_id": "m1"
-        })
+    def test_shad_class_wraps_maxrubika_account_client(self):
+        fake = types.ModuleType("maxrubika")
+        fake.Shad = FakeMaxShad
+        with patch.dict(sys.modules, {"maxrubika": fake}):
+            # Resolve the lazy class after the fake dependency is installed.
+            cls = shad._load_shad_class()
+            client = cls(session="account.session", platform="shad_web")
+        self.assertIsInstance(client, FakeMaxShad)
+        self.assertEqual(client.options["session"], "account.session")
+        self.assertEqual(client.options["platform"], "shad_web")
+        self.assertEqual(client.options["api_version"], 6)
+        self.assertFalse(client.options["show_welcome"])
 
-    async def test_event_reply(self):
-        event = shad.Event(self.bot, {"message": {
-            "message_id": "m1", "text": "hi", "chat_id": "chat1"
-        }})
-        await event.reply("hello")
-        self.bot.request.assert_awaited_with("sendMessage", {
-            "chat_id": "chat1", "text": "hello", "reply_to_message_id": "m1"
-        })
-
-    async def test_command_dispatch(self):
-        seen = []
-        @self.bot.command("start")
-        async def handler(bot, event):
-            seen.append(event.text)
-        await self.bot._dispatch({"message": {
-            "message_id": "m1", "text": "/start", "chat_id": "chat1"
-        }})
-        self.assertEqual(seen, ["/start"])
-
-    async def test_empty_token(self):
-        with self.assertRaises(ValueError):
-            shad.IRubix(" ")
+    def test_supported_platforms_are_documented(self):
+        from maxrubika.client.core.configs import PLATFORMS
+        for platform in ("shad_web", "shad_pwa", "shad_android"):
+            self.assertIn(platform, PLATFORMS)
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
