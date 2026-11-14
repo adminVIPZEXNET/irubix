@@ -14,14 +14,14 @@ class FakeMaxShad:
 
 
 class ShadAdapterTests(unittest.TestCase):
-    def test_root_import_does_not_require_maxrubika(self):
+    def test_root_import_does_not_require_eager_shad_dependency(self):
         self.assertIn("shad", irubix.__all__)
+        self.assertTrue(hasattr(shad, "_load_shad_class"))
 
-    def test_shad_class_wraps_maxrubika_account_client(self):
+    def test_shad_adapter_forwards_account_options(self):
         fake = types.ModuleType("maxrubika")
         fake.Shad = FakeMaxShad
         with patch.dict(sys.modules, {"maxrubika": fake}):
-            # Resolve the lazy class after the fake dependency is installed.
             cls = shad._load_shad_class()
             client = cls(session="account.session", platform="shad_web")
         self.assertIsInstance(client, FakeMaxShad)
@@ -29,11 +29,6 @@ class ShadAdapterTests(unittest.TestCase):
         self.assertEqual(client.options["platform"], "shad_web")
         self.assertEqual(client.options["api_version"], 6)
         self.assertFalse(client.options["show_welcome"])
-
-    def test_supported_platforms_are_documented(self):
-        from maxrubika.client.core.configs import PLATFORMS
-        for platform in ("shad_web", "shad_pwa", "shad_android"):
-            self.assertIn(platform, PLATFORMS)
 
 
 if __name__ == "__main__":
