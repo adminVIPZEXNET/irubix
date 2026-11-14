@@ -1,6 +1,5 @@
-"""irubix: یک لایه ساده و کاربردی روی کتابخانه maxrubika برای ساخت ربات روبیکا."""
+"""irubix: کتابخانه مستقل ساخت ربات روبیکا."""
+from .bot import IRubix, Bot, Event, RubikaAPIError
 
-from .bot import IRubix, Bot
-
-__all__ = ["IRubix", "Bot"]
-__version__ = "0.1.0"
+__all__ = ["IRubix", "Bot", "Event", "RubikaAPIError"]
+__version__ = "0.2.0"
