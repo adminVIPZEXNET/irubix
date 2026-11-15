@@ -24,7 +24,8 @@ __all__ = [
     "PluginManager", "MiddlewareManager", "RateLimiter",
     "ConversationManager", "BotStats", "CommandPermissions",
     "MessageBuilder", "FileManager", "AIAdapter", "CloudStorageAdapter",
-    "AutoReconnect", "WebhookAdapter", "DeveloperConsole", "SmartErrorHandler",\n    "UniversalEventRouter", "KeyboardBuilder",
+    "AutoReconnect", "WebhookAdapter", "DeveloperConsole", "SmartErrorHandler",
+    "UniversalEventRouter", "KeyboardBuilder",
 ]
 
 _PLATFORM_MODULES = {
