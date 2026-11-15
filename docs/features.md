@@ -11,7 +11,7 @@ from irubix import (
     PluginManager, MiddlewareManager, RateLimiter, ConversationManager,
     BotStats, CommandPermissions, MessageBuilder, FileManager,
     AIAdapter, CloudStorageAdapter, AutoReconnect, WebhookAdapter,
-    DeveloperConsole, SmartErrorHandler, UniversalEventRouter, KeyboardBuilder,
+    DeveloperConsole, SmartErrorHandler, UniversalEventRouter, KeyboardBuilder,\n    SessionManager, UniversalClient,
 )
 ```
 
@@ -141,3 +141,38 @@ keyboard = (
 The event router expects a normalized event object. The keyboard builder returns a
 neutral description; each messaging platform has different keyboard schemas, so a
 platform adapter must translate it before sending.
+
+
+## Persistent sessions and universal client
+
+`SessionManager` stores JSON-compatible session data on local disk and atomically
+replaces its JSON file when changes are saved. Do not store secrets in plaintext
+session files unless you have secured the device and storage location.
+
+```python
+sessions = SessionManager("./data/sessions.json")
+sessions.create(chat_id, {"step": "ask_name"})
+sessions.set(chat_id, "name", "Ada")
+print(sessions.get(chat_id))
+sessions.delete(chat_id)
+```
+
+`UniversalClient` is a registry/facade for client instances that you create.
+It can route text sends to the selected platform and broadcast to a mapping of
+platform names to chat IDs. It does not normalize every platform API or translate
+platform-specific keyboards, media, or event objects.
+
+```python
+from irubix import Rubika, bale, UniversalClient
+
+clients = UniversalClient(
+    rubika=Rubika("RUBIKA_TOKEN"),
+    bale=bale("BALE_TOKEN"),
+)
+await clients.send_text("rubika", "CHAT_ID", "Hello")
+await clients.broadcast_text(
+    {"rubika": "CHAT_ID_1", "bale": "CHAT_ID_2"},
+    "Hello everyone",
+)
+```
+
