@@ -13,7 +13,7 @@ from .features import (
 )
 
 __author__ = "mahdishami"
-__version__ = "0.10.0"
+__version__ = "0.11.0"
 
 from ._update import check_for_updates
 check_for_updates(__version__)
