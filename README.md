@@ -16,15 +16,15 @@ python -m pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive
 
 ## شروع سریع
 
-در همه پیام‌رسان‌ها کلاینت مستقیماً با توکن ساخته می‌شود؛ نیازی به `.IRubix` نیست.
+در همه پیام‌رسان‌ها کلاینت مستقیماً ساخته می‌شود؛ نیازی به `.IRubix` نیست. واردکردن توکن اختیاری است: اگر توکن را ننویسید، IRubix آن را به‌صورت مخفی در ترمینال درخواست می‌کند.
 
-فقط ماژول پیام‌رسان و توکن همان ربات را انتخاب کنید.
+فقط ماژول پیام‌رسان موردنظر را انتخاب کنید.
 
 **روبیکا**
 ```python
 from irubix import Rubika
 
-bot = Rubika("BOT_TOKEN")
+bot = Rubika()  # توکن در ترمینال پرسیده می‌شود
 
 @bot.command("start")
 async def start(bot, event):
@@ -37,7 +37,7 @@ bot.run()
 ```python
 from irubix import bale
 
-bot = bale("BOT_TOKEN")
+bot = bale()  # توکن در ترمینال پرسیده می‌شود
 
 @bot.command("start")
 async def start(bot, event):
@@ -50,7 +50,7 @@ bot.run()
 ```python
 from irubix import soroush
 
-bot = soroush("BOT_TOKEN")
+bot = soroush()  # توکن در ترمینال پرسیده می‌شود
 
 @bot.command("start")
 async def start(bot, event):
@@ -63,7 +63,7 @@ bot.run()
 ```python
 from irubix import telegram
 
-bot = telegram("BOT_TOKEN")
+bot = telegram()  # توکن در ترمینال پرسیده می‌شود
 
 @bot.command("start")
 async def start(bot, event):
