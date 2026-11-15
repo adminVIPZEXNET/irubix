@@ -141,3 +141,52 @@ update = Update.from_dict({"type": "NewMessage", "new_message": message.to_dict(
   file that has already been uploaded.
 - The raw response dictionaries are preserved as returned by Rubika. Model
   classes are optional helpers and do not alter API responses.
+
+## Extended convenience API
+
+Media wrappers use the existing documented two-step upload flow:
+`send_image`, `send_video`, `send_voice`, `send_music`, and
+`send_gif`. `upload_file(path, file_type)` uploads and returns a Rubika
+file ID without sending it; `download_file(file_id)` returns downloaded bytes.
+
+Compatibility aliases include `get_chat_info`, `edit_message`, and
+`disconnect`. `register_all_endpoints(base_url)` registers the five supported
+webhook endpoint types at the following paths: `update`, `inline`,
+`query`, `selection`, and `search-selection`.
+
+## Filters, middleware and plugins
+
+```python
+from irubix import Rubika, Text, FromUser, Command
+
+bot = Rubika("YOUR_BOT_TOKEN")
+
+@bot.message(Text() & FromUser("USER_ID"))
+async def private_text(bot, event):
+    await event.reply("Text received")
+
+@bot.message(Command("help") | Text("help"))
+async def help_handler(bot, event):
+    await event.reply("Help")
+
+async def logging_middleware(bot, event, next_handler):
+    print(event.type, event.chat_id)
+    await next_handler()
+
+bot.middleware(logging_middleware)
+# A plugin module must expose setup(bot):
+# bot.load_plugin("my_project.plugins.echo")
+bot.run()
+```
+
+Filters can be combined with `&`, `|`, and `~`. Middleware uses
+`middleware(bot, event, next_handler)`. Plugins are modules or callables
+exposing `setup(bot)`.
+
+## Scope and API limitations
+
+Quiz mode is not implemented because the currently referenced Bot API method
+list documents polls, not a quiz endpoint. IRubix does not start an HTTP server:
+deploy a public HTTPS route using your web framework and pass its parsed body
+to `process_webhook()`. User-account/Userbot methods are intentionally outside
+the token-based Bot API client.
