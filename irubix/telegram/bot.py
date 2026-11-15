@@ -1,6 +1,7 @@
 """Async Telegram Bot API client (Python standard library only)."""
 from __future__ import annotations
-import asyncio, json, urllib.error, urllib.request
+import asyncio, hashlib, json, urllib.error, urllib.request
+from pathlib import Path
 from typing import Any, Callable
 
 class TelegramAPIError(RuntimeError):
@@ -162,16 +163,52 @@ class IRubix:
 
     async def start(self, *, timeout: int = 30, retry_delay: float = 2):
         """Long polling; Telegram webhooks and getUpdates cannot be used together."""
+        state_dir = Path.home() / ".irubix" / "updates"
+        token_key = hashlib.sha256(self.token.encode("utf-8")).hexdigest()
+        state_file = state_dir / f"{token_key}.json"
+        initialize_cursor = self._offset is None
+        if self._offset is None:
+            try:
+                saved = json.loads(state_file.read_text(encoding="utf-8"))
+                if isinstance(saved, dict) and isinstance(saved.get("offset_id"), int):
+                    self._offset = saved["offset_id"]
+                    initialize_cursor = False
+            except (OSError, ValueError, TypeError):
+                pass
+
+        def save_offset():
+            if self._offset is None:
+                return
+            try:
+                state_dir.mkdir(parents=True, exist_ok=True)
+                temporary = state_file.with_suffix(".tmp")
+                temporary.write_text(json.dumps({"offset_id": self._offset}), encoding="utf-8")
+                temporary.replace(state_file)
+            except OSError:
+                pass
+
         self._running = True
         print("[IRubix:Telegram] Bot started.")
         while self._running:
             try:
                 updates = await self.get_updates(offset=self._offset, timeout=timeout)
-                for update in updates or []:
-                    if not isinstance(update, dict): continue
-                    update_id = update.get("update_id")
-                    if isinstance(update_id, int): self._offset = update_id + 1
-                    await self._dispatch(update)
+                batch = [item for item in (updates or []) if isinstance(item, dict)]
+                if initialize_cursor:
+                    # Discard the pre-existing backlog once when upgrading from
+                    # a version that did not persist the polling cursor.
+                    initialize_cursor = False
+                    for update in batch:
+                        update_id = update.get("update_id")
+                        if isinstance(update_id, int):
+                            self._offset = max(self._offset or 0, update_id + 1)
+                    save_offset()
+                else:
+                    for update in batch:
+                        await self._dispatch(update)
+                        update_id = update.get("update_id")
+                        if isinstance(update_id, int):
+                            self._offset = max(self._offset or 0, update_id + 1)
+                            save_offset()
             except asyncio.CancelledError: raise
             except Exception as exc:
                 print(f"[IRubix:Telegram] Polling error: {exc}")
