@@ -72,6 +72,38 @@ async def start(bot, event):
 bot.run()
 ```
 
+## اجرای چند ربات هم‌زمان
+
+با `MultiBot` می‌توانید چند ربات از پیام‌رسان‌های مختلف را در یک برنامه اجرا کنید:
+
+```python
+from irubix import MultiBot
+
+app = MultiBot()
+rubika = app.add("rubika", "RUBIKA_TOKEN")
+telegram = app.add("telegram", "TELEGRAM_TOKEN")
+bale = app.add("bale", "BALE_TOKEN")
+
+@rubika.command("start")
+async def rubika_start(bot, event):
+    await event.reply("Hello from Rubika!")
+
+@telegram.command("start")
+async def telegram_start(bot, event):
+    await event.reply("Hello from Telegram!")
+
+app.run()  # همه ربات‌ها به‌صورت هم‌زمان اجرا می‌شوند
+```
+
+برای افزودن چند ربات از یک پیام‌رسان، نام یکتا تعیین کنید:
+
+```python
+first = app.add("bale", "TOKEN_1", name="bale_main")
+second = app.add("bale", "TOKEN_2", name="bale_backup")
+```
+
+`app.stop()` همه ربات‌ها را متوقف می‌کند و `app.get("rubika")` یک ربات ثبت‌شده را برمی‌گرداند.
+
 ## مستندات
 
 - [راهنمای کامل همه کلاس‌ها و نمونه‌کدها](https://adminvipzexnet.github.io/irubix/classes/)
