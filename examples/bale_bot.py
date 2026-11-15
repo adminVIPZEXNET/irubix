@@ -1,6 +1,6 @@
 from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 
 @bot.command("start")

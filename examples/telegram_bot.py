@@ -1,6 +1,6 @@
 from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 
 @bot.command("start")

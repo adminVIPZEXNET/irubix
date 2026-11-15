@@ -4,7 +4,7 @@
 <main class="container"><p class="eyebrow">TELEGRAM BOT API</p><h1>ساخت ربات تلگرام با IRubix</h1><p>از BotFather توکن بگیرید. این ماژول با Bot API تلگرام کار می‌کند و وابستگی جانبی ندارد.</p>
 <h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
 <h2>نمونه شروع</h2><pre><code>from irubix import telegram
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):

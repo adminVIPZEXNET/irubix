@@ -8,13 +8,15 @@
 python -m pip install --upgrade irubix
 ```
 
-برای نصب آخرین نسخه مخزن:
+برای نصب آخرین نسخه مخزن (بدون نیاز به Git):
 
 ```bash
-python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git
+python -m pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip
 ```
 
 ## شروع سریع
+
+در همه پیام‌رسان‌ها کلاینت مستقیماً با توکن ساخته می‌شود؛ نیازی به `.IRubix` نیست.
 
 فقط ماژول پیام‌رسان و توکن همان ربات را انتخاب کنید.
 
@@ -22,7 +24,7 @@ python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git
 ```python
 from irubix import Rubika
 
-bot = Rubika.IRubix("BOT_TOKEN")
+bot = Rubika("BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -35,7 +37,7 @@ bot.run()
 ```python
 from irubix import bale
 
-bot = bale.IRubix("BOT_TOKEN")
+bot = bale("BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -48,7 +50,7 @@ bot.run()
 ```python
 from irubix import soroush
 
-bot = soroush.IRubix("BOT_TOKEN")
+bot = soroush("BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -61,7 +63,7 @@ bot.run()
 ```python
 from irubix import telegram
 
-bot = telegram.IRubix("BOT_TOKEN")
+bot = telegram("BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -103,7 +105,7 @@ tests/                # تست‌ها
 
 ## نکات
 
-- برای روبیکا از `from irubix import Rubika` و `Rubika.IRubix(...)` استفاده کنید.
+- برای روبیکا از `from irubix import Rubika` و `Rubika(...)` استفاده کنید.
 
 - تمام درخواست‌های API به‌صورت async اجرا می‌شوند.
 - هسته کتابخانه به کتابخانه جانبی نیاز ندارد.

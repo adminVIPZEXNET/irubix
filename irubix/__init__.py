@@ -1,27 +1,19 @@
 """IRubix: lightweight async clients for messaging platforms."""
-
 from importlib import import_module
+from types import ModuleType
 
 from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
 
 __author__ = "mahdishami"
-__version__ = "0.9.1"
+__version__ = "0.9.2"
 
 from ._update import check_for_updates
-
 check_for_updates(__version__)
 
 __all__ = [
-    "Rubika",
-    "Bot",
-    "Event",
-    "RubikaAPIError",
-    "rubika",
-    "bale",
-    "soroush",
-    "telegram",
-    "__version__",
-    "__author__",
+    "Rubika", "Bot", "Event", "RubikaAPIError",
+    "rubika", "bale", "soroush", "telegram",
+    "__version__", "__author__",
 ]
 
 _PLATFORM_MODULES = {
@@ -32,26 +24,33 @@ _PLATFORM_MODULES = {
 }
 
 
+class _CallablePlatformModule(ModuleType):
+    """Allow a platform namespace to be called directly with its bot token."""
+
+    def __call__(self, *args, **kwargs):
+        return self.IRubix(*args, **kwargs)
+
+
+class Rubika(_RubikaClient):
+    """Create a Rubika bot directly: Rubika("TOKEN")."""
+
+    IRubix = _RubikaClient
+    Bot = _RubikaClient
+    Event = Event
+    RubikaAPIError = RubikaAPIError
+    APIError = RubikaAPIError
+
+
 def __getattr__(name):
-    """Import a platform client only when it is requested."""
+    """Load a platform namespace only when it is requested."""
     module_path = _PLATFORM_MODULES.get(name)
     if module_path is None:
         raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
-
     module = import_module(module_path, __name__)
+    module.__class__ = _CallablePlatformModule
     globals()[name] = module
     return module
 
 
 def __dir__():
     return sorted(set(globals()) | set(__all__))
-
-
-class Rubika:
-    """Namespace for the Rubika bot client: Rubika.IRubix(...)."""
-
-    IRubix = _RubikaClient
-    Bot = Bot
-    Event = Event
-    RubikaAPIError = RubikaAPIError
-    APIError = RubikaAPIError

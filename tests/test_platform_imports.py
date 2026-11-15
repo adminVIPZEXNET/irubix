@@ -1,26 +1,30 @@
-"""Public import paths for every supported messaging platform."""
-
+"""Public import paths and direct callable constructors for every platform."""
 import subprocess
 import sys
 import unittest
 
 
 class PlatformImportTests(unittest.TestCase):
-    def test_all_platforms_have_a_consistent_import_path(self):
+    def test_all_platforms_are_directly_callable(self):
         code = """
 from irubix import Rubika, rubika, bale, soroush, telegram
 
+assert callable(Rubika)
+assert callable(rubika)
+assert callable(bale)
+assert callable(soroush)
+assert callable(telegram)
+
+assert isinstance(Rubika("TEST_TOKEN"), Rubika.IRubix)
+assert isinstance(rubika("TEST_TOKEN"), rubika.IRubix)
+assert isinstance(bale("TEST_TOKEN"), bale.IRubix)
+assert isinstance(soroush("TEST_TOKEN"), soroush.IRubix)
+assert isinstance(telegram("TEST_TOKEN"), telegram.IRubix)
+
 assert Rubika.IRubix is Rubika.Bot
-assert rubika.IRubix is Rubika.IRubix
-try:
-    from irubix import IRubix
-except ImportError:
-    pass
-else:
-    raise AssertionError('Legacy top-level IRubix import must not be exposed')
-assert callable(bale.IRubix)
-assert callable(soroush.IRubix)
-assert callable(telegram.IRubix)
+assert bale.IRubix is bale.Bot
+assert soroush.IRubix is soroush.Bot
+assert telegram.IRubix is telegram.Bot
 """
         subprocess.run([sys.executable, "-c", code], check=True)
 

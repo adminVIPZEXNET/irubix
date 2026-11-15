@@ -1,6 +1,6 @@
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 
 @bot.command("start")

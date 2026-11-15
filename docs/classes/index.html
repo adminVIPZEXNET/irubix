@@ -8,7 +8,7 @@
 <section class="card" id="rubika"><h2>۱. روبیکا</h2><p>واردسازی: <code>from irubix import Rubika</code> · کلاس جایگزین: <code>Bot</code> · خطا: <code>RubikaAPIError</code></p>
 <h3>ساخت ربات، دستور و دریافت پیام</h3><pre class="code">from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -27,7 +27,7 @@ bot.run()</pre>
 <h3>ارسال پیام مستقل</h3><pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
@@ -38,7 +38,7 @@ asyncio.run(main())</pre>
 <h3>ارسال فایل محلی (send_file)</h3><pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
@@ -54,10 +54,10 @@ asyncio.run(main())</pre>
 <p>پارامتر <code>path</code> مسیر فایل یا داده باینری است. برای داده باینری می‌توانید نام را با <code>file_name</code> تعیین کنید.</p>
 <h3>متدهای موجود</h3><ul><li><code>request(method, input=None)</code></li><li><code>get_me()</code>، <code>get_chat(chat_id)</code>، <code>get_file(file_id)</code></li><li><code>send_text(chat_id, text, **kwargs)</code>، <code>send_message(chat_id, text, **kwargs)</code></li><li><code>send_file(chat_id, path, text=None, file_type="File", **kwargs)</code></li><li><code>send_poll(chat_id, question, options)</code>؛ <code>send_quiz()</code> فعلاً پیاده‌سازی نشده است.</li><li><code>forward_message(...)</code>، <code>edit_message_text(...)</code>، <code>delete_message(...)</code></li><li><code>ban_chat_member(...)</code>، <code>unban_chat_member(...)</code></li><li><code>command(names)</code>، <code>message(flt=None)</code>، <code>callback()</code></li><li><code>start(poll_interval=1.0, limit=100)</code>، <code>stop()</code>، <code>run(...)</code>، <code>event.reply(text, **kwargs)</code></li></ul><p><a href="../bot-guide/">راهنمای روبیکا</a> · <a href="../bot-methods/">مرجع متدها</a></p></section>
 
-<section class="card" id="bale"><h2>۲. بله</h2><p>واردسازی: <code>from irubix import bale</code> · کلاس: <code>bale.IRubix</code> یا <code>bale.Bot</code> · خطا: <code>BaleAPIError</code></p>
+<section class="card" id="bale"><h2>۲. بله</h2><p>واردسازی: <code>from irubix import bale</code> · کلاس: <code>bale</code> یا <code>bale.Bot</code> · خطا: <code>BaleAPIError</code></p>
 <h3>ساخت ربات و دریافت پیام</h3><pre class="code">from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -76,7 +76,7 @@ bot.run()</pre>
 <h3>ارسال متن، عکس و سند</h3><pre class="code">import asyncio
 from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
@@ -87,10 +87,10 @@ async def main():
 asyncio.run(main())</pre>
 <h3>متدهای موجود</h3><ul><li><code>request(method, payload=None)</code>، <code>get_me()</code>، <code>get_updates(offset=None, limit=100, timeout=30, ...)</code></li><li><code>send_message(chat_id, text, **kwargs)</code></li><li><code>send_photo(chat_id, photo, caption=None, **kwargs)</code>، <code>send_document(chat_id, document, caption=None, **kwargs)</code></li><li><code>edit_message_text(chat_id, message_id, text, **kwargs)</code>، <code>delete_message(chat_id, message_id)</code></li><li><code>command(names)</code>، <code>message(flt=None)</code>، <code>callback()</code></li><li><code>start(timeout=30, retry_delay=2)</code>، <code>stop()</code>، <code>run(...)</code>، <code>event.reply(text, **kwargs)</code></li></ul><p>برای عکس و سند از file_id یا URL استفاده کنید؛ آپلود فایل محلی با <code>send_file</code> در این کلاینت موجود نیست. <a href="../bale-guide/">راهنما</a> · <a href="../bale-methods/">متدها</a></p></section>
 
-<section class="card" id="soroush"><h2>۳. سروش‌پلاس</h2><p>واردسازی: <code>from irubix import soroush</code> · کلاس: <code>soroush.IRubix</code> یا <code>soroush.Bot</code> · خطا: <code>SoroushAPIError</code></p>
+<section class="card" id="soroush"><h2>۳. سروش‌پلاس</h2><p>واردسازی: <code>from irubix import soroush</code> · کلاس: <code>soroush</code> یا <code>soroush.Bot</code> · خطا: <code>SoroushAPIError</code></p>
 <h3>ساخت ربات و دریافت پیام</h3><pre class="code">from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -111,7 +111,7 @@ bot.run()</pre>
 <h3>ارسال متن، عکس و سند</h3><pre class="code">import asyncio
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
@@ -122,10 +122,10 @@ async def main():
 asyncio.run(main())</pre>
 <h3>متدهای موجود</h3><ul><li><code>request(method, payload=None, http_method="POST")</code>، <code>get_me()</code>، <code>log_out()</code>، <code>close()</code></li><li><code>get_updates(offset=None, limit=100, timeout=30, allowed_updates=None)</code></li><li><code>set_webhook(url, **kwargs)</code>، <code>delete_webhook(drop_pending_updates=None)</code>، <code>get_webhook_info()</code></li><li><code>send_message(...)</code>، <code>forward_message(...)</code>، <code>send_photo(...)</code>، <code>send_document(...)</code></li><li><code>edit_message_text(...)</code>، <code>delete_message(...)</code>، <code>answer_callback_query(...)</code></li><li><code>command(names)</code>، <code>message(flt=None)</code>، <code>callback()</code></li><li><code>start(timeout=30, retry_delay=2)</code>، <code>stop()</code>، <code>run(...)</code>، <code>event.reply(text, **kwargs)</code></li></ul><p>برای رسانه از file_id یا URL استفاده کنید؛ <code>send_file</code> برای آپلود فایل محلی در این کلاینت وجود ندارد. Long polling و webhook را هم‌زمان فعال نکنید. <a href="../soroush-guide/">راهنما</a> · <a href="../soroush-methods/">متدها</a></p></section>
 
-<section class="card" id="telegram"><h2>۴. تلگرام</h2><p>واردسازی: <code>from irubix import telegram</code> · کلاس: <code>telegram.IRubix</code> یا <code>telegram.Bot</code> · خطا: <code>TelegramAPIError</code></p>
+<section class="card" id="telegram"><h2>۴. تلگرام</h2><p>واردسازی: <code>from irubix import telegram</code> · کلاس: <code>telegram</code> یا <code>telegram.Bot</code> · خطا: <code>TelegramAPIError</code></p>
 <h3>ساخت ربات و دریافت پیام</h3><pre class="code">from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -144,7 +144,7 @@ bot.run()</pre>
 <h3>ارسال متن، عکس و سند</h3><pre class="code">import asyncio
 from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
@@ -173,12 +173,12 @@ async def hello(bot, event):
 <p>ساخت کلاینت با timeout و آدرس پیش‌فرض:</p>
 <pre class="code">from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN", timeout=30)</pre>
+bot = Rubika("YOUR_BOT_TOKEN", timeout=30)</pre>
 <p><code>request</code>، اطلاعات ربات و گفتگو، و دریافت اطلاعات فایل:</p>
 <pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 async def main():
     me = await bot.get_me()
@@ -194,7 +194,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 async def main():
     a = await bot.send_text("YOUR_CHAT_ID", "پیام اول")
@@ -210,7 +210,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 async def main():
     result = await bot.send_file(
@@ -226,7 +226,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 async def main():
     result = await bot.send_poll(
@@ -241,7 +241,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 async def main():
     forwarded = await bot.forward_message(
@@ -262,7 +262,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 async def main():
     # فقط مدیر مجاز گروه/کانال:
@@ -274,7 +274,7 @@ asyncio.run(main())</pre>
 <p>Decoratorها، پاسخ رویداد و اجرای ربات:</p>
 <pre class="code">from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 @bot.command(["start", "help"])
 async def commands(bot, event):
@@ -298,7 +298,7 @@ bot.run(poll_interval=1.0, limit=100)</pre>
 <pre class="code">import asyncio
 from irubix import Rubika
 
-bot = Rubika.IRubix("YOUR_BOT_TOKEN")
+bot = Rubika("YOUR_BOT_TOKEN")
 
 async def main():
     # اجرای polling تا زمانی که task لغو یا bot متوقف شود
@@ -310,16 +310,16 @@ async def main():
 asyncio.run(main())</pre>
 <p class="muted">متد <code>send_quiz</code> در کد وجود دارد اما عمداً <code>NotImplementedError</code> می‌دهد؛ حالت Quiz در API فعلی روبیکا پشتیبانی نشده است. برای نظرسنجی از <code>send_poll</code> استفاده کنید.</p>
 
-<h3>بله · bale.IRubix</h3>
+<h3>بله · bale</h3>
 <p>ساخت کلاینت:</p>
 <pre class="code">from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN", timeout=40)</pre>
+bot = bale("BALE_BOT_TOKEN", timeout=40)</pre>
 <p><code>request</code>، اطلاعات ربات و دریافت Update:</p>
 <pre class="code">import asyncio
 from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 async def main():
     me = await bot.get_me()
@@ -332,7 +332,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 async def main():
     result = await bot.send_message(
@@ -348,7 +348,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 async def main():
     photo = await bot.send_photo(
@@ -364,7 +364,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 async def main():
     edited = await bot.edit_message_text(
@@ -378,7 +378,7 @@ asyncio.run(main())</pre>
 <p>Decoratorها، پاسخ رویداد، شروع و توقف:</p>
 <pre class="code">from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -402,7 +402,7 @@ bot.run(timeout=30, retry_delay=2)</pre>
 <pre class="code">import asyncio
 from irubix import bale
 
-bot = bale.IRubix("BALE_BOT_TOKEN")
+bot = bale("BALE_BOT_TOKEN")
 
 async def main():
     task = asyncio.create_task(bot.start(timeout=30, retry_delay=2))
@@ -412,16 +412,16 @@ async def main():
 
 asyncio.run(main())</pre>
 
-<h3>سروش‌پلاس · soroush.IRubix</h3>
+<h3>سروش‌پلاس · soroush</h3>
 <p>ساخت کلاینت:</p>
 <pre class="code">from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN", timeout=40)</pre>
+bot = soroush("SOROUSH_BOT_TOKEN", timeout=40)</pre>
 <p><code>request</code>، اطلاعات ربات، خروج و بستن نشست:</p>
 <pre class="code">import asyncio
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 async def main():
     me = await bot.get_me()
@@ -437,7 +437,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 async def main():
     updates = await bot.get_updates(limit=20, timeout=10)
@@ -455,7 +455,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 async def main():
     result = await bot.send_message(
@@ -471,7 +471,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 async def main():
     photo = await bot.send_photo(
@@ -487,7 +487,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 async def main():
     forwarded = await bot.forward_message(
@@ -506,7 +506,7 @@ asyncio.run(main())</pre>
 <p>Decoratorها، Event و اجرای polling:</p>
 <pre class="code">from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -531,7 +531,7 @@ bot.run(timeout=30, retry_delay=2)</pre>
 <pre class="code">import asyncio
 from irubix import soroush
 
-bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+bot = soroush("SOROUSH_BOT_TOKEN")
 
 async def main():
     task = asyncio.create_task(bot.start(timeout=30, retry_delay=2))
@@ -541,16 +541,16 @@ async def main():
 
 asyncio.run(main())</pre>
 
-<h3>تلگرام · telegram.IRubix</h3>
+<h3>تلگرام · telegram</h3>
 <p>ساخت کلاینت:</p>
 <pre class="code">from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN", timeout=40)</pre>
+bot = telegram("TELEGRAM_BOT_TOKEN", timeout=40)</pre>
 <p><code>request</code>، اطلاعات ربات و گفتگو، و دریافت Update:</p>
 <pre class="code">import asyncio
 from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 async def main():
     me = await bot.get_me()
@@ -564,7 +564,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 async def main():
     message = await bot.send_message(
@@ -586,7 +586,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 async def main():
     forwarded = await bot.forward_message(
@@ -605,7 +605,7 @@ asyncio.run(main())</pre>
 <pre class="code">import asyncio
 from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 async def main():
     result = await bot.answer_callback_query(
@@ -619,7 +619,7 @@ asyncio.run(main())</pre>
 <p>Decoratorها، Event و اجرای polling:</p>
 <pre class="code">from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -646,7 +646,7 @@ bot.run(timeout=30, retry_delay=2)</pre>
 <pre class="code">import asyncio
 from irubix import telegram
 
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+bot = telegram("TELEGRAM_BOT_TOKEN")
 
 async def main():
     task = asyncio.create_task(bot.start(timeout=30, retry_delay=2))
@@ -666,7 +666,7 @@ asyncio.run(main())</pre>
 </ul>
 </section>
 
-</main><footer class="foot">Rubika.IRubix · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></footer>
+</main><footer class="foot">Rubika · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></footer>
 <script>
 document.querySelectorAll("pre.code").forEach((pre)=>{const wrap=document.createElement("div");wrap.className="code-wrap";pre.parentNode.insertBefore(wrap,pre);wrap.appendChild(pre);const button=document.createElement("button");button.className="copy-btn";button.type="button";button.textContent="کپی کد";button.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(pre.innerText);button.textContent="کپی شد ✓";setTimeout(()=>button.textContent="کپی کد",1500)}catch(_){button.textContent="کپی ناموفق"}});wrap.appendChild(button)});
 const menuButton=document.querySelector(".menu-toggle"),nav=document.querySelector(".nav");if(menuButton&&nav)menuButton.addEventListener("click",()=>{const opened=nav.classList.toggle("menu-open");menuButton.setAttribute("aria-expanded",String(opened));menuButton.textContent=opened?"×":"☰"});
