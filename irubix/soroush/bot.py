@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable, Optional
 
 from .._token import resolve_token
+from .._bot_api import BotAPIMethods, encode_request_payload
 
 
 class SoroushAPIError(RuntimeError):
@@ -48,7 +49,7 @@ class Event:
         return await self.bot.send_message(self.chat_id, text, **kwargs)
 
 
-class IRubix:
+class IRubix(BotAPIMethods):
     """Async Soroush Plus Bot API client with decorator-based handlers."""
 
     API_URL = "https://api.splus.ir"
@@ -76,8 +77,8 @@ class IRubix:
             if payload:
                 url += "?" + urllib.parse.urlencode(payload, doseq=True)
         else:
-            data = json.dumps(payload or {}, ensure_ascii=False).encode("utf-8")
-            headers["Content-Type"] = "application/json; charset=utf-8"
+            data, content_type = encode_request_payload(payload or {})
+            headers["Content-Type"] = content_type
         request = urllib.request.Request(url, data=data, headers=headers,
                                          method=http_method.upper())
         try:
