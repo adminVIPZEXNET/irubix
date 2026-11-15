@@ -74,6 +74,34 @@ class RubikaAPIMethodTests(unittest.IsolatedAsyncioTestCase):
             "chat_id": "chat-1", "file_id": "file-1", "text": "caption",
         })
 
+    async def test_process_update_webhook_envelope(self):
+        seen = []
+
+        @self.bot.command("start")
+        async def start(bot, event):
+            seen.append((event.chat_id, event.text, event.command))
+
+        await self.bot.process_update({"update": {
+            "type": "NewMessage",
+            "chat_id": "chat-1",
+            "new_message": {"message_id": "m1", "text": "/start", "sender_id": "u1"},
+        }})
+        self.assertEqual(seen, [("chat-1", "/start", "start")])
+
+    async def test_process_inline_message_webhook_envelope(self):
+        seen = []
+
+        @self.bot.callback()
+        async def callback(bot, event):
+            seen.append((event.chat_id, event.message_id, event.button_id))
+
+        await self.bot.process_webhook({"inline_message": {
+            "sender_id": "u1", "text": "Clicked",
+            "aux_data": {"button_id": "btn-1"},
+            "message_id": "m2", "chat_id": "chat-2",
+        }})
+        self.assertEqual(seen, [("chat-2", "m2", "btn-1")])
+
     async def test_invalid_values(self):
         with self.assertRaises(ValueError):
             await self.bot.get_updates(limit=0)
