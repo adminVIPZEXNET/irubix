@@ -1,9 +1,122 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="مستندات IRubix برای ربات‌های تلگرام، روبیکا، بله و سروش‌پلاس"><title>مستندات IRubix | تلگرام، روبیکا، بله و سروش‌پلاس</title><link rel="stylesheet" href="/irubix/style.css"></head>
-<body><header class="top"><nav class="nav"><a class="brand" href="/irubix/"><img src="/irubix/assets/irubix-logo.svg" alt="IRubix"><span>مستندات کتابخانه IRubix</span></a><button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button>
-<div class="links"><a class="active" href="/irubix/">خانه</a><a href="/irubix/telegram-guide/">راهنمای تلگرام</a><a href="/irubix/telegram-methods/">متدهای تلگرام</a><a href="/irubix/bot-guide/">راهنمای روبیکا</a><a href="/irubix/bot-methods/">متدهای روبیکا</a><a href="/irubix/bale-guide/">راهنمای بله</a><a href="/irubix/bale-methods/">متدهای بله</a><a href="/irubix/soroush-guide/">راهنمای سروش‌پلاس</a><a href="/irubix/soroush-methods/">متدهای سروش‌پلاس</a><a href="/irubix/outputs/">خروجی‌ها</a><a href="/irubix/faq/">سؤالات متداول</a><a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></div></nav></header>
-<main class="wrap home-wrap"><section class="home-intro"><img src="/irubix/assets/irubix-logo.svg" alt="لوگوی IRubix"><h1>یک کتابخانه، چهار پلتفرم ربات</h1><p>با IRubix برای تلگرام، روبیکا، بله و سروش‌پلاس ربات بسازید.</p></section>
-<section class="home-menu"><a href="/irubix/telegram-guide/">راهنمای ربات تلگرام</a><a href="/irubix/telegram-methods/">متدهای تلگرام</a><a href="/irubix/bot-guide/">راهنمای ربات روبیکا</a><a href="/irubix/bot-methods/">متدهای روبیکا</a><a href="/irubix/bale-guide/">شروع سریع ربات بله</a><a href="/irubix/bale-methods/">متدهای بله</a><a href="/irubix/soroush-guide/">شروع سریع سروش‌پلاس</a><a href="/irubix/soroush-methods/">متدهای سروش‌پلاس</a><a href="/irubix/outputs/">تصاویر خروجی</a><a href="/irubix/faq/">سؤالات متداول</a><a href="https://github.com/adminVIPZEXNET/irubix">مخزن گیت‌هاب</a><a href="https://Rubika.ir/Liberyirubix">کانال پشتیبانی روبیکا</a></section>
-<section class="card home-install"><h2>نصب کتابخانه</h2><p>برای نصب نسخه توسعه‌یافته:</p><div class="install"><code>pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip</code><button onclick="copyText('pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip',this)">کپی</button></div><p class="muted">برای ساخت ربات در هر پلتفرم، راهنمای همان پلتفرم را انتخاب کنید.</p></section></main>
-<footer class="foot">IRubix · مستندات فارسی · <a href="https://github.com/adminVIPZEXNET/irubix">مشاهده سورس در GitHub</a></footer>
-<script>function copyText(t,b){navigator.clipboard.writeText(t).then(()=>{b.textContent='کپی شد ✓';setTimeout(()=>b.textContent='کپی',1500)}).catch(()=>{b.textContent='کپی نشد'})}const menuButton=document.querySelector(".menu-toggle"),nav=document.querySelector(".nav");if(menuButton&&nav){menuButton.addEventListener("click",()=>{const opened=nav.classList.toggle("menu-open");menuButton.setAttribute("aria-expanded",String(opened));menuButton.textContent=opened?"×":"☰"});document.querySelectorAll(".links a").forEach(link=>link.addEventListener("click",()=>{nav.classList.remove("menu-open");menuButton.setAttribute("aria-expanded","false");menuButton.textContent="☰"}))}</script></body></html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="راهنمای ساده ساخت ربات با کتابخانه پایتون IRubix برای روبیکا، بله، سروش‌پلاس و تلگرام">
+  <title>IRubix | مستندات</title>
+  <link rel="stylesheet" href="/irubix/style.css">
+</head>
+<body>
+  <header class="top">
+    <nav class="nav">
+      <a class="brand" href="/irubix/">
+        <img src="/irubix/assets/irubix-logo.svg" alt="IRubix">
+        <span>IRubix</span>
+      </a>
+      <button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button>
+      <div class="links">
+        <a class="active" href="/irubix/">خانه</a>
+        <a href="/irubix/bot-guide/">روبیکا</a>
+        <a href="/irubix/bale-guide/">بله</a>
+        <a href="/irubix/soroush-guide/">سروش‌پلاس</a>
+        <a href="/irubix/telegram-guide/">تلگرام</a>
+        <a href="/irubix/faq/">سؤالات متداول</a>
+        <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div>
+        <span class="tag">کتابخانه پایتون · Async</span>
+        <h1>ساخت ربات، ساده و یکدست</h1>
+        <p>با یک رابط ساده برای روبیکا، بله، سروش‌پلاس و تلگرام ربات بسازید.</p>
+        <div class="btns">
+          <a class="btn primary" href="#platforms">انتخاب پیام‌رسان</a>
+          <a class="btn" href="https://github.com/adminVIPZEXNET/irubix">مشاهده کد منبع</a>
+        </div>
+      </div>
+      <img src="/irubix/assets/irubix-logo.svg" alt="لوگوی IRubix">
+    </section>
+
+    <section id="platforms">
+      <div class="pagehead">
+        <h2>پیام‌رسان را انتخاب کنید</h2>
+        <p>راهنمای شروع و فهرست متدهای هر پلتفرم در دسترس است.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <h3>روبیکا</h3>
+          <p>ساخت ربات با Bot API روبیکا.</p>
+          <a href="/irubix/bot-guide/">راهنمای شروع</a>
+          <a href="/irubix/bot-methods/">فهرست متدها</a>
+        </article>
+        <article class="card">
+          <h3>بله</h3>
+          <p>ساخت ربات با Bot API بله.</p>
+          <a href="/irubix/bale-guide/">راهنمای شروع</a>
+          <a href="/irubix/bale-methods/">فهرست متدها</a>
+        </article>
+        <article class="card">
+          <h3>سروش‌پلاس</h3>
+          <p>ساخت ربات با API سروش‌پلاس.</p>
+          <a href="/irubix/soroush-guide/">راهنمای شروع</a>
+          <a href="/irubix/soroush-methods/">فهرست متدها</a>
+        </article>
+        <article class="card">
+          <h3>تلگرام</h3>
+          <p>ساخت ربات با Telegram Bot API.</p>
+          <a href="/irubix/telegram-guide/">راهنمای شروع</a>
+          <a href="/irubix/telegram-methods/">فهرست متدها</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="card home-install">
+      <h2>نصب از مخزن</h2>
+      <p>برای دریافت آخرین نسخه کد:</p>
+      <div class="install">
+        <code>python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git</code>
+        <button type="button" onclick="copyText('python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git', this)">کپی</button>
+      </div>
+      <p class="muted">برای مشاهده نمونه‌کدها و خروجی‌ها، به بخش <a href="/irubix/outputs/">خروجی‌ها</a> بروید.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    IRubix · مستندات فارسی · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a>
+  </footer>
+
+  <script>
+    function copyText(value, button) {
+      navigator.clipboard.writeText(value).then(() => {
+        button.textContent = "کپی شد";
+        setTimeout(() => button.textContent = "کپی", 1500);
+      }).catch(() => {
+        button.textContent = "کپی نشد";
+      });
+    }
+
+    const menuButton = document.querySelector(".menu-toggle");
+    const nav = document.querySelector(".nav");
+
+    if (menuButton && nav) {
+      menuButton.addEventListener("click", () => {
+        const opened = nav.classList.toggle("menu-open");
+        menuButton.setAttribute("aria-expanded", String(opened));
+        menuButton.textContent = opened ? "×" : "☰";
+      });
+
+      document.querySelectorAll(".links a").forEach((link) => {
+        link.addEventListener("click", () => {
+          nav.classList.remove("menu-open");
+          menuButton.setAttribute("aria-expanded", "false");
+          menuButton.textContent = "☰";
+        });
+      });
+    }
+  </script>
+</body>
+</html>
