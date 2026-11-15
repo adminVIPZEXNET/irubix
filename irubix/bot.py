@@ -407,7 +407,8 @@ class IRubix:
                 if initialize_cursor:
                     # Skip updates already waiting when this process first
                     # starts; only updates arriving after this cursor are new.
-                    initialize_cursor = False
+                    if next_offset is not None:
+                        initialize_cursor = False
                 else:
                     for update in updates:
                         if isinstance(update, dict):
