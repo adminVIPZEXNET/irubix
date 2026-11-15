@@ -118,6 +118,21 @@ class PublicMethodsTests(unittest.IsolatedAsyncioTestCase):
         await self.bot._dispatch({"button_id": "BTN-1"})
         self.assertEqual(seen, ["BTN-1"])
 
+    async def test_event_command_and_arguments(self):
+        event = Event(self.bot, {"message": {"chat_id": "CHAT", "text": "/start hello world"}})
+        self.assertEqual(event.command, "start")
+        self.assertEqual(event.args, "hello world")
+
+    async def test_event_command_with_bot_username(self):
+        event = Event(self.bot, {"message": {"chat_id": "CHAT", "text": "/start@my_bot hello"}})
+        self.assertEqual(event.command, "start")
+        self.assertEqual(event.args, "hello")
+
+    async def test_non_command_has_empty_command_and_args(self):
+        event = Event(self.bot, {"message": {"chat_id": "CHAT", "text": "hello world"}})
+        self.assertEqual(event.command, "")
+        self.assertEqual(event.args, "")
+
     async def test_event_reply(self):
         event = Event(self.bot, {"message": {
             "chat_id": "CHAT", "message_id": "M1", "text": "hi"

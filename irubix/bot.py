@@ -47,6 +47,10 @@ class Event:
         )
         self.button_id = raw.get("button_id") or raw.get("data")
         self.update_type = self.type
+        parts = self.text.strip().split(maxsplit=1)
+        raw_command = parts[0] if parts and parts[0].startswith("/") else ""
+        self.command = raw_command[1:].split("@", 1)[0] if raw_command else ""
+        self.args = parts[1] if len(parts) > 1 and raw_command else ""
 
     async def reply(self, text: str, **kwargs: Any):
         """Reply to the current message."""
