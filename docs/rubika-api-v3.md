@@ -77,7 +77,18 @@ await bot.update_bot_endpoints(
 )
 ```
 
-### Handle webhook payloads\n\nYour HTTPS route can pass the parsed JSON body directly to the client. Both the `{"update": ...}` and `{"inline_message": ...}` envelopes are normalized before registered handlers run.\n\n```python\n@app.post("/rubika/update")  # example route in your web framework\nasync def rubika_update(request):\n    await bot.process_webhook(await request.json())\n    return {"ok": True}\n```\n\n### Manage chat keyboards
+### Handle webhook payloads
+
+Your HTTPS route can pass the parsed JSON body directly to the client. Both the `{"update": ...}` and `{"inline_message": ...}` envelopes are normalized before registered handlers run.
+
+```python
+@app.post("/rubika/update")  # example route in your web framework
+async def rubika_update(request):
+    await bot.process_webhook(await request.json())
+    return {"ok": True}
+```
+
+### Manage chat keyboards
 
 ```python
 keypad = {
