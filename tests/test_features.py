@@ -7,7 +7,7 @@ from pathlib import Path
 from irubix import (
     AIAdapter, BotStats, CloudStorageAdapter, CommandPermissions,
     ConversationManager, FileManager, MessageBuilder, MiddlewareManager,
-    PluginManager, RateLimiter, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,
+    PluginManager, RateLimiter, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,\n    SessionManager, UniversalClient,
 )
 
 
@@ -124,6 +124,44 @@ class FeatureTests(unittest.TestCase):
             with self.assertRaises(FileNotFoundError):
                 manager.load(Path(root) / "missing.py")
 
+
+    def test_persistent_sessions(self):
+        with tempfile.TemporaryDirectory() as root:
+            path = Path(root) / "sessions.json"
+            sessions = SessionManager(path)
+            sessions.create("user-1", {"step": "name"})
+            sessions.set("user-1", "name", "Ada")
+            restored = SessionManager(path)
+            self.assertEqual(restored.get("user-1", "name"), "Ada")
+            self.assertTrue(restored.delete("user-1"))
+            self.assertIsNone(SessionManager(path).get("user-1"))
+
+    def test_universal_client_facade(self):
+        class Client:
+            async def send_message(self, chat_id, text, **kwargs):
+                return {"chat_id": chat_id, "text": text}
+        async def scenario():
+            client = UniversalClient(telegram=Client())
+            result = await client.send_text("telegram", 123, "hello")
+            self.assertEqual(result, {"chat_id": 123, "text": "hello"})
+            self.assertEqual(client.platforms(), ("telegram",))
+        asyncio.run(scenario())
+
+    def test_message_builder_sends_caption_once(self):
+        class Client:
+            def __init__(self):
+                self.calls = []
+            async def send_file(self, chat_id, file, **kwargs):
+                self.calls.append((chat_id, file, kwargs))
+                return "sent"
+        async def scenario():
+            client = Client()
+            builder = MessageBuilder("caption").add_file("photo.jpg", file_type="Image")
+            result = await builder.send(client, "chat")
+            self.assertEqual(result, ["sent"])
+            self.assertEqual(len(client.calls), 1)
+            self.assertEqual(client.calls[0][2]["text"], "caption")
+        asyncio.run(scenario())
 
 if __name__ == "__main__":
     unittest.main()
