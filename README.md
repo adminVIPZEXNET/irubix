@@ -1,41 +1,117 @@
 # IRubix
 
-کتابخانه پایتون برای ساخت ربات در تلگرام، روبیکا، بله و سروش‌پلاس.
-
-- کلاینت ربات برای Telegram، Rubika، Bale و Soroush Plus
-- پشتیبانی از async/await و handlerهای رویداد
-- بدون وابستگی runtime اضافی
-- مستندات فارسی
-
-سازنده: [mahdishami](https://github.com/mahdishami)
-
-## مستندات
-- [وب‌سایت](https://adminvipzexnet.github.io/irubix/)
-- [راهنمای تلگرام](https://adminvipzexnet.github.io/irubix/telegram-guide/)
-- [متدهای تلگرام](https://adminvipzexnet.github.io/irubix/telegram-methods/)
-- [راهنمای روبیکا](https://adminvipzexnet.github.io/irubix/bot-guide/)
-- [متدهای روبیکا](https://adminvipzexnet.github.io/irubix/bot-methods/)
-- [راهنمای بله](https://adminvipzexnet.github.io/irubix/bale-guide/)
-- [متدهای بله](https://adminvipzexnet.github.io/irubix/bale-methods/)
-- [راهنمای سروش‌پلاس](https://adminvipzexnet.github.io/irubix/soroush-guide/)
-- [متدهای سروش‌پلاس](https://adminvipzexnet.github.io/irubix/soroush-methods/)
+کتابخانه‌ای سبک برای ساخت ربات در **روبیکا، بله، سروش‌پلاس و تلگرام** با Python و `async/await`.
 
 ## نصب
+
 ```bash
-pip install --upgrade irubix
+python -m pip install --upgrade irubix
 ```
 
-## نمونه ربات تلگرام
+برای نصب آخرین نسخه مخزن:
+
+```bash
+python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git
+```
+
+## شروع سریع
+
+فقط ماژول پیام‌رسان و توکن همان ربات را انتخاب کنید.
+
+**روبیکا**
 ```python
-from irubix import telegram
-bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+from irubix import rubika
+
+bot = rubika.IRubix("BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
-    await event.reply("سلام! خوش اومدی ❤️")
+    await event.reply("سلام! ربات فعاله.")
 
 bot.run()
 ```
 
+**بله**
+```python
+from irubix import bale
+
+bot = bale.IRubix("BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! ربات فعاله.")
+
+bot.run()
+```
+
+**سروش‌پلاس**
+```python
+from irubix import soroush
+
+bot = soroush.IRubix("BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! ربات فعاله.")
+
+bot.run()
+```
+
+**تلگرام**
+```python
+from irubix import telegram
+
+bot = telegram.IRubix("BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! ربات فعاله.")
+
+bot.run()
+```
+
+## مستندات
+
+| پیام‌رسان | راهنما | متدها |
+|---|---|---|
+| روبیکا | [شروع سریع](https://adminvipzexnet.github.io/irubix/bot-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/bot-methods/) |
+| بله | [شروع سریع](https://adminvipzexnet.github.io/irubix/bale-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/bale-methods/) |
+| سروش‌پلاس | [شروع سریع](https://adminvipzexnet.github.io/irubix/soroush-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/soroush-methods/) |
+| تلگرام | [شروع سریع](https://adminvipzexnet.github.io/irubix/telegram-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/telegram-methods/) |
+
+- [وب‌سایت مستندات](https://adminvipzexnet.github.io/irubix/)
+- [نمونه خروجی‌ها](https://adminvipzexnet.github.io/irubix/outputs/)
+- [سؤالات متداول](https://adminvipzexnet.github.io/irubix/faq/)
+
+## ساختار پروژه
+
+```text
+irubix/
+├── __init__.py       # ورودی اصلی کتابخانه
+├── bot.py            # کلاینت روبیکا
+├── _update.py        # بررسی نسخه جدید
+├── bale/             # کلاینت بله
+├── soroush/          # کلاینت سروش‌پلاس
+└── telegram/         # کلاینت تلگرام
+
+docs/                 # مستندات
+examples/             # نمونه‌کدها
+tests/                # تست‌ها
+```
+
+## نکات
+
+- تمام درخواست‌های API به‌صورت async اجرا می‌شوند.
+- هسته کتابخانه به کتابخانه جانبی نیاز ندارد.
+- هر پیام‌رسان فقط API و قابلیت‌های رسمی خودش را ارائه می‌کند.
+- برای غیرفعال‌کردن بررسی نسخه جدید، متغیر محیطی `IRUBIX_DISABLE_UPDATE_CHECK=1` را تنظیم کنید.
+
+## اجرای تست‌ها
+
+```bash
+python -m unittest discover -s tests -v
+```
+
 ## مجوز
-IRubix تحت مجوز MIT منتشر می‌شود.
+
+MIT

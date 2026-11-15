@@ -1,0 +1,11 @@
+from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! ربات تلگرام فعاله.")
+
+
+bot.run()
