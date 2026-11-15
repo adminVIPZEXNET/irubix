@@ -1,12 +1,18 @@
-""""IRubix: lightweight async clients for messaging platforms."""
+"""IRubix: lightweight async clients and platform-neutral bot utilities."""
 from importlib import import_module
 from types import ModuleType
 
 from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
 from .multibot import MultiBot
+from .features import (
+    AIAdapter, AutoReconnect, BotStats, CloudStorageAdapter,
+    CommandPermissions, ConversationManager, DeveloperConsole, FileManager,
+    MessageBuilder, MiddlewareManager, PluginManager, RateLimiter,
+    SmartErrorHandler, WebhookAdapter,
+)
 
 __author__ = "mahdishami"
-__version__ = "0.9.13"
+__version__ = "0.10.0"
 
 from ._update import check_for_updates
 check_for_updates(__version__)
@@ -15,6 +21,10 @@ __all__ = [
     "Rubika", "Bot", "Event", "RubikaAPIError",
     "rubika", "bale", "soroush", "telegram",
     "__version__", "__author__", "MultiBot",
+    "PluginManager", "MiddlewareManager", "RateLimiter",
+    "ConversationManager", "BotStats", "CommandPermissions",
+    "MessageBuilder", "FileManager", "AIAdapter", "CloudStorageAdapter",
+    "AutoReconnect", "WebhookAdapter", "DeveloperConsole", "SmartErrorHandler",
 ]
 
 _PLATFORM_MODULES = {
@@ -29,7 +39,7 @@ class _CallablePlatformModule(ModuleType):
     """Allow a platform namespace to be called directly with its bot token."""
 
     def __call__(self, *args, **kwargs):
-        return self.IRubix(*args, **kwargs)
+        return self.IRubIX(*args, **kwargs)
 
 
 class Rubika(_RubikaClient):
