@@ -13,11 +13,11 @@ from pathlib import Path
 from typing import Any, Callable
 
 
-_CYAN = "\\033[96m"
-_GREEN = "\\033[92m"
-_RED = "\\033[91m"
-_RESET = "\\033[0m"
-_BOLD = "\\033[1m"
+_CYAN = "\033[96m"
+_GREEN = "\033[92m"
+_RED = "\033[91m"
+_RESET = "\033[0m"
+_BOLD = "\033[1m"
 
 
 def _terminal_color(text: str, color: str) -> str:
