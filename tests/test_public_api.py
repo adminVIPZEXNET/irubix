@@ -3,10 +3,10 @@ import asyncio
 import unittest
 from unittest.mock import AsyncMock
 
-from irubix import IRubix, Event, RubikaAPIError
+from irubix import Rubika, Event, RubikaAPIError
 
 
-class FakeBot(IRubix):
+class FakeBot(Rubika.IRubix):
     def __init__(self):
         super().__init__("TEST_TOKEN")
         self.calls = []
@@ -147,7 +147,7 @@ class PublicMethodsTests(unittest.IsolatedAsyncioTestCase):
 
     def test_empty_token_rejected(self):
         with self.assertRaises(ValueError):
-            IRubix("  ")
+            Rubika.IRubix("  ")
 
 
 if __name__ == "__main__":

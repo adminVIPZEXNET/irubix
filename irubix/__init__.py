@@ -2,7 +2,7 @@
 
 from importlib import import_module
 
-from .bot import Bot, Event, IRubix, RubikaAPIError
+from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
 
 __author__ = "mahdishami"
 __version__ = "0.9.1"
@@ -12,7 +12,6 @@ from ._update import check_for_updates
 check_for_updates(__version__)
 
 __all__ = [
-    "IRubix",
     "Rubika",
     "Bot",
     "Event",
@@ -51,7 +50,7 @@ def __dir__():
 class Rubika:
     """Namespace for the Rubika bot client: Rubika.IRubix(...)."""
 
-    IRubix = IRubix
+    IRubix = _RubikaClient
     Bot = Bot
     Event = Event
     RubikaAPIError = RubikaAPIError
