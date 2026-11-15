@@ -1,11 +1,63 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای بله | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bale-guide/">راهنمای بله</a></nav></header>
-<main class="container"><p class="eyebrow">BALE API</p><h1>مرجع متدهای بله</h1>
-<p>متدهای موجود در کلاینت بله نسخه 0.4.0</p>
-<h2>مدیریت و دریافت رویداد</h2><ul><li><code>get_me()</code> — دریافت اطلاعات ربات</li><li><code>get_updates(offset=None, limit=100, timeout=30)</code> — دریافت به‌روزرسانی‌ها</li><li><code>command(names)</code> — ثبت دستور</li><li><code>message(flt=None)</code> — ثبت handler پیام</li><li><code>callback()</code> — ثبت handler دکمه callback</li><li><code>start(timeout=30)</code> / <code>run(timeout=30)</code> — اجرای polling</li><li><code>stop()</code> — توقف polling</li></ul>
-<h2>پیام‌ها</h2><ul><li><code>send_message(chat_id, text, **kwargs)</code></li><li><code>send_photo(chat_id, photo, caption=None)</code></li><li><code>send_document(chat_id, document, caption=None)</code></li><li><code>edit_message_text(chat_id, message_id, text)</code></li><li><code>delete_message(chat_id, message_id)</code></li><li><code>event.reply(text, **kwargs)</code></li></ul>
-<h2>خطاها</h2><p>خطاهای ارتباطی یا پاسخ ناموفق API با <code>BaleAPIError</code> گزارش می‌شوند.</p>
-<p><a href="../bale-guide/">راهنمای شروع سریع</a> · <a href="https://docs.bale.ai/">مستندات رسمی بله</a></p>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای بله | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body>
+<header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bale-guide/">راهنمای بله</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
+<main class="container">
+<p class="eyebrow">BALE BOT API · IRUBIX 0.4.0</p><h1>مرجع کامل متدهای بله</h1>
+<p>این صفحه بر اساس سورس واقعی <code>irubix/bale/bot.py</code> نوشته شده است. فقط موارد زیر در کلاینت فعلی پیاده‌سازی شده‌اند؛ وجود یک endpoint در API بله به‌تنهایی به معنی وجود متد آماده برای آن در IRubix نیست.</p>
+<h2>ساخت کلاینت و خطا</h2>
+<pre><code>from irubix import bale
+
+bot = bale("BALE_BOT_TOKEN", timeout=40)
+# base_url اختیاری است: bale("TOKEN", base_url="https://tapi.bale.ai")</code></pre>
+<p>سازنده: <code>IRubix(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>BaleAPIError</code> · نام مستعار کلاس: <code>bale.Bot</code>.</p>
+<h2>درخواست و اطلاعات</h2>
+<ul>
+<li><code>await bot.request(method, payload=None)</code> — فراخوانی مستقیم متد Bot API بله. نام متد نباید خالی یا شامل <code>/</code> باشد.</li>
+<li><code>await bot.get_me()</code> — دریافت اطلاعات ربات.</li>
+<li><code>await bot.get_updates(*, offset=None, limit=100, timeout=30)</code> — دریافت Updateها با long polling.</li>
+</ul>
+<h2>ارسال و مدیریت پیام</h2>
+<ul>
+<li><code>await bot.send_message(chat_id, text, **kwargs)</code> — پارامترهای اضافی مجاز در wrapper: <code>reply_to_message_id</code>، <code>reply_markup</code>، <code>parse_mode</code>، <code>disable_notification</code>، <code>protect_content</code> و <code>message_thread_id</code>.</li>
+<li><code>await bot.send_photo(chat_id, photo, caption=None, **kwargs)</code> — ارسال عکس با file_id یا URL؛ <code>reply_to_message_id</code> پشتیبانی می‌شود.</li>
+<li><code>await bot.send_document(chat_id, document, caption=None, **kwargs)</code> — ارسال سند با file_id یا URL؛ <code>reply_to_message_id</code> پشتیبانی می‌شود.</li>
+<li><code>await bot.edit_message_text(chat_id, message_id, text, **kwargs)</code> — ویرایش متن؛ <code>reply_markup</code> اختیاری.</li>
+<li><code>await bot.delete_message(chat_id, message_id)</code> — حذف پیام.</li>
+<li><code>await event.reply(text, **kwargs)</code> — پاسخ به پیام جاری؛ برای callback نیز چت و پیام مربوط به callback را پیدا می‌کند و از <code>send_message</code> استفاده می‌کند.</li>
+</ul>
+<h2>ثبت handler و رویداد</h2>
+<ul>
+<li><code>@bot.command(names)</code> — ثبت یک دستور یا فهرستی از دستورها؛ نام دستور را با یا بدون <code>/</code> می‌پذیرد.</li>
+<li><code>@bot.message(flt=None)</code> — ثبت handler پیام؛ <code>flt</code> در صورت callable بودن به‌عنوان فیلتر رویداد اجرا می‌شود.</li>
+<li><code>@bot.callback()</code> — ثبت handler برای callback query.</li>
+</ul>
+<p>فیلدهای Event: <code>raw</code> و <code>update</code> (داده خام)، <code>message</code>، <code>chat</code>، <code>chat_id</code>، <code>message_id</code>، <code>text</code>، <code>sender</code>، <code>sender_id</code>، <code>callback_query</code>، <code>button_id</code> و <code>type</code>.</p>
+<pre><code>from irubix import bale
+
+bot = bale("BALE_BOT_TOKEN")
+
+@bot.command(["start", "help"])
+async def commands(bot, event):
+    await event.reply("سلام از بله")
+
+@bot.message(lambda event: event.text == "سلام")
+async def hello(bot, event):
+    await event.reply("سلام!")
+
+@bot.callback()
+async def buttons(bot, event):
+    print(event.button_id, event.callback_query)
+
+bot.run()</code></pre>
+<h2>اجرای polling</h2>
+<ul>
+<li><code>await bot.start(*, timeout=30, retry_delay=2)</code> — شروع long polling تا زمان فراخوانی stop؛ timeout باید بین 0 و 50 باشد.</li>
+<li><code>bot.stop()</code> — درخواست توقف حلقه polling.</li>
+<li><code>bot.run(*, timeout=30, retry_delay=2)</code> — اجرای ساده؛ اگر event loop فعال باشد coroutine شروع را برمی‌گرداند.</li>
+</ul>
+<h2>آنچه در کلاینت بله فعلی وجود ندارد</h2>
+<p>در این نسخه wrapperهای اختصاصی <code>get_chat</code>، <code>forward_message</code>، <code>answer_callback_query</code>، <code>send_audio</code>، <code>send_video</code>، <code>send_location</code>، <code>set_webhook</code> و <code>send_file</code> پیاده‌سازی نشده‌اند. برای endpointهای دیگر می‌توان از <code>request()</code> استفاده کرد، مشروط به اینکه پارامترهای API را مطابق مستندات رسمی ارسال کنید. آپلود فایل محلی در متدهای رسانه‌ای فعلی انجام نمی‌شود.</p>
+<p><a href="https://docs.bale.ai/">مستندات رسمی بله</a> · <a href="../bale-guide/">راهنمای شروع سریع</a> · <a href="../classes/">نمونه‌کدهای همه کلاس‌ها</a></p>
 </main></body></html>
