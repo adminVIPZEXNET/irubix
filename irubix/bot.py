@@ -63,7 +63,8 @@ class Event:
             or raw.get("sender_id")
             or raw.get("user_id")
         )
-        aux_data = raw.get("aux_data") or {}\n        self.button_id = raw.get("button_id") or raw.get("data") or (aux_data.get("button_id") if isinstance(aux_data, dict) else None)
+        aux_data = raw.get("aux_data") or {}
+        self.button_id = raw.get("button_id") or raw.get("data") or (aux_data.get("button_id") if isinstance(aux_data, dict) else None)
         self.update_type = self.type
         parts = self.text.strip().split(maxsplit=1)
         raw_command = parts[0] if parts and parts[0].startswith("/") else ""
