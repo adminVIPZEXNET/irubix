@@ -97,6 +97,8 @@ class IRubix(RubikaAPIMethods):
         self.base_url = (base_url or self.API_URL).rstrip("/") + "/" + self.token
         self.timeout = timeout
         self._handlers: list[tuple[str, Any, Callable]] = []
+        self._middlewares: list[Callable] = []
+        self._plugins: list[Any] = []
         self._running = False
 
     def _request_sync(self, method: str, payload: dict | None = None):
@@ -300,6 +302,106 @@ class IRubix(RubikaAPIMethods):
         )
         return await self.request("sendFile", payload)
 
+
+    async def upload_file(self, path, file_type: str = "File", *, file_name: str | None = None):
+        """Upload a file and return its Rubika file_id without sending it."""
+        allowed = {"File", "Image", "Voice", "Video", "Music", "Gif"}
+        if file_type not in allowed:
+            raise ValueError(f"file_type must be one of: {', '.join(sorted(allowed))}")
+        name = file_name or (Path(path).name if isinstance(path, (str, Path)) else "upload.bin")
+        result = await self.request_send_file(file_type)
+        data = result.get("data") or result
+        upload_url = data.get("upload_url") if isinstance(data, dict) else None
+        if not upload_url:
+            raise RubikaAPIError("Rubika did not return an upload_url.")
+        return await asyncio.to_thread(self._upload_sync, upload_url, path, str(name))
+
+    async def download_file(self, file_id: str) -> bytes:
+        """Download a file and return raw bytes."""
+        result = await self.get_file(file_id)
+        data = result.get("data") or result
+        url = data.get("download_url") or data.get("file_url") or data.get("url")
+        if not url:
+            raise RubikaAPIError("Rubika did not return a downloadable file URL.")
+        def fetch():
+            request = urllib.request.Request(url, headers={"User-Agent": f"IRubix/{self.__version__}"})
+            try:
+                with urllib.request.urlopen(request, timeout=max(self.timeout, 60)) as response:
+                    return response.read()
+            except Exception as exc:
+                raise RubikaAPIError(f"File download failed: {exc}") from exc
+        return await asyncio.to_thread(fetch)
+
+    async def send_image(self, chat_id: str, path, text: str | None = None, **kwargs):
+        return await self.send_file(chat_id, path, text=text, file_type="Image", **kwargs)
+
+    async def send_video(self, chat_id: str, path, text: str | None = None, **kwargs):
+        return await self.send_file(chat_id, path, text=text, file_type="Video", **kwargs)
+
+    async def send_voice(self, chat_id: str, path, text: str | None = None, **kwargs):
+        return await self.send_file(chat_id, path, text=text, file_type="Voice", **kwargs)
+
+    async def send_music(self, chat_id: str, path, text: str | None = None, **kwargs):
+        return await self.send_file(chat_id, path, text=text, file_type="Music", **kwargs)
+
+    async def send_gif(self, chat_id: str, path, text: str | None = None, **kwargs):
+        return await self.send_file(chat_id, path, text=text, file_type="Gif", **kwargs)
+
+    async def get_chat_info(self, chat_id: str):
+        """Alias for get_chat."""
+        return await self.get_chat(chat_id)
+
+    async def edit_message(self, chat_id: str, message_id: str, text: str):
+        """Alias for edit_message_text."""
+        return await self.edit_message_text(chat_id, message_id, text)
+
+    async def register_all_endpoints(self, base_url: str):
+        """Register all five Rubika webhook endpoint types."""
+        base = base_url.rstrip("/")
+        if not base.startswith("https://"):
+            raise ValueError("Webhook base URL must use HTTPS.")
+        routes = {"ReceiveUpdate":"update", "ReceiveInlineMessage":"inline",
+                  "ReceiveQuery":"query", "GetSelectionItem":"selection",
+                  "SearchSelectionItems":"search-selection"}
+        results = {}
+        for endpoint_type, suffix in routes.items():
+            results[endpoint_type] = await self.update_bot_endpoints(
+                f"{base}/{suffix}", endpoint_type)
+        return results
+
+    def middleware(self, middleware):
+        """Register middleware(bot, event, next_handler)."""
+        if not callable(middleware):
+            raise TypeError("middleware must be callable.")
+        self._middlewares.append(middleware)
+        return middleware
+
+    def add_plugin(self, plugin):
+        """Register a plugin exposing setup(bot), or a setup callable."""
+        setup = getattr(plugin, "setup", plugin)
+        if not callable(setup):
+            raise TypeError("Plugin must be callable or expose setup(bot).")
+        result = setup(self)
+        self._plugins.append(plugin)
+        return result
+
+    def load_plugin(self, module_path: str):
+        """Import and register a plugin module by dotted path."""
+        import importlib
+        return self.add_plugin(importlib.import_module(module_path))
+
+    def disconnect(self):
+        """Alias for stop()."""
+        self.stop()
+
+    async def on_query(self, payload: dict):
+        """Process a receiveQuery webhook payload."""
+        return await self.process_webhook(payload)
+
+    async def on_selection(self, payload: dict):
+        """Process a selection webhook payload."""
+        return await self.process_webhook(payload)
+
     def command(self, names):
         """Register one or more slash commands."""
         commands = [names] if isinstance(names, str) else list(names)
@@ -366,10 +468,21 @@ class IRubix(RubikaAPIMethods):
                 if callable(value) and not value(event):
                     continue
 
-            try:
-                result = handler(self, event)
+            async def invoke(index=0):
+                if index >= len(self._middlewares):
+                    result = handler(self, event)
+                    if hasattr(result, "__await__"):
+                        return await result
+                    return result
+                middleware = self._middlewares[index]
+                async def next_handler():
+                    return await invoke(index + 1)
+                result = middleware(self, event, next_handler)
                 if hasattr(result, "__await__"):
-                    await result
+                    return await result
+                return result
+            try:
+                await invoke()
             except Exception as exc:
                 print(_terminal_color(f"[IRubix] Handler error: {exc}", _RED), flush=True)
 
