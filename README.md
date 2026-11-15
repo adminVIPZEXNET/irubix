@@ -72,6 +72,8 @@ bot.run()
 
 ## مستندات
 
+- [راهنمای کامل همه کلاس‌ها و نمونه‌کدها](https://adminvipzexnet.github.io/irubix/classes/)
+
 | پیام‌رسان | راهنما | متدها |
 |---|---|---|
 | روبیکا | [شروع سریع](https://adminvipzexnet.github.io/irubix/bot-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/bot-methods/) |
