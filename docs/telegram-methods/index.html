@@ -1,13 +1,57 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای تلگرام | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../telegram-guide/">راهنمای تلگرام</a></nav></header>
-<main class="container"><p class="eyebrow">TELEGRAM BOT API</p><h1>مرجع کلاس Telegram</h1><p>کلاس اصلی <code>telegram(token)</code> و نام مستعار <code>telegram.Bot(token)</code> است.</p>
-<h2>متدها</h2><ul><li><code>request(method, payload=None)</code> — فراخوانی Bot API</li><li><code>get_me()</code> — اطلاعات ربات</li><li><code>get_chat(chat_id)</code> — اطلاعات گفتگو</li><li><code>get_updates(offset=None, limit=100, timeout=30)</code> — دریافت آپدیت</li><li><code>send_message(chat_id, text, **kwargs)</code> — ارسال متن</li><li><code>send_photo(chat_id, photo, caption=None, **kwargs)</code> — ارسال عکس با file_id یا URL</li><li><code>send_document(chat_id, document, caption=None, **kwargs)</code> — ارسال سند با file_id یا URL</li><li><code>forward_message(chat_id, from_chat_id, message_id)</code> — فوروارد</li><li><code>edit_message_text(chat_id, message_id, text, **kwargs)</code> — ویرایش متن</li><li><code>delete_message(chat_id, message_id)</code> — حذف پیام</li><li><code>answer_callback_query(callback_query_id, **kwargs)</code> — پاسخ callback</li></ul>
-<h2>مدیریت رویداد</h2><ul><li><code>command(names)</code> — ثبت دستور</li><li><code>message(flt=None)</code> — ثبت پیام با فیلتر اختیاری</li><li><code>callback()</code> — ثبت callback</li><li><code>start(timeout=30, retry_delay=2)</code>، <code>stop()</code> و <code>run()</code> — کنترل polling</li></ul>
-<h2>ویژگی Event</h2><p><code>event.text</code>، <code>event.chat_id</code>، <code>event.message_id</code>، <code>event.sender_id</code>، <code>event.button_id</code>، <code>event.callback_query_id</code> و <code>await event.reply(text)</code>.</p>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای تلگرام | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../telegram-guide/">راهنمای تلگرام</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
+<main class="container">
+<p class="eyebrow">TELEGRAM BOT API · IRUBIX 0.1.0</p><h1>مرجع کامل متدهای تلگرام</h1>
+<p>این صفحه با سورس فعلی <code>irubix/telegram/bot.py</code> تطبیق داده شده است. این فهرست، wrapperهای آماده IRubix را نشان می‌دهد؛ برای endpointهای دیگر Bot API از <code>request()</code> استفاده کنید.</p>
+<h2>ساخت کلاینت و خطا</h2>
 <pre><code>from irubix import telegram
-bot = telegram("TOKEN")
-@bot.command("start")
-async def start(bot, event):
-    await event.reply("سلام")
-bot.run()</code></pre></main></body></html>
+
+bot = telegram("TELEGRAM_BOT_TOKEN", timeout=40)</code></pre>
+<p>سازنده: <code>IRubix(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>TelegramAPIError</code> · نام مستعار کلاس: <code>telegram.Bot</code>.</p>
+<h2>درخواست و دریافت اطلاعات</h2>
+<ul>
+<li><code>await bot.request(method, payload=None)</code> — فراخوانی مستقیم Telegram Bot API.</li>
+<li><code>await bot.get_me()</code> — دریافت اطلاعات ربات.</li>
+<li><code>await bot.get_chat(chat_id)</code> — دریافت اطلاعات گفتگو.</li>
+<li><code>await bot.get_updates(*, offset=None, limit=100, timeout=30, allowed_updates=None)</code> — دریافت Updateها با long polling؛ limit بین 1 تا 100 و timeout نامنفی.</li>
+</ul>
+<h2>ارسال و مدیریت پیام</h2>
+<ul>
+<li><code>await bot.send_message(chat_id, text, **kwargs)</code> — گزینه‌های پشتیبانی‌شده در wrapper: <code>parse_mode</code>، <code>entities</code>، <code>link_preview_options</code>، <code>disable_notification</code>، <code>protect_content</code>، <code>reply_parameters</code>، <code>reply_markup</code>، <code>message_thread_id</code> و <code>business_connection_id</code>.</li>
+<li><code>await bot.send_photo(chat_id, photo, caption=None, **kwargs)</code> — ارسال عکس با file_id یا URL؛ گزینه‌ها: <code>parse_mode</code>، <code>reply_markup</code>، <code>reply_parameters</code>، <code>message_thread_id</code> و <code>disable_notification</code>.</li>
+<li><code>await bot.send_document(chat_id, document, caption=None, **kwargs)</code> — ارسال سند با file_id یا URL؛ گزینه‌ها مانند send_photo.</li>
+<li><code>await bot.forward_message(chat_id, from_chat_id, message_id, **kwargs)</code> — فوروارد؛ گزینه‌ها: <code>message_thread_id</code>، <code>disable_notification</code> و <code>protect_content</code>.</li>
+<li><code>await bot.edit_message_text(chat_id, message_id, text, **kwargs)</code> — ویرایش متن؛ گزینه‌ها: <code>parse_mode</code>، <code>entities</code>، <code>link_preview_options</code> و <code>reply_markup</code>.</li>
+<li><code>await bot.delete_message(chat_id, message_id)</code> — حذف پیام.</li>
+<li><code>await bot.answer_callback_query(callback_query_id, **kwargs)</code> — پاسخ به callback؛ گزینه‌ها: <code>text</code>، <code>show_alert</code>، <code>url</code> و <code>cache_time</code>.</li>
+<li><code>await event.reply(text, **kwargs)</code> — پاسخ به پیام جاری؛ در تلگرام به‌صورت پیش‌فرض <code>reply_parameters</code> را تنظیم می‌کند.</li>
+</ul>
+<h2>ثبت handler و Event</h2>
+<ul><li><code>@bot.command(names)</code> — ثبت یک یا چند فرمان.</li><li><code>@bot.message(flt=None)</code> — ثبت handler پیام با فیلتر callable اختیاری.</li><li><code>@bot.callback()</code> — ثبت handler callback query.</li></ul>
+<p>فیلدهای Event: <code>raw</code> و <code>update</code>، <code>message</code>، <code>chat</code>، <code>chat_id</code>، <code>message_id</code>، <code>text</code>، <code>sender</code>، <code>sender_id</code>، <code>callback_query</code>، <code>button_id</code>، <code>callback_query_id</code> و <code>type</code>.</p>
+<pre><code>from irubix import telegram
+
+bot = telegram("TELEGRAM_BOT_TOKEN")
+
+@bot.command(["start", "help"])
+async def commands(bot, event):
+    await event.reply("سلام از تلگرام")
+
+@bot.message(lambda event: event.text == "سلام")
+async def hello(bot, event):
+    await event.reply("سلام!")
+
+@bot.callback()
+async def buttons(bot, event):
+    await bot.answer_callback_query(
+        event.callback_query_id,
+        text="انتخاب شما ثبت شد"
+    )
+
+bot.run()</code></pre>
+<h2>اجرای polling</h2>
+<ul><li><code>await bot.start(*, timeout=30, retry_delay=2)</code> — شروع long polling.</li><li><code>bot.stop()</code> — درخواست توقف polling.</li><li><code>bot.run(*, timeout=30, retry_delay=2)</code> — اجرای ساده؛ اگر event loop فعال باشد coroutine شروع را برمی‌گرداند.</li></ul>
+<p><strong>محدودیت مهم:</strong> در Telegram Bot API، استفاده از <code>getUpdates</code> و webhook هم‌زمان ممکن نیست. در کلاینت فعلی IRubix متدهای اختصاصی <code>set_webhook</code>، <code>delete_webhook</code>، <code>get_webhook_info</code>، <code>send_audio</code>، <code>send_video</code>، <code>send_location</code> و <code>send_file</code> وجود ندارند؛ برای endpointهای دیگر می‌توانید از <code>request()</code> با پارامترهای مستند API استفاده کنید.</p>
+<p><a href="https://core.telegram.org/bots/api">مستندات رسمی Telegram Bot API</a> · <a href="../telegram-guide/">راهنمای شروع سریع</a> · <a href="../classes/">نمونه‌کدهای همه کلاس‌ها</a></p>
+</main></body></html>
