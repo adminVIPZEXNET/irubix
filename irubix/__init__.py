@@ -4,16 +4,8 @@ from types import ModuleType
 
 from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
 from .multibot import MultiBot
-from .features import (
-    AIAdapter, AutoReconnect, BotStats, CloudStorageAdapter,
-    CommandPermissions, ConversationManager, DeveloperConsole, FileManager,
-    MessageBuilder, MiddlewareManager, PluginManager, RateLimiter,
-    SmartErrorHandler, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,
-    SessionManager, UniversalClient,
-)
-
 __author__ = "mahdishami"
-__version__ = "0.11.0"
+__version__ = "0.11.1"
 
 from ._update import check_for_updates
 check_for_updates(__version__)
@@ -22,11 +14,6 @@ __all__ = [
     "Rubika", "Bot", "Event", "RubikaAPIError",
     "rubika", "bale", "soroush", "telegram",
     "__version__", "__author__", "MultiBot",
-    "PluginManager", "MiddlewareManager", "RateLimiter",
-    "ConversationManager", "BotStats", "CommandPermissions",
-    "MessageBuilder", "FileManager", "AIAdapter", "CloudStorageAdapter",
-    "AutoReconnect", "WebhookAdapter", "DeveloperConsole", "SmartErrorHandler",
-    "UniversalEventRouter", "KeyboardBuilder", "SessionManager", "UniversalClient",
 ]
 
 _PLATFORM_MODULES = {
