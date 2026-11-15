@@ -10,6 +10,8 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Callable
 
+from .._token import resolve_token
+
 
 class BaleAPIError(RuntimeError):
     """Raised when Bale returns an API or transport error."""
@@ -56,10 +58,8 @@ class IRubix:
     API_URL = "https://tapi.bale.ai"
     __version__ = "0.4.0"
 
-    def __init__(self, token: str, *, timeout: float = 40, base_url: str | None = None):
-        if not isinstance(token, str) or not token.strip():
-            raise ValueError("Bale bot token must not be empty.")
-        self.token = token.strip()
+    def __init__(self, token: str | None = None, *, timeout: float = 40, base_url: str | None = None):
+        self.token = resolve_token(token, "Bale")
         self.base_url = (base_url or self.API_URL).rstrip("/")
         self.timeout = timeout
         self._handlers: list[tuple[str, Any, Callable]] = []
