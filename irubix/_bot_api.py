@@ -42,8 +42,10 @@ def encode_request_payload(payload: dict[str, Any]):
             filename, data, mime = files[key]
             safe_name = filename.replace('"', "")
             chunks.append(
-                f'Content-Disposition: form-data; name="{key}"; filename="{safe_name}"\r\n'
-                f"Content-Type: {mime}\r\n\r\n".encode("utf-8")
+                (
+                    f'Content-Disposition: form-data; name="{key}"; filename="{safe_name}"\r\n'
+                    f"Content-Type: {mime}\r\n\r\n"
+                ).encode("utf-8")
             )
             chunks.extend((data, b"\r\n"))
         else:
@@ -122,7 +124,7 @@ class BotAPIMethods:
             with urllib.request.urlopen(request, timeout=getattr(self, "timeout", 40)) as response:
                 return response.read()
 
-        data = await __import__("asyncio").to_thread(fetch)
+        data = await asyncio.to_thread(fetch)
         if destination is None:
             return data
         target = Path(destination)
