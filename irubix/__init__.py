@@ -3,9 +3,10 @@ from importlib import import_module
 from types import ModuleType
 
 from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
+from .multibot import MultiBot
 
 __author__ = "mahdishami"
-__version__ = "0.9.12"
+__version__ = "0.9.13"
 
 from ._update import check_for_updates
 check_for_updates(__version__)
@@ -13,7 +14,7 @@ check_for_updates(__version__)
 __all__ = [
     "Rubika", "Bot", "Event", "RubikaAPIError",
     "rubika", "bale", "soroush", "telegram",
-    "__version__", "__author__",
+    "__version__", "__author__", "MultiBot",
 ]
 
 _PLATFORM_MODULES = {
