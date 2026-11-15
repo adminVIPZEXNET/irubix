@@ -34,7 +34,7 @@ class MultiBot:
     def add(self, platform: str, token: str | None = None, *,
             name: str | None = None, **kwargs: Any):
         """Create, register, and return a platform bot."""
-        client_name = name or str(platform).strip().lower().replace(" ", "_")
+        client_name = name or str(platform).strip().lower().replace("-", "_").replace(" ", "_")
         if not client_name:
             raise ValueError("Bot name cannot be empty.")
         if client_name in self.bots:
