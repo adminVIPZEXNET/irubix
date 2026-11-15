@@ -4,6 +4,7 @@ from types import ModuleType
 
 from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
 from .multibot import MultiBot
+from .models import (APIModel, AuxData, Bot as BotModel, BotCommand, ButtonType, Chat, ChatKeypadType, ChatType, ContactMessage, File, FileType, ForwardedFrom, InlineMessage, Keypad, KeypadRow, Location, Message, Metadata, MetadataPart, Poll, PollStatus, Update, UpdateType)
 __author__ = "mahdishami"
 __version__ = "0.11.1"
 
@@ -13,7 +14,11 @@ check_for_updates(__version__)
 __all__ = [
     "Rubika", "Bot", "Event", "RubikaAPIError",
     "rubika", "bale", "soroush", "telegram",
-    "__version__", "__author__", "MultiBot",
+    "__version__", "__author__", "MultiBot", "APIModel", "File", "Chat",
+    "AuxData", "Location", "BotModel", "BotCommand", "ForwardedFrom",
+    "ContactMessage", "PollStatus", "Poll", "Message", "Update",
+    "InlineMessage", "MetadataPart", "Metadata", "KeypadRow", "Keypad",
+    "ChatType", "FileType", "ChatKeypadType", "UpdateType", "ButtonType",
 ]
 
 _PLATFORM_MODULES = {
