@@ -4,6 +4,7 @@ import asyncio, hashlib, json, urllib.error, urllib.request
 from pathlib import Path
 from typing import Any, Callable
 from .._token import resolve_token
+from .._bot_api import BotAPIMethods, encode_request_payload
 
 class TelegramAPIError(RuntimeError):
     """Raised for Telegram API and transport errors."""
@@ -32,9 +33,10 @@ class Event:
             kwargs.setdefault("reply_parameters", {"message_id": self.message_id})
         return await self.bot.send_message(self.chat_id, text, **kwargs)
 
-class IRubix:
+class IRubix(BotAPIMethods):
     """Async Telegram Bot API client with decorator-based handlers."""
     API_URL = "https://api.telegram.org"
+    FILE_URL = "https://api.telegram.org/file"
     __version__ = "0.1.0"
 
     def __init__(self, token: str | None = None, *, timeout: float = 40, base_url: str | None = None):
@@ -49,9 +51,9 @@ class IRubix:
         if not method or "/" in method:
             raise ValueError("Invalid API method name.")
         url = f"{self.base_url}/bot{self.token}/{method}"
-        body = json.dumps(payload or {}, ensure_ascii=False).encode("utf-8")
+        body, content_type = encode_request_payload(payload or {})
         request = urllib.request.Request(url, data=body, headers={
-            "Content-Type": "application/json", "Accept": "application/json",
+            "Content-Type": content_type, "Accept": "application/json",
             "User-Agent": f"IRubix-Telegram/{self.__version__}"}, method="POST")
         try:
             with urllib.request.urlopen(request, timeout=self.timeout) as response:
