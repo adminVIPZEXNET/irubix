@@ -39,7 +39,7 @@ class _CallablePlatformModule(ModuleType):
     """Allow a platform namespace to be called directly with its bot token."""
 
     def __call__(self, *args, **kwargs):
-        return self.IRubIX(*args, **kwargs)
+        return self.IRubix(*args, **kwargs)
 
 
 class Rubika(_RubikaClient):
