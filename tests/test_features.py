@@ -7,7 +7,8 @@ from pathlib import Path
 from irubix import (
     AIAdapter, BotStats, CloudStorageAdapter, CommandPermissions,
     ConversationManager, FileManager, MessageBuilder, MiddlewareManager,
-    PluginManager, RateLimiter, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,\n    SessionManager, UniversalClient,
+    PluginManager, RateLimiter, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,
+    SessionManager, UniversalClient,
 )
 
 
