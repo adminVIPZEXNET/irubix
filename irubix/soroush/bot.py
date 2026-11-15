@@ -154,10 +154,12 @@ class IRubix(BotAPIMethods):
         payload.update({key: value for key, value in kwargs.items() if value is not None})
         return await self.request("sendMessage", payload)
 
-    async def forward_message(self, chat_id, from_chat_id, message_id):
-        return await self.request("forwardMessage", {
+    async def forward_message(self, chat_id, from_chat_id, message_id, **kwargs):
+        payload = {
             "chat_id": chat_id, "from_chat_id": from_chat_id, "message_id": message_id
-        })
+        }
+        payload.update({key: value for key, value in kwargs.items() if value is not None})
+        return await self.request("forwardMessage", payload)
 
     async def send_photo(self, chat_id, photo, caption: Optional[str] = None, **kwargs):
         payload = {"chat_id": chat_id, "photo": photo}
