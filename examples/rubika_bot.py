@@ -1,6 +1,6 @@
-from irubix import rubika
+from irubix import Rubika
 
-bot = rubika.IRubix("RUBIKA_BOT_TOKEN")
+bot = Rubika.IRubix("RUBIKA_BOT_TOKEN")
 
 
 @bot.command("start")

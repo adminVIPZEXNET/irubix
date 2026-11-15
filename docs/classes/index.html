@@ -5,10 +5,10 @@
 <section class="card"><h2>نصب</h2><pre class="code">python -m pip install --upgrade irubix</pre><p>نصب آخرین نسخه مخزن:</p><pre class="code">python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git</pre><p>متدهای شبکه‌ای async هستند و باید با <code>await</code> فراخوانی شوند.</p></section>
 <section class="card"><h2>انتخاب پیام‌رسان</h2><div class="grid"><article class="card"><h3>روبیکا</h3><a href="#rubika">نمونه و متدها</a></article><article class="card"><h3>بله</h3><a href="#bale">نمونه و متدها</a></article><article class="card"><h3>سروش‌پلاس</h3><a href="#soroush">نمونه و متدها</a></article><article class="card"><h3>تلگرام</h3><a href="#telegram">نمونه و متدها</a></article></div></section>
 
-<section class="card" id="rubika"><h2>۱. روبیکا</h2><p>واردسازی: <code>from irubix import IRubix</code> · کلاس جایگزین: <code>Bot</code> · خطا: <code>RubikaAPIError</code></p>
-<h3>ساخت ربات، دستور و دریافت پیام</h3><pre class="code">from irubix import IRubix
+<section class="card" id="rubika"><h2>۱. روبیکا</h2><p>واردسازی: <code>from irubix import Rubika</code> · کلاس جایگزین: <code>Bot</code> · خطا: <code>RubikaAPIError</code></p>
+<h3>ساخت ربات، دستور و دریافت پیام</h3><pre class="code">from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -25,9 +25,9 @@ async def buttons(bot, event):
 
 bot.run()</pre>
 <h3>ارسال پیام مستقل</h3><pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
@@ -36,9 +36,9 @@ async def main():
 
 asyncio.run(main())</pre>
 <h3>ارسال فایل محلی (send_file)</h3><pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
@@ -163,7 +163,7 @@ async def handle(bot, event):
     await event.reply("پیام دریافت شد")</pre><p>برای فیلتر پیام:</p><pre class="code">@bot.message(lambda event: event.text == "سلام")
 async def hello(bot, event):
     await event.reply("سلام به شما!")</pre><p>فیلدهای Event بسته به پیام‌رسان متفاوت‌اند؛ برای داده کامل رویداد از <code>event.raw</code> استفاده کنید.</p></section>
-<section class="card"><h2>نکات</h2><ul><li>روبیکا از <code>from irubix import IRubix</code> استفاده می‌کند؛ بقیه از ماژول اختصاصی خودشان.</li><li>برای اجرای ربات از <code>bot.run()</code> استفاده کنید.</li><li>توکن را در GitHub یا کد عمومی قرار ندهید.</li><li>متد <code>send_file</code> برای ارسال فایل محلی فعلاً مختص روبیکاست.</li></ul></section>
+<section class="card"><h2>نکات</h2><ul><li>روبیکا از <code>from irubix import Rubika</code> استفاده می‌کند؛ بقیه از ماژول اختصاصی خودشان.</li><li>برای اجرای ربات از <code>bot.run()</code> استفاده کنید.</li><li>توکن را در GitHub یا کد عمومی قرار ندهید.</li><li>متد <code>send_file</code> برای ارسال فایل محلی فعلاً مختص روبیکاست.</li></ul></section>
 
 <section class="card" id="all-method-examples">
 <h2>مثال کدنویسی تمام متدها</h2>
@@ -171,14 +171,14 @@ async def hello(bot, event):
 
 <h3>روبیکا · IRubix</h3>
 <p>ساخت کلاینت با timeout و آدرس پیش‌فرض:</p>
-<pre class="code">from irubix import IRubix
+<pre class="code">from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN", timeout=30)</pre>
+bot = Rubika.IRubix("YOUR_BOT_TOKEN", timeout=30)</pre>
 <p><code>request</code>، اطلاعات ربات و گفتگو، و دریافت اطلاعات فایل:</p>
 <pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 async def main():
     me = await bot.get_me()
@@ -192,9 +192,9 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>send_text</code> و نام جایگزین <code>send_message</code>:</p>
 <pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 async def main():
     a = await bot.send_text("YOUR_CHAT_ID", "پیام اول")
@@ -208,9 +208,9 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>send_file</code> برای فایل محلی یا داده باینری:</p>
 <pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 async def main():
     result = await bot.send_file(
@@ -224,9 +224,9 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>send_poll</code> برای نظرسنجی:</p>
 <pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 async def main():
     result = await bot.send_poll(
@@ -239,9 +239,9 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>forward_message</code>، ویرایش و حذف پیام:</p>
 <pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 async def main():
     forwarded = await bot.forward_message(
@@ -260,9 +260,9 @@ async def main():
 asyncio.run(main())</pre>
 <p>مسدودکردن و رفع مسدودیت کاربر (نمونه‌ها عمداً غیرفعال‌اند):</p>
 <pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 async def main():
     # فقط مدیر مجاز گروه/کانال:
@@ -272,9 +272,9 @@ async def main():
 
 asyncio.run(main())</pre>
 <p>Decoratorها، پاسخ رویداد و اجرای ربات:</p>
-<pre class="code">from irubix import IRubix
+<pre class="code">from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 @bot.command(["start", "help"])
 async def commands(bot, event):
@@ -296,9 +296,9 @@ async def callback_handler(bot, event):
 bot.run(poll_interval=1.0, limit=100)</pre>
 <p>اجرای دستی polling و توقف:</p>
 <pre class="code">import asyncio
-from irubix import IRubix
+from irubix import Rubika
 
-bot = IRubix("YOUR_BOT_TOKEN")
+bot = Rubika.IRubix("YOUR_BOT_TOKEN")
 
 async def main():
     # اجرای polling تا زمانی که task لغو یا bot متوقف شود
@@ -666,7 +666,7 @@ asyncio.run(main())</pre>
 </ul>
 </section>
 
-</main><footer class="foot">IRubix · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></footer>
+</main><footer class="foot">Rubika.IRubix · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></footer>
 <script>
 document.querySelectorAll("pre.code").forEach((pre)=>{const wrap=document.createElement("div");wrap.className="code-wrap";pre.parentNode.insertBefore(wrap,pre);wrap.appendChild(pre);const button=document.createElement("button");button.className="copy-btn";button.type="button";button.textContent="کپی کد";button.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(pre.innerText);button.textContent="کپی شد ✓";setTimeout(()=>button.textContent="کپی کد",1500)}catch(_){button.textContent="کپی ناموفق"}});wrap.appendChild(button)});
 const menuButton=document.querySelector(".menu-toggle"),nav=document.querySelector(".nav");if(menuButton&&nav)menuButton.addEventListener("click",()=>{const opened=nav.classList.toggle("menu-open");menuButton.setAttribute("aria-expanded",String(opened));menuButton.textContent=opened?"×":"☰"});

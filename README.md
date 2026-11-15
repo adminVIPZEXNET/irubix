@@ -20,9 +20,9 @@ python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git
 
 **روبیکا**
 ```python
-from irubix import rubika
+from irubix import Rubika
 
-bot = rubika.IRubix("BOT_TOKEN")
+bot = Rubika.IRubix("BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
@@ -90,7 +90,7 @@ bot.run()
 ```text
 irubix/
 ├── __init__.py       # ورودی اصلی کتابخانه
-├── bot.py            # کلاینت روبیکا
+├── bot.py            # پیاده‌سازی کلاینت روبیکا
 ├── _update.py        # بررسی نسخه جدید
 ├── bale/             # کلاینت بله
 ├── soroush/          # کلاینت سروش‌پلاس
@@ -102,6 +102,8 @@ tests/                # تست‌ها
 ```
 
 ## نکات
+
+- برای روبیکا از `from irubix import Rubika` و `Rubika.IRubix(...)` استفاده کنید.
 
 - تمام درخواست‌های API به‌صورت async اجرا می‌شوند.
 - هسته کتابخانه به کتابخانه جانبی نیاز ندارد.

@@ -5,7 +5,7 @@ from importlib import import_module
 from .bot import Bot, Event, IRubix, RubikaAPIError
 
 __author__ = "mahdishami"
-__version__ = "0.9.0"
+__version__ = "0.9.1"
 
 from ._update import check_for_updates
 
@@ -13,6 +13,7 @@ check_for_updates(__version__)
 
 __all__ = [
     "IRubix",
+    "Rubika",
     "Bot",
     "Event",
     "RubikaAPIError",
@@ -45,3 +46,13 @@ def __getattr__(name):
 
 def __dir__():
     return sorted(set(globals()) | set(__all__))
+
+
+class Rubika:
+    """Namespace for the Rubika bot client: Rubika.IRubix(...)."""
+
+    IRubix = IRubix
+    Bot = Bot
+    Event = Event
+    RubikaAPIError = RubikaAPIError
+    APIError = RubikaAPIError
