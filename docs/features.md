@@ -11,7 +11,8 @@ from irubix import (
     PluginManager, MiddlewareManager, RateLimiter, ConversationManager,
     BotStats, CommandPermissions, MessageBuilder, FileManager,
     AIAdapter, CloudStorageAdapter, AutoReconnect, WebhookAdapter,
-    DeveloperConsole, SmartErrorHandler, UniversalEventRouter, KeyboardBuilder,\n    SessionManager, UniversalClient,
+    DeveloperConsole, SmartErrorHandler, UniversalEventRouter, KeyboardBuilder,
+    SessionManager, UniversalClient,
 )
 ```
 
