@@ -164,6 +164,508 @@ async def handle(bot, event):
 async def hello(bot, event):
     await event.reply("سلام به شما!")</pre><p>فیلدهای Event بسته به پیام‌رسان متفاوت‌اند؛ برای داده کامل رویداد از <code>event.raw</code> استفاده کنید.</p></section>
 <section class="card"><h2>نکات</h2><ul><li>روبیکا از <code>from irubix import IRubix</code> استفاده می‌کند؛ بقیه از ماژول اختصاصی خودشان.</li><li>برای اجرای ربات از <code>bot.run()</code> استفاده کنید.</li><li>توکن را در GitHub یا کد عمومی قرار ندهید.</li><li>متد <code>send_file</code> برای ارسال فایل محلی فعلاً مختص روبیکاست.</li></ul></section>
+
+<section class="card" id="all-method-examples">
+<h2>مثال کدنویسی تمام متدها</h2>
+<p>در این بخش برای تک‌تک متدهای عمومی هر کلاینت، نمونه فراخوانی قرار داده شده است. مقادیر نمونه مثل توکن، شناسه گفتگو، شناسه پیام و file_id را با اطلاعات واقعی خود جایگزین کنید. نمونه‌های مدیریتی را فقط در گروهی که مجاز به مدیریت آن هستید اجرا کنید.</p>
+
+<h3>روبیکا · IRubix</h3>
+<p>ساخت کلاینت با timeout و آدرس پیش‌فرض:</p>
+<pre class="code">from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN", timeout=30)</pre>
+<p><code>request</code>، اطلاعات ربات و گفتگو، و دریافت اطلاعات فایل:</p>
+<pre class="code">import asyncio
+from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+async def main():
+    me = await bot.get_me()
+    chat = await bot.get_chat("YOUR_CHAT_ID")
+    file_info = await bot.get_file("FILE_ID")
+
+    # فراخوانی مستقیم یکی از متدهای رسمی API
+    result = await bot.request("getMe", {})
+    print(me, chat, file_info, result)
+
+asyncio.run(main())</pre>
+<p><code>send_text</code> و نام جایگزین <code>send_message</code>:</p>
+<pre class="code">import asyncio
+from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+async def main():
+    a = await bot.send_text("YOUR_CHAT_ID", "پیام اول")
+    b = await bot.send_message(
+        "YOUR_CHAT_ID",
+        "پاسخ به پیام",
+        reply_to_message_id="MESSAGE_ID"
+    )
+    print(a, b)
+
+asyncio.run(main())</pre>
+<p><code>send_file</code> برای فایل محلی یا داده باینری:</p>
+<pre class="code">import asyncio
+from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+async def main():
+    result = await bot.send_file(
+        "YOUR_CHAT_ID",
+        "photo.jpg",
+        text="تصویر من",
+        file_type="Image"
+    )
+    print(result)
+
+asyncio.run(main())</pre>
+<p><code>send_poll</code> برای نظرسنجی:</p>
+<pre class="code">import asyncio
+from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+async def main():
+    result = await bot.send_poll(
+        "YOUR_CHAT_ID",
+        "کدام زبان را ترجیح می‌دهید؟",
+        ["Python", "JavaScript", "Go"]
+    )
+    print(result)
+
+asyncio.run(main())</pre>
+<p><code>forward_message</code>، ویرایش و حذف پیام:</p>
+<pre class="code">import asyncio
+from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+async def main():
+    forwarded = await bot.forward_message(
+        from_chat_id="SOURCE_CHAT_ID",
+        message_id="MESSAGE_ID",
+        to_chat_id="TARGET_CHAT_ID"
+    )
+    edited = await bot.edit_message_text(
+        "YOUR_CHAT_ID", "MESSAGE_ID", "متن ویرایش‌شده"
+    )
+    print(forwarded, edited)
+
+    # حذف پیام را فقط در صورت نیاز از حالت توضیح خارج کنید:
+    # await bot.delete_message("YOUR_CHAT_ID", "MESSAGE_ID")
+
+asyncio.run(main())</pre>
+<p>مسدودکردن و رفع مسدودیت کاربر (نمونه‌ها عمداً غیرفعال‌اند):</p>
+<pre class="code">import asyncio
+from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+async def main():
+    # فقط مدیر مجاز گروه/کانال:
+    # await bot.ban_chat_member("YOUR_CHAT_ID", "USER_ID")
+    # await bot.unban_chat_member("YOUR_CHAT_ID", "USER_ID")
+    pass
+
+asyncio.run(main())</pre>
+<p>Decoratorها، پاسخ رویداد و اجرای ربات:</p>
+<pre class="code">from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+@bot.command(["start", "help"])
+async def commands(bot, event):
+    await event.reply("دستور دریافت شد")
+
+@bot.message()
+async def all_messages(bot, event):
+    print(event.text, event.chat_id, event.message_id)
+    await event.reply("پیامت دریافت شد")
+
+@bot.message(lambda event: event.text == "سلام")
+async def filtered_message(bot, event):
+    await event.reply("سلام!")
+
+@bot.callback()
+async def callback_handler(bot, event):
+    print(event.button_id)
+
+bot.run(poll_interval=1.0, limit=100)</pre>
+<p>اجرای دستی polling و توقف:</p>
+<pre class="code">import asyncio
+from irubix import IRubix
+
+bot = IRubix("YOUR_BOT_TOKEN")
+
+async def main():
+    # اجرای polling تا زمانی که task لغو یا bot متوقف شود
+    task = asyncio.create_task(bot.start(poll_interval=1.0, limit=100))
+    await asyncio.sleep(10)
+    bot.stop()
+    await task
+
+asyncio.run(main())</pre>
+<p class="muted">متد <code>send_quiz</code> در کد وجود دارد اما عمداً <code>NotImplementedError</code> می‌دهد؛ حالت Quiz در API فعلی روبیکا پشتیبانی نشده است. برای نظرسنجی از <code>send_poll</code> استفاده کنید.</p>
+
+<h3>بله · bale.IRubix</h3>
+<p>ساخت کلاینت:</p>
+<pre class="code">from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN", timeout=40)</pre>
+<p><code>request</code>، اطلاعات ربات و دریافت Update:</p>
+<pre class="code">import asyncio
+from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN")
+
+async def main():
+    me = await bot.get_me()
+    updates = await bot.get_updates(limit=20, timeout=10)
+    raw = await bot.request("getMe", {})
+    print(me, updates, raw)
+
+asyncio.run(main())</pre>
+<p>ارسال پیام با گزینه‌های اختیاری:</p>
+<pre class="code">import asyncio
+from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN")
+
+async def main():
+    result = await bot.send_message(
+        "YOUR_CHAT_ID",
+        "سلام از بله",
+        parse_mode="HTML",
+        disable_notification=False
+    )
+    print(result)
+
+asyncio.run(main())</pre>
+<p>ارسال عکس و سند با file_id یا URL:</p>
+<pre class="code">import asyncio
+from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN")
+
+async def main():
+    photo = await bot.send_photo(
+        "YOUR_CHAT_ID", "PHOTO_FILE_ID_OR_URL", caption="تصویر"
+    )
+    document = await bot.send_document(
+        "YOUR_CHAT_ID", "DOCUMENT_FILE_ID_OR_URL", caption="فایل"
+    )
+    print(photo, document)
+
+asyncio.run(main())</pre>
+<p>ویرایش و حذف پیام:</p>
+<pre class="code">import asyncio
+from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN")
+
+async def main():
+    edited = await bot.edit_message_text(
+        "YOUR_CHAT_ID", "MESSAGE_ID", "متن جدید"
+    )
+    print(edited)
+    # در صورت نیاز:
+    # await bot.delete_message("YOUR_CHAT_ID", "MESSAGE_ID")
+
+asyncio.run(main())</pre>
+<p>Decoratorها، پاسخ رویداد، شروع و توقف:</p>
+<pre class="code">from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("ربات بله آماده است")
+
+@bot.message()
+async def messages(bot, event):
+    print(event.text, event.chat_id, event.message_id)
+    await event.reply(event.text or "پیام دریافت شد")
+
+@bot.message(lambda event: event.text == "راهنما")
+async def help_message(bot, event):
+    await event.reply("راهنمای ربات")
+
+@bot.callback()
+async def callbacks(bot, event):
+    print(event.button_id)
+
+bot.run(timeout=30, retry_delay=2)</pre>
+<p>اجرای دستی و توقف:</p>
+<pre class="code">import asyncio
+from irubix import bale
+
+bot = bale.IRubix("BALE_BOT_TOKEN")
+
+async def main():
+    task = asyncio.create_task(bot.start(timeout=30, retry_delay=2))
+    await asyncio.sleep(10)
+    bot.stop()
+    await task
+
+asyncio.run(main())</pre>
+
+<h3>سروش‌پلاس · soroush.IRubix</h3>
+<p>ساخت کلاینت:</p>
+<pre class="code">from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN", timeout=40)</pre>
+<p><code>request</code>، اطلاعات ربات، خروج و بستن نشست:</p>
+<pre class="code">import asyncio
+from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+async def main():
+    me = await bot.get_me()
+    raw = await bot.request("getMe", {})
+    print(me, raw)
+
+    # این دو متد نشست ربات را تحت تأثیر قرار می‌دهند:
+    # await bot.log_out()
+    # await bot.close()
+
+asyncio.run(main())</pre>
+<p>دریافت Update و مدیریت Webhook:</p>
+<pre class="code">import asyncio
+from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+async def main():
+    updates = await bot.get_updates(limit=20, timeout=10)
+    print(updates)
+
+    info = await bot.get_webhook_info()
+    print(info)
+
+    # برای استفاده از webhook، آدرس HTTPS خود را وارد کنید:
+    # await bot.set_webhook("https://example.com/soroush-webhook")
+    # await bot.delete_webhook(drop_pending_updates=True)
+
+asyncio.run(main())</pre>
+<p>ارسال پیام با گزینه‌های قالب‌بندی و پاسخ:</p>
+<pre class="code">import asyncio
+from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+async def main():
+    result = await bot.send_message(
+        "YOUR_CHAT_ID",
+        "سلام از سروش‌پلاس",
+        parse_mode="HTML",
+        disable_web_page_preview=True
+    )
+    print(result)
+
+asyncio.run(main())</pre>
+<p>ارسال عکس و سند با file_id یا URL:</p>
+<pre class="code">import asyncio
+from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+async def main():
+    photo = await bot.send_photo(
+        "YOUR_CHAT_ID", "PHOTO_FILE_ID_OR_URL", caption="تصویر"
+    )
+    document = await bot.send_document(
+        "YOUR_CHAT_ID", "DOCUMENT_FILE_ID_OR_URL", caption="سند"
+    )
+    print(photo, document)
+
+asyncio.run(main())</pre>
+<p>فوروارد، ویرایش، حذف و پاسخ به Callback:</p>
+<pre class="code">import asyncio
+from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+async def main():
+    forwarded = await bot.forward_message(
+        "TARGET_CHAT_ID", "SOURCE_CHAT_ID", "MESSAGE_ID"
+    )
+    edited = await bot.edit_message_text(
+        "YOUR_CHAT_ID", "MESSAGE_ID", "متن جدید"
+    )
+    print(forwarded, edited)
+
+    # فقط در صورت نیاز:
+    # await bot.delete_message("YOUR_CHAT_ID", "MESSAGE_ID")
+    # await bot.answer_callback_query("CALLBACK_QUERY_ID", text="ثبت شد")
+
+asyncio.run(main())</pre>
+<p>Decoratorها، Event و اجرای polling:</p>
+<pre class="code">from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("ربات سروش‌پلاس آماده است")
+
+@bot.message()
+async def messages(bot, event):
+    print(event.text, event.chat_id, event.sender_id)
+    await event.reply(event.text or "پیام دریافت شد")
+
+@bot.message(lambda event: event.text == "سلام")
+async def filtered(bot, event):
+    await event.reply("سلام!")
+
+@bot.callback()
+async def callbacks(bot, event):
+    if event.callback_query:
+        await bot.answer_callback_query(event.callback_query["id"], text="ثبت شد")
+
+bot.run(timeout=30, retry_delay=2)</pre>
+<p>اجرای دستی و توقف:</p>
+<pre class="code">import asyncio
+from irubix import soroush
+
+bot = soroush.IRubix("SOROUSH_BOT_TOKEN")
+
+async def main():
+    task = asyncio.create_task(bot.start(timeout=30, retry_delay=2))
+    await asyncio.sleep(10)
+    bot.stop()
+    await task
+
+asyncio.run(main())</pre>
+
+<h3>تلگرام · telegram.IRubix</h3>
+<p>ساخت کلاینت:</p>
+<pre class="code">from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN", timeout=40)</pre>
+<p><code>request</code>، اطلاعات ربات و گفتگو، و دریافت Update:</p>
+<pre class="code">import asyncio
+from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+async def main():
+    me = await bot.get_me()
+    chat = await bot.get_chat("YOUR_CHAT_ID")
+    updates = await bot.get_updates(limit=20, timeout=10)
+    raw = await bot.request("getMe", {})
+    print(me, chat, updates, raw)
+
+asyncio.run(main())</pre>
+<p>ارسال پیام و عکس و سند:</p>
+<pre class="code">import asyncio
+from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+async def main():
+    message = await bot.send_message(
+        "YOUR_CHAT_ID",
+        "سلام از تلگرام",
+        parse_mode="HTML",
+        disable_notification=False
+    )
+    photo = await bot.send_photo(
+        "YOUR_CHAT_ID", "PHOTO_FILE_ID_OR_URL", caption="تصویر"
+    )
+    document = await bot.send_document(
+        "YOUR_CHAT_ID", "DOCUMENT_FILE_ID_OR_URL", caption="سند"
+    )
+    print(message, photo, document)
+
+asyncio.run(main())</pre>
+<p>فوروارد، ویرایش و حذف پیام:</p>
+<pre class="code">import asyncio
+from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+async def main():
+    forwarded = await bot.forward_message(
+        "TARGET_CHAT_ID", "SOURCE_CHAT_ID", "MESSAGE_ID"
+    )
+    edited = await bot.edit_message_text(
+        "YOUR_CHAT_ID", "MESSAGE_ID", "متن ویرایش‌شده"
+    )
+    print(forwarded, edited)
+
+    # در صورت نیاز:
+    # await bot.delete_message("YOUR_CHAT_ID", "MESSAGE_ID")
+
+asyncio.run(main())</pre>
+<p>پاسخ به Callback Query:</p>
+<pre class="code">import asyncio
+from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+async def main():
+    result = await bot.answer_callback_query(
+        "CALLBACK_QUERY_ID",
+        text="درخواست شما ثبت شد",
+        show_alert=False
+    )
+    print(result)
+
+asyncio.run(main())</pre>
+<p>Decoratorها، Event و اجرای polling:</p>
+<pre class="code">from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("ربات تلگرام آماده است")
+
+@bot.message()
+async def messages(bot, event):
+    print(event.text, event.chat_id, event.sender_id)
+    await event.reply(event.text or "پیام دریافت شد")
+
+@bot.message(lambda event: event.text == "سلام")
+async def filtered(bot, event):
+    await event.reply("سلام!")
+
+@bot.callback()
+async def callbacks(bot, event):
+    await bot.answer_callback_query(
+        event.callback_query_id,
+        text="انتخاب شما ثبت شد"
+    )
+
+bot.run(timeout=30, retry_delay=2)</pre>
+<p>اجرای دستی و توقف:</p>
+<pre class="code">import asyncio
+from irubix import telegram
+
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+async def main():
+    task = asyncio.create_task(bot.start(timeout=30, retry_delay=2))
+    await asyncio.sleep(10)
+    bot.stop()
+    await task
+
+asyncio.run(main())</pre>
+
+<h3>نکته درباره تفاوت متدها</h3>
+<ul>
+<li>روبیکا متد <code>send_file</code> برای آپلود فایل محلی دارد؛ در سه کلاینت دیگر چنین متدی در پیاده‌سازی فعلی وجود ندارد.</li>
+<li>در بله و تلگرام برای ارسال عکس و سند از file_id یا URL استفاده شده است؛ در سروش‌پلاس نیز ورودی متدهای رسانه‌ای فعلی file_id یا URL است.</li>
+<li>سروش‌پلاس متدهای Webhook، <code>log_out</code> و <code>close</code> را دارد؛ این متدها در کلاینت‌های دیگر این مخزن وجود ندارند.</li>
+<li>روبیکا متدهای مدیریتی ban/unban و نظرسنجی دارد؛ <code>send_quiz</code> فقط placeholder است و قابل استفاده عملی نیست.</li>
+<li>متدهای <code>_request_sync</code>، <code>_dispatch</code> و <code>_upload_sync</code> داخلی هستند و جزو API عمومی مستندشده نیستند.</li>
+</ul>
+</section>
+
 </main><footer class="foot">IRubix · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></footer>
 <script>
 document.querySelectorAll("pre.code").forEach((pre)=>{const wrap=document.createElement("div");wrap.className="code-wrap";pre.parentNode.insertBefore(wrap,pre);wrap.appendChild(pre);const button=document.createElement("button");button.className="copy-btn";button.type="button";button.textContent="کپی کد";button.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(pre.innerText);button.textContent="کپی شد ✓";setTimeout(()=>button.textContent="کپی کد",1500)}catch(_){button.textContent="کپی ناموفق"}});wrap.appendChild(button)});
