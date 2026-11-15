@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from .._token import resolve_token
+from .._bot_api import BotAPIMethods, encode_request_payload
 
 
 class BaleAPIError(RuntimeError):
@@ -52,10 +53,11 @@ class Event:
         return await self.bot.send_message(chat_id, text, **kwargs)
 
 
-class IRubix:
+class IRubix(BotAPIMethods):
     """Async Bale Bot API client with a small, decorator-based interface."""
 
     API_URL = "https://tapi.bale.ai"
+    FILE_URL = "https://tapi.bale.ai/file"
     __version__ = "0.4.0"
 
     def __init__(self, token: str | None = None, *, timeout: float = 40, base_url: str | None = None):
@@ -68,10 +70,10 @@ class IRubix:
 
     def _request_sync(self, method: str, payload: dict | None = None):
         url = f"{self.base_url}/bot{self.token}/{method}"
-        data = json.dumps(payload or {}, ensure_ascii=False).encode("utf-8")
+        data, content_type = encode_request_payload(payload or {})
         request = urllib.request.Request(
             url, data=data,
-            headers={"Content-Type": "application/json", "Accept": "application/json",
+            headers={"Content-Type": content_type, "Accept": "application/json",
                      "User-Agent": f"IRubix-Bale/{self.__version__}"},
             method="POST",
         )
