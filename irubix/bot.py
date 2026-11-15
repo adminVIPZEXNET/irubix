@@ -4,12 +4,26 @@ from __future__ import annotations
 import asyncio
 import json
 import mimetypes
+import os
 import secrets
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any, Callable
+
+
+_CYAN = "\\033[96m"
+_GREEN = "\\033[92m"
+_RED = "\\033[91m"
+_RESET = "\\033[0m"
+_BOLD = "\\033[1m"
+
+
+def _terminal_color(text: str, color: str) -> str:
+    if os.environ.get("NO_COLOR") is not None or os.environ.get("TERM", "").lower() == "dumb":
+        return text
+    return f"{color}{text}{_RESET}"
 
 
 class RubikaAPIError(RuntimeError):
@@ -335,7 +349,7 @@ class IRubix:
                 if hasattr(result, "__await__"):
                     await result
             except Exception as exc:
-                print(f"[IRubix] Handler error: {exc}")
+                print(_terminal_color(f"[IRubix] Handler error: {exc}", _RED), flush=True)
 
     async def start(self, poll_interval: float = 1.0, limit: int = 100):
         """Start long-running getUpdates polling."""
@@ -345,7 +359,7 @@ class IRubix:
             raise ValueError("limit must be between 1 and 100.")
         offset = None
         self._running = True
-        print("[IRubix] Bot started.")
+        print(_terminal_color("[IRubix] Bot started.", _BOLD + _GREEN), flush=True)
         while self._running:
             payload = {"limit": limit}
             if offset:
@@ -363,10 +377,10 @@ class IRubix:
             except asyncio.CancelledError:
                 raise
             except Exception as exc:
-                print(f"[IRubix] Polling error: {exc}")
+                print(_terminal_color(f"[IRubix] Polling error: {exc}", _RED), flush=True)
                 await asyncio.sleep(2)
             await asyncio.sleep(poll_interval)
-        print("[IRubix] Bot stopped.")
+        print(_terminal_color("[IRubix] Bot stopped.", _CYAN), flush=True)
 
     def stop(self):
         """Ask the polling loop to stop."""
