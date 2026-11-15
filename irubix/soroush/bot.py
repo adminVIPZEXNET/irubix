@@ -151,13 +151,7 @@ class IRubix(BotAPIMethods):
 
     async def send_message(self, chat_id, text: str, **kwargs):
         payload = {"chat_id": chat_id, "text": text}
-        allowed = ("parse_mode", "entities", "reply_markup", "disable_web_page_preview",
-                   "reply_to_message_id", "allow_sending_without_reply")
-        for key in allowed:
-            if kwargs.get(key) is not None:
-                value = kwargs[key]
-                payload[key] = json.dumps(value, ensure_ascii=False) if key in (
-                    "entities", "reply_markup") and not isinstance(value, str) else value
+        payload.update({key: value for key, value in kwargs.items() if value is not None})
         return await self.request("sendMessage", payload)
 
     async def forward_message(self, chat_id, from_chat_id, message_id):
@@ -169,9 +163,7 @@ class IRubix(BotAPIMethods):
         payload = {"chat_id": chat_id, "photo": photo}
         if caption is not None:
             payload["caption"] = caption
-        for key in ("parse_mode", "reply_markup", "reply_to_message_id"):
-            if kwargs.get(key) is not None:
-                payload[key] = kwargs[key]
+        payload.update({key: value for key, value in kwargs.items() if value is not None})
         return await self.request("sendPhoto", payload)
 
     async def send_document(self, chat_id, document, caption: Optional[str] = None, **kwargs):
@@ -185,9 +177,7 @@ class IRubix(BotAPIMethods):
 
     async def edit_message_text(self, chat_id, message_id, text: str, **kwargs):
         payload = {"chat_id": chat_id, "message_id": message_id, "text": text}
-        for key in ("parse_mode", "entities", "reply_markup", "disable_web_page_preview"):
-            if kwargs.get(key) is not None:
-                payload[key] = kwargs[key]
+        payload.update({key: value for key, value in kwargs.items() if value is not None})
         return await self.request("editMessageText", payload)
 
     async def delete_message(self, chat_id, message_id):
