@@ -9,6 +9,29 @@ class RubikaAPIMethodTests(unittest.IsolatedAsyncioTestCase):
         self.bot = Rubika("test-token")
         self.bot.request = AsyncMock(return_value={"status": "OK", "data": {}})
 
+
+    async def test_get_chat_info_alias(self):
+        await self.bot.get_chat_info("chat-1")
+        self.bot.request.assert_awaited_once_with("getChat", {"chat_id": "chat-1"})
+
+    async def test_register_all_endpoints(self):
+        await self.bot.register_all_endpoints("https://example.com/hooks")
+        self.assertEqual(self.bot.request.await_count, 5)
+
+    async def test_middleware_runs_before_handler(self):
+        calls = []
+        async def middleware(bot, event, next_handler):
+            calls.append("before")
+            await next_handler()
+            calls.append("after")
+        self.bot.middleware(middleware)
+        @self.bot.command("start")
+        async def start(bot, event):
+            calls.append("handler")
+        await self.bot.process_update({"type":"NewMessage","chat_id":"c",
+            "new_message":{"text":"/start"}})
+        self.assertEqual(calls, ["before", "handler", "after"])
+
     async def test_get_updates(self):
         await self.bot.get_updates("offset-1", limit=20)
         self.bot.request.assert_awaited_once_with(
