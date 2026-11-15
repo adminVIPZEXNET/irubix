@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import json
 import mimetypes
 import os
@@ -357,12 +358,39 @@ class IRubix:
             raise ValueError("poll_interval must be at least 0.1 seconds.")
         if not 1 <= limit <= 100:
             raise ValueError("limit must be between 1 and 100.")
+        # Keep the Rubika update cursor between process restarts. Without this,
+        # getUpdates starts from the beginning and replays already handled updates.
+        state_dir = Path.home() / ".irubix" / "updates"
+        token_key = hashlib.sha256(self.token.encode("utf-8")).hexdigest()
+        state_file = state_dir / f"{token_key}.json"
         offset = None
+        try:
+            saved = json.loads(state_file.read_text(encoding="utf-8"))
+            if isinstance(saved, dict):
+                offset = saved.get("offset_id")
+        except (OSError, ValueError, TypeError):
+            pass
+
+        def save_offset(value):
+            if value is None:
+                return
+            try:
+                state_dir.mkdir(parents=True, exist_ok=True)
+                temporary = state_file.with_suffix(".tmp")
+                temporary.write_text(
+                    json.dumps({"offset_id": value}),
+                    encoding="utf-8",
+                )
+                temporary.replace(state_file)
+            except OSError:
+                # Polling should continue even if the device cannot persist state.
+                pass
+
         self._running = True
         print(_terminal_color("[IRubix] Bot started.", _BOLD + _GREEN), flush=True)
         while self._running:
             payload = {"limit": limit}
-            if offset:
+            if offset is not None:
                 payload["offset_id"] = offset
             try:
                 result = await self.request("getUpdates", payload)
@@ -370,10 +398,13 @@ class IRubix:
                 if not isinstance(data, dict):
                     await asyncio.sleep(poll_interval)
                     continue
-                offset = data.get("next_offset_id") or offset
+                next_offset = data.get("next_offset_id")
                 for update in data.get("updates") or []:
                     if isinstance(update, dict):
                         await self._dispatch(update)
+                if next_offset is not None:
+                    offset = next_offset
+                    save_offset(offset)
             except asyncio.CancelledError:
                 raise
             except Exception as exc:
