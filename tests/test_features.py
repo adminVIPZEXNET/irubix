@@ -7,7 +7,7 @@ from pathlib import Path
 from irubix import (
     AIAdapter, BotStats, CloudStorageAdapter, CommandPermissions,
     ConversationManager, FileManager, MessageBuilder, MiddlewareManager,
-    PluginManager, RateLimiter, WebhookAdapter,
+    PluginManager, RateLimiter, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,
 )
 
 
@@ -96,6 +96,26 @@ class FeatureTests(unittest.TestCase):
             result = await builder.send(Client(), "chat")
             self.assertEqual(result[0][0:2], ("chat", "hello"))
             self.assertEqual(result[0][2]["reply_to_message_id"], "m1")
+        asyncio.run(scenario())
+
+    def test_keyboard_builder(self):
+        keyboard = KeyboardBuilder(inline=True).button("OK", callback_data="ok").new_row().button("Docs", url="https://example.com")
+        built = keyboard.build()
+        self.assertTrue(built["inline"])
+        self.assertEqual(len(built["rows"]), 2)
+
+    def test_event_router(self):
+        async def scenario():
+            router = UniversalEventRouter()
+            seen = []
+            @router.on("message")
+            async def handler(event):
+                seen.append(event.text)
+            class Event:
+                type = "message"
+                text = "hello"
+            await router.dispatch(Event())
+            self.assertEqual(seen, ["hello"])
         asyncio.run(scenario())
 
     def test_plugin_manager_rejects_missing_file(self):
