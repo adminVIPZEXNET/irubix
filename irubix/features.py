@@ -414,9 +414,65 @@ class SmartErrorHandler:
         return None
 
 
+class UniversalEventRouter:
+    """Register and dispatch normalized events without binding to one platform."""
+
+    def __init__(self):
+        self._handlers: list[tuple[str | None, Callable, Callable | None]] = []
+
+    def on(self, event_type: str | None = None, *, filter: Callable | None = None):
+        def decorator(handler):
+            self._handlers.append((event_type, handler, filter))
+            return handler
+        return decorator
+
+    async def dispatch(self, event: Any):
+        event_type = getattr(event, "type", None) or getattr(event, "update_type", None)
+        results = []
+        for expected, handler, predicate in tuple(self._handlers):
+            if expected is not None and expected != event_type:
+                continue
+            if predicate is not None and not predicate(event):
+                continue
+            result = handler(event)
+            results.append(await result if inspect.isawaitable(result) else result)
+        return results
+
+
+class KeyboardBuilder:
+    """Build a neutral keyboard description; platform clients must translate it."""
+
+    def __init__(self, *, inline: bool = False):
+        self.inline = inline
+        self.rows: list[list[dict[str, Any]]] = [[]]
+
+    def button(self, text: str, *, callback_data: str | None = None,
+               url: str | None = None):
+        if not text:
+            raise ValueError("Button text cannot be empty")
+        if callback_data is not None and url is not None:
+            raise ValueError("A button cannot have both callback_data and url")
+        item = {"text": str(text)}
+        if callback_data is not None:
+            item["callback_data"] = str(callback_data)
+        if url is not None:
+            item["url"] = str(url)
+        self.rows[-1].append(item)
+        return self
+
+    def new_row(self):
+        if self.rows[-1]:
+            self.rows.append([])
+        return self
+
+    def build(self):
+        rows = [list(row) for row in self.rows if row]
+        return {"inline": self.inline, "rows": rows}
+
+
 __all__ = [
     "PluginManager", "MiddlewareManager", "RateLimiter", "ConversationManager",
     "BotStats", "CommandPermissions", "MessageBuilder", "FileManager",
     "AIAdapter", "CloudStorageAdapter", "AutoReconnect", "WebhookAdapter",
-    "DeveloperConsole", "SmartErrorHandler",
+    "DeveloperConsole", "SmartErrorHandler", "UniversalEventRouter", "KeyboardBuilder",
 ]
