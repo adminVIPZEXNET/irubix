@@ -23,6 +23,7 @@ def _is_newer(latest: str, installed: str) -> bool:
 
 
 def _check(installed: str) -> None:
+    """Print an English upgrade notice when PyPI has a newer release."""
     try:
         request = Request(
             _PYPI_JSON,
@@ -33,9 +34,10 @@ def _check(installed: str) -> None:
         latest = str(data["info"]["version"])
         if _is_newer(latest, installed):
             print(
-                "\n[IRubix] نسخه جدید در دسترس است! "
-                f"(نسخه شما: {installed} | نسخه جدید: {latest})\n"
-                "برای به‌روزرسانی اجرا کنید:\n"
+                "\n[IRubix] A new version is available!\n"
+                f"Current version: {installed}\n"
+                f"Latest version: {latest}\n\n"
+                "To update, run:\n"
                 "python -m pip install --upgrade irubix\n",
                 file=sys.stderr,
                 flush=True,
