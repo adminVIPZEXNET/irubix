@@ -1,11 +1,11 @@
-"""IRubix: lightweight async clients for messaging platforms."""
+""""IRubix: lightweight async clients for messaging platforms."""
 from importlib import import_module
 from types import ModuleType
 
 from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
 
 __author__ = "mahdishami"
-__version__ = "0.9.5"
+__version__ = "0.9.6"
 
 from ._update import check_for_updates
 check_for_updates(__version__)
