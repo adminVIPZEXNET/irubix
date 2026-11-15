@@ -10,6 +10,8 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Callable, Optional
 
+from .._token import resolve_token
+
 
 class SoroushAPIError(RuntimeError):
     """Raised when Soroush Plus returns an API or transport error."""
@@ -53,11 +55,9 @@ class IRubix:
     FILE_URL = "https://api.splus.ir/file"
     __version__ = "0.5.0"
 
-    def __init__(self, token: str, *, timeout: float = 40,
+    def __init__(self, token: str | None = None, *, timeout: float = 40,
                  base_url: Optional[str] = None):
-        if not isinstance(token, str) or not token.strip():
-            raise ValueError("Soroush bot token must not be empty.")
-        self.token = token.strip()
+        self.token = resolve_token(token, "Soroush Plus")
         self.base_url = (base_url or self.API_URL).rstrip("/")
         self.timeout = timeout
         self._handlers = []
