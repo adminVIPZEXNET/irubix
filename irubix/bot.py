@@ -323,7 +323,26 @@ class IRubix(RubikaAPIMethods):
             return function
         return decorator
 
+    async def process_update(self, payload: dict):
+        """Process a Rubika receiveUpdate or receiveInlineMessage webhook body."""
+        if not isinstance(payload, dict):
+            raise TypeError("Webhook payload must be a dictionary.")
+        if isinstance(payload.get("update"), dict):
+            payload = payload["update"]
+        elif isinstance(payload.get("inline_message"), dict):
+            payload = {**payload["inline_message"], "type": "InlineMessage"}
+        await self._dispatch(payload)
+
+    async def process_webhook(self, payload: dict):
+        """Alias for process_update, intended for HTTPS webhook handlers."""
+        return await self.process_update(payload)
+
     async def _dispatch(self, raw: dict):
+        # Normalize the two webhook envelopes as well as bare getUpdates objects.
+        if isinstance(raw.get("update"), dict):
+            raw = raw["update"]
+        elif isinstance(raw.get("inline_message"), dict):
+            raw = {**raw["inline_message"], "type": "InlineMessage"}
         event = Event(self, raw)
         for kind, value, handler in tuple(self._handlers):
             if kind == "command":
