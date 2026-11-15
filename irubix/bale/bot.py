@@ -221,17 +221,21 @@ class IRubix:
         print("[IRubix:Bale] Bot started.")
         while self._running:
             try:
-                updates = await self.get_updates(offset=self._offset, timeout=timeout)
+                updates = await self.get_updates(
+                    offset=self._offset,
+                    timeout=0 if initialize_cursor else timeout,
+                )
                 batch = [item for item in (updates or []) if isinstance(item, dict)]
                 if initialize_cursor:
-                    # Discard the pre-existing backlog once when upgrading from
-                    # a version that did not persist the polling cursor.
-                    initialize_cursor = False
+                    # Drain only the backlog that existed before polling began.
+                    # A zero-timeout request avoids swallowing new live messages.
                     for update in batch:
                         update_id = update.get("update_id")
                         if isinstance(update_id, int):
                             self._offset = max(self._offset or 0, update_id + 1)
                     save_offset()
+                    if not batch:
+                        initialize_cursor = False
                 else:
                     for update in batch:
                         await self._dispatch(update)
