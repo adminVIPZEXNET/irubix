@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from ._token import resolve_token
+from .api_methods import RubikaAPIMethods
 
 
 _CYAN = "\033[96m"
@@ -78,7 +79,7 @@ class Event:
         return await self.bot.send_text(self.chat_id, text, **kwargs)
 
 
-class IRubix:
+class IRubix(RubikaAPIMethods):
     """Async Rubika Bot API client. Uses only the Python standard library."""
 
     API_URL = "https://botapi.rubika.ir/v3"
