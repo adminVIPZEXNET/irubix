@@ -8,7 +8,7 @@ README = (ROOT / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="irubix",
-    version="0.11.1",
+    version="0.12.0",
     author="mahdishami",
     description="Async multi-platform bot clients for Rubika, Bale, Soroush Plus and Telegram",
     long_description=README,
