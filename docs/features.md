@@ -11,7 +11,7 @@ from irubix import (
     PluginManager, MiddlewareManager, RateLimiter, ConversationManager,
     BotStats, CommandPermissions, MessageBuilder, FileManager,
     AIAdapter, CloudStorageAdapter, AutoReconnect, WebhookAdapter,
-    DeveloperConsole, SmartErrorHandler,
+    DeveloperConsole, SmartErrorHandler, UniversalEventRouter, KeyboardBuilder,
 )
 ```
 
@@ -117,3 +117,27 @@ await errors.handle(exception, context=event)
 AutoReconnect retries failures from `client.start()`; use it instead of calling
 `bot.run()` when you need a custom retry policy. WebhookAdapter is a request validator
 and dispatcher, not an HTTP server. Mount it in an ASGI or other HTTP framework.
+
+## Universal events and keyboard descriptions
+
+```python
+router = UniversalEventRouter()
+
+@router.on("message")
+async def on_message(event):
+    print(event.text)
+
+await router.dispatch(normalized_event)
+
+keyboard = (
+    KeyboardBuilder(inline=True)
+    .button("Confirm", callback_data="confirm")
+    .new_row()
+    .button("Documentation", url="https://example.com")
+    .build()
+)
+```
+
+The event router expects a normalized event object. The keyboard builder returns a
+neutral description; each messaging platform has different keyboard schemas, so a
+platform adapter must translate it before sending.
