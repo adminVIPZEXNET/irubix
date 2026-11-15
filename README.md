@@ -107,6 +107,7 @@ second = app.add("bale", "TOKEN_2", name="bale_backup")
 ## مستندات
 
 - [راهنمای کامل همه کلاس‌ها و نمونه‌کدها](https://adminvipzexnet.github.io/irubix/classes/)
+- [مستندات کامل API روبیکا v3، متدها و مدل‌ها](docs/rubika-api-v3.md)
 
 | پیام‌رسان | راهنما | متدها |
 |---|---|---|
