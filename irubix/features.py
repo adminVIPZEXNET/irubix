@@ -470,6 +470,123 @@ class KeyboardBuilder:
         return {"inline": self.inline, "rows": rows}
 
 
+class SessionManager:
+    """Persist JSON-compatible user/chat sessions atomically on local disk."""
+
+    def __init__(self, path: str | os.PathLike):
+        self.path = Path(path).expanduser()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._sessions: dict[str, dict[str, Any]] = {}
+        self.load()
+
+    def load(self):
+        try:
+            data = json.loads(self.path.read_text(encoding="utf-8"))
+        except FileNotFoundError:
+            data = {}
+        if not isinstance(data, dict):
+            raise ValueError("Session file must contain a JSON object.")
+        self._sessions = {
+            str(key): dict(value) for key, value in data.items()
+            if isinstance(value, dict)
+        }
+        return self
+
+    def save(self):
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = self.path.with_name(self.path.name + ".tmp")
+        temporary.write_text(
+            json.dumps(self._sessions, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+        temporary.replace(self.path)
+        return self.path
+
+    def create(self, session_id: Any, data: dict | None = None):
+        key = str(session_id)
+        self._sessions[key] = dict(data or {})
+        self.save()
+        return dict(self._sessions[key])
+
+    def get(self, session_id: Any, key: str | None = None, default=None):
+        session = self._sessions.get(str(session_id))
+        if session is None:
+            return default if key is not None else None
+        return session.get(key, default) if key is not None else dict(session)
+
+    def set(self, session_id: Any, key: str, value: Any):
+        session = self._sessions.setdefault(str(session_id), {})
+        session[key] = value
+        self.save()
+        return value
+
+    def delete(self, session_id: Any):
+        removed = self._sessions.pop(str(session_id), None)
+        if removed is not None:
+            self.save()
+            return True
+        return False
+
+    def all(self):
+        return {key: dict(value) for key, value in self._sessions.items()}
+
+
+class UniversalClient:
+    """A small registry/facade for already-created platform clients.
+
+    Platform-specific method signatures remain platform-specific; this class
+    deliberately does not pretend that every API supports identical features.
+    """
+
+    def __init__(self, **clients: Any):
+        self.clients: dict[str, Any] = {}
+        for platform, client in clients.items():
+            self.add(platform, client)
+
+    @staticmethod
+    def _key(platform: str) -> str:
+        return str(platform).strip().lower().replace("-", "_").replace(" ", "_")
+
+    def add(self, platform: str, client: Any):
+        key = self._key(platform)
+        if not key or client is None:
+            raise ValueError("A platform name and client are required.")
+        if key in self.clients:
+            raise ValueError(f"Client {key!r} is already registered.")
+        self.clients[key] = client
+        return client
+
+    def get(self, platform: str):
+        key = self._key(platform)
+        try:
+            return self.clients[key]
+        except KeyError as exc:
+            raise KeyError(f"No client registered for {key!r}.") from exc
+
+    def remove(self, platform: str):
+        return self.clients.pop(self._key(platform))
+
+    def platforms(self):
+        return tuple(self.clients)
+
+    async def send_text(self, platform: str, chat_id: Any, text: str, **kwargs):
+        client = self.get(platform)
+        sender = getattr(client, "send_text", None) or getattr(client, "send_message", None)
+        if sender is None:
+            raise NotImplementedError(
+                f"Client {self._key(platform)!r} has no text-send method."
+            )
+        result = sender(chat_id, text, **kwargs)
+        return await result if inspect.isawaitable(result) else result
+
+    async def broadcast_text(self, chat_targets: dict[str, Any], text: str, **kwargs):
+        """Send text to {platform: chat_id}; return per-platform results."""
+        results = {}
+        for platform, chat_id in chat_targets.items():
+            results[platform] = await self.send_text(platform, chat_id, text, **kwargs)
+        return results
+
+
 __all__ = [
     "PluginManager", "MiddlewareManager", "RateLimiter", "ConversationManager",
     "BotStats", "CommandPermissions", "MessageBuilder", "FileManager",
