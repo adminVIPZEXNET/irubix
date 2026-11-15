@@ -13,6 +13,8 @@ import urllib.request
 from pathlib import Path
 from typing import Any, Callable
 
+from ._token import resolve_token
+
 
 _CYAN = "\033[96m"
 _GREEN = "\033[92m"
@@ -84,14 +86,12 @@ class IRubix:
 
     def __init__(
         self,
-        token: str,
+        token: str | None = None,
         *,
         timeout: float = 30,
         base_url: str | None = None,
     ):
-        if not isinstance(token, str) or not token.strip():
-            raise ValueError("Bot token must not be empty.")
-        self.token = token.strip()
+        self.token = resolve_token(token, "Rubika")
         self.base_url = (base_url or self.API_URL).rstrip("/") + "/" + self.token
         self.timeout = timeout
         self._handlers: list[tuple[str, Any, Callable]] = []
