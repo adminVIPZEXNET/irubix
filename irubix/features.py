@@ -259,19 +259,25 @@ class MessageBuilder:
 
     async def send(self, bot: Any, chat_id: str):
         results = []
-        if self.text:
+        if self.text and not self.files:
             sender = getattr(bot, "send_text", None) or getattr(bot, "send_message", None)
             if sender is None:
                 raise NotImplementedError("This client has no text-send method")
             options = dict(self.options)
             if self.reply_to is not None:
                 options.setdefault("reply_to_message_id", self.reply_to)
-            results.append(await sender(chat_id, self.text, **options))
-        for file, file_type in self.files:
+            result = sender(chat_id, self.text, **options)
+            results.append(await result if inspect.isawaitable(result) else result)
+        for index, (file, file_type) in enumerate(self.files):
             sender = getattr(bot, "send_file", None)
             if sender is None:
-                raise NotImplementedError("This client has no file-send method")
-            results.append(await sender(chat_id, file, text=self.text or None, file_type=file_type))
+                raise NotImplementedError("This client has no send_file method")
+            options = dict(self.options)
+            if self.reply_to is not None:
+                options.setdefault("reply_to_message_id", self.reply_to)
+            caption = self.text if index == 0 else None
+            result = sender(chat_id, file, text=caption, file_type=file_type, **options)
+            results.append(await result if inspect.isawaitable(result) else result)
         return results
 
 
@@ -592,4 +598,5 @@ __all__ = [
     "BotStats", "CommandPermissions", "MessageBuilder", "FileManager",
     "AIAdapter", "CloudStorageAdapter", "AutoReconnect", "WebhookAdapter",
     "DeveloperConsole", "SmartErrorHandler", "UniversalEventRouter", "KeyboardBuilder",
+    "SessionManager", "UniversalClient",
 ]
