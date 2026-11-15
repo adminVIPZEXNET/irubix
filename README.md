@@ -126,6 +126,8 @@ irubix/
 ├── __init__.py       # ورودی اصلی کتابخانه
 ├── bot.py            # پیاده‌سازی کلاینت روبیکا
 ├── _update.py        # بررسی نسخه جدید
+├── multibot.py       # اجرای چند ربات
+├── features.py       # ابزارهای مشترک و مستقل از پلتفرم
 ├── bale/             # کلاینت بله
 ├── soroush/          # کلاینت سروش‌پلاس
 └── telegram/         # کلاینت تلگرام
@@ -173,6 +175,8 @@ IRubix علاوه بر کلاینت‌های پیام‌رسان، ابزاره�
 - `WebhookAdapter`: اعتبارسنجی secret و تحویل update به handler
 - `DeveloperConsole`: راه‌اندازی logging استاندارد
 - `SmartErrorHandler`: ثبت خطا و callback اختیاری برای مدیریت آن
+- `UniversalEventRouter`: مسیریابی رویدادهای نرمال‌شده با یک API مشترک
+- `KeyboardBuilder`: ساختار خنثی دکمه‌ها برای تبدیل توسط آداپتور هر پیام‌رسان
 
 نمونه:
 
