@@ -124,6 +124,21 @@ class RubikaAPIMethods:
         }))
         return await self.request("sendFile", payload)
 
+
+    async def register_all_endpoints(self, base_url: str):
+        """Register all five documented webhook endpoint types."""
+        base = base_url.rstrip("/")
+        if not base.startswith("https://"):
+            raise ValueError("Webhook base URL must use HTTPS.")
+        routes = {"ReceiveUpdate":"update", "ReceiveInlineMessage":"inline",
+                  "ReceiveQuery":"query", "GetSelectionItem":"selection",
+                  "SearchSelectionItems":"search-selection"}
+        results = {}
+        for endpoint_type, suffix in routes.items():
+            results[endpoint_type] = await self.update_bot_endpoints(
+                f"{base}/{suffix}", endpoint_type)
+        return results
+
     @staticmethod
     def _rubika_optional(values: dict, allowed: set[str]) -> dict:
         """Filter optional fields and omit None values."""
