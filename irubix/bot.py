@@ -370,6 +370,10 @@ class IRubix:
                 offset = saved.get("offset_id")
         except (OSError, ValueError, TypeError):
             pass
+        # The previous IRubix versions did not persist offsets. On the first
+        # run after upgrading, establish a clean cursor and discard the old
+        # pending backlog instead of replaying old commands.
+        initialize_cursor = offset is None
 
         def save_offset(value):
             if value is None:
@@ -399,9 +403,15 @@ class IRubix:
                     await asyncio.sleep(poll_interval)
                     continue
                 next_offset = data.get("next_offset_id")
-                for update in data.get("updates") or []:
-                    if isinstance(update, dict):
-                        await self._dispatch(update)
+                updates = data.get("updates") or []
+                if initialize_cursor:
+                    # Skip updates already waiting when this process first
+                    # starts; only updates arriving after this cursor are new.
+                    initialize_cursor = False
+                else:
+                    for update in updates:
+                        if isinstance(update, dict):
+                            await self._dispatch(update)
                 if next_offset is not None:
                     offset = next_offset
                     save_offset(offset)
