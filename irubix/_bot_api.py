@@ -80,6 +80,33 @@ class BotAPIMethods:
             raise ValueError("method must be a non-empty API method name.")
         return await self.request(method, params or None)
 
+    _POSITIONAL_PARAMETERS = {
+        "getMe": (),
+        "getChat": ("chat_id",),
+        "getChatMember": ("chat_id", "user_id"),
+        "getFile": ("file_id",),
+        "sendMessage": ("chat_id", "text"),
+        "sendPhoto": ("chat_id", "photo"),
+        "sendAudio": ("chat_id", "audio"),
+        "sendDocument": ("chat_id", "document"),
+        "sendVideo": ("chat_id", "video"),
+        "sendAnimation": ("chat_id", "animation"),
+        "sendVoice": ("chat_id", "voice"),
+        "sendVideoNote": ("chat_id", "video_note"),
+        "sendSticker": ("chat_id", "sticker"),
+        "sendLocation": ("chat_id", "latitude", "longitude"),
+        "sendContact": ("chat_id", "phone_number", "first_name"),
+        "sendPoll": ("chat_id", "question", "options"),
+        "sendChatAction": ("chat_id", "action"),
+        "forwardMessage": ("chat_id", "from_chat_id", "message_id"),
+        "copyMessage": ("chat_id", "from_chat_id", "message_id"),
+        "editMessageText": ("chat_id", "message_id", "text"),
+        "deleteMessage": ("chat_id", "message_id"),
+        "answerCallbackQuery": ("callback_query_id",),
+        "setWebhook": ("url",),
+        "setMyCommands": ("commands",),
+    }
+
     def __getattr__(self, name: str):
         # Resolve otherwise-unimplemented API methods dynamically. This keeps
         # the SDK forward-compatible with new endpoints without pretending the
@@ -92,10 +119,16 @@ class BotAPIMethods:
 
         async def invoke(*args: Any, **kwargs: Any):
             if args:
-                raise TypeError(
-                    f"{name}() accepts API parameters as keyword arguments; "
-                    "use call_api(method, **params) for native endpoint names."
-                )
+                parameter_names = self._POSITIONAL_PARAMETERS.get(endpoint)
+                if parameter_names is None or len(args) > len(parameter_names):
+                    raise TypeError(
+                        f"{name}() accepts keyword arguments for this endpoint; "
+                        "use call_api(method, **params) for full API access."
+                    )
+                for key, value in zip(parameter_names, args):
+                    if key in kwargs:
+                        raise TypeError(f"{name}() got multiple values for {key!r}.")
+                    kwargs[key] = value
             return await self.request(endpoint, kwargs or None)
 
         invoke.__name__ = name
