@@ -105,10 +105,15 @@ class IRubix(BotAPIMethods):
         return await self.request("getMe")
 
     async def get_updates(self, *, offset: int | None = None, limit: int = 100,
-                          timeout: int = 30):
+                          timeout: int = 30, **kwargs):
+        if not 1 <= limit <= 100:
+            raise ValueError("limit must be between 1 and 100.")
+        if timeout < 0:
+            raise ValueError("timeout must be zero or greater.")
         payload = {"limit": limit, "timeout": timeout}
         if offset is not None:
             payload["offset"] = offset
+        payload.update({key: value for key, value in kwargs.items() if value is not None})
         return await self.request("getUpdates", payload)
 
     async def send_message(self, chat_id: int | str, text: str, **kwargs):
