@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio, hashlib, json, urllib.error, urllib.request
 from pathlib import Path
 from typing import Any, Callable
+from .._token import resolve_token
 
 class TelegramAPIError(RuntimeError):
     """Raised for Telegram API and transport errors."""
@@ -36,10 +37,8 @@ class IRubix:
     API_URL = "https://api.telegram.org"
     __version__ = "0.1.0"
 
-    def __init__(self, token: str, *, timeout: float = 40, base_url: str | None = None):
-        if not isinstance(token, str) or not token.strip():
-            raise ValueError("Telegram bot token must not be empty.")
-        self.token = token.strip()
+    def __init__(self, token: str | None = None, *, timeout: float = 40, base_url: str | None = None):
+        self.token = resolve_token(token, "Telegram")
         self.base_url = (base_url or self.API_URL).rstrip("/")
         self.timeout = timeout
         self._handlers: list[tuple[str, Any, Callable]] = []
