@@ -1,4 +1,4 @@
-"""IRubix: lightweight async clients and platform-neutral bot utilities."""
+"""IRubix: lightweight async clients for supported messaging platforms."""
 from importlib import import_module
 from types import ModuleType
 
