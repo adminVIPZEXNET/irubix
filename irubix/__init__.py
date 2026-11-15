@@ -8,7 +8,8 @@ from .features import (
     AIAdapter, AutoReconnect, BotStats, CloudStorageAdapter,
     CommandPermissions, ConversationManager, DeveloperConsole, FileManager,
     MessageBuilder, MiddlewareManager, PluginManager, RateLimiter,
-    SmartErrorHandler, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,\n    SessionManager, UniversalClient,
+    SmartErrorHandler, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,
+    SessionManager, UniversalClient,
 )
 
 __author__ = "mahdishami"
