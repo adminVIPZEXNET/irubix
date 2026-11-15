@@ -90,15 +90,13 @@ class IRubix(BotAPIMethods):
 
     async def send_message(self, chat_id, text: str, **kwargs):
         payload = {"chat_id": chat_id, "text": text}
-        allowed = ("parse_mode", "entities", "link_preview_options", "disable_notification", "protect_content", "reply_parameters", "reply_markup", "message_thread_id", "business_connection_id")
-        payload.update({k: kwargs[k] for k in allowed if kwargs.get(k) is not None})
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
         return await self.request("sendMessage", payload)
 
     async def send_photo(self, chat_id, photo, caption: str | None = None, **kwargs):
         payload = {"chat_id": chat_id, "photo": photo}
         if caption is not None: payload["caption"] = caption
-        for k in ("parse_mode", "reply_markup", "reply_parameters", "message_thread_id", "disable_notification"):
-            if kwargs.get(k) is not None: payload[k] = kwargs[k]
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
         return await self.request("sendPhoto", payload)
 
     async def send_document(self, chat_id, document, caption: str | None = None, **kwargs):
@@ -116,8 +114,7 @@ class IRubix(BotAPIMethods):
 
     async def edit_message_text(self, chat_id, message_id, text: str, **kwargs):
         payload = {"chat_id": chat_id, "message_id": message_id, "text": text}
-        for k in ("parse_mode", "entities", "link_preview_options", "reply_markup"):
-            if kwargs.get(k) is not None: payload[k] = kwargs[k]
+        payload.update({k: v for k, v in kwargs.items() if v is not None})
         return await self.request("editMessageText", payload)
 
     async def delete_message(self, chat_id, message_id):
