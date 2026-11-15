@@ -112,6 +112,10 @@ class RubikaAPIMethodTests(unittest.IsolatedAsyncioTestCase):
 
 
 class RubikaModelTests(unittest.TestCase):
+    def test_client_version_matches_package_version(self):
+        from irubix import __version__
+        self.assertEqual(self.bot.__version__, __version__)
+
     def test_models_are_exported(self):
         self.assertEqual(File.from_dict({"file_id": "f1"}).file_id, "f1")
         self.assertEqual(Chat.from_dict({"chat_id": "c1"}).chat_id, "c1")
