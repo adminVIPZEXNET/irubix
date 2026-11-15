@@ -10,6 +10,21 @@ from urllib.request import Request, urlopen
 _GITHUB_VERSION = "https://raw.githubusercontent.com/adminVIPZEXNET/irubix/main/irubix/__init__.py"
 _TIMEOUT = 5.0
 
+# ANSI colors are supported by modern terminals, including Pydroid.
+_CYAN = "\033[96m"
+_GREEN = "\033[92m"
+_YELLOW = "\033[93m"
+_MAGENTA = "\033[95m"
+_BOLD = "\033[1m"
+_RESET = "\033[0m"
+
+
+def _color(text: str, color: str) -> str:
+    """Apply terminal color unless the user explicitly disables colors."""
+    if os.environ.get("NO_COLOR") is not None or os.environ.get("TERM", "").lower() == "dumb":
+        return text
+    return f"{color}{text}{_RESET}"
+
 
 def _version_key(version: str) -> tuple[int, ...]:
     """Compare ordinary numeric release versions without extra dependencies."""
@@ -35,20 +50,25 @@ def _latest_github_version() -> str:
 
 
 def _check(installed: str) -> None:
-    """Print an English upgrade notice when GitHub has a newer release."""
+    """Print a colored English upgrade notice when GitHub has a newer release."""
     try:
         latest = _latest_github_version()
         if _is_newer(latest, installed):
-            print(
-                "\n[IRubix] A new version is available!\n"
-                f"Current version: {installed}\n"
-                f"Latest version: {latest}\n\n"
-                "To update from GitHub, run:\n"
-                "python -m pip install --upgrade --no-cache-dir --no-build-isolation "
-                "https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip\n",
-                file=sys.stderr,
-                flush=True,
-            )
+            lines = [
+                "",
+                _color("[IRubix] A new version is available!", _BOLD + _CYAN),
+                _color(f"Current version: {installed}", _YELLOW),
+                _color(f"Latest version: {latest}", _GREEN),
+                "",
+                _color("To update from GitHub, run:", _MAGENTA),
+                _color(
+                    "python -m pip install --upgrade --no-cache-dir --no-build-isolation "
+                    "https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip",
+                    _BOLD,
+                ),
+                "",
+            ]
+            print("\n".join(lines), file=sys.stderr, flush=True)
     except Exception:
         # Update checks must never interrupt or slow down the user's program.
         return
