@@ -8,7 +8,7 @@ from .features import (
     AIAdapter, AutoReconnect, BotStats, CloudStorageAdapter,
     CommandPermissions, ConversationManager, DeveloperConsole, FileManager,
     MessageBuilder, MiddlewareManager, PluginManager, RateLimiter,
-    SmartErrorHandler, WebhookAdapter,
+    SmartErrorHandler, WebhookAdapter, UniversalEventRouter, KeyboardBuilder,
 )
 
 __author__ = "mahdishami"
@@ -24,7 +24,7 @@ __all__ = [
     "PluginManager", "MiddlewareManager", "RateLimiter",
     "ConversationManager", "BotStats", "CommandPermissions",
     "MessageBuilder", "FileManager", "AIAdapter", "CloudStorageAdapter",
-    "AutoReconnect", "WebhookAdapter", "DeveloperConsole", "SmartErrorHandler",
+    "AutoReconnect", "WebhookAdapter", "DeveloperConsole", "SmartErrorHandler",\n    "UniversalEventRouter", "KeyboardBuilder",
 ]
 
 _PLATFORM_MODULES = {
