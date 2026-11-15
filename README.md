@@ -154,3 +154,53 @@ python -m unittest discover -s tests -v
 ## مجوز
 
 MIT
+
+## ابزارهای توسعه و قابلیت‌های مشترک (نسخه 0.10.0)
+
+IRubix علاوه بر کلاینت‌های پیام‌رسان، ابزارهای اختیاری و مستقل از پلتفرم ارائه می‌کند:
+
+- `PluginManager`: بارگذاری افزونه‌های Python از فایل‌های محلی
+- `MiddlewareManager`: اجرای middleware قبل و بعد از handler
+- `RateLimiter`: محدودسازی نرخ درخواست‌ها به‌صورت async
+- `ConversationManager`: مدیریت state و صف پیام مکالمه برای هر chat
+- `BotStats`: آمار پیام‌ها، خطاها و uptime
+- `CommandPermissions`: نقش‌ها و مجوزهای ساده کاربران
+- `MessageBuilder`: ساخت و ارسال متن و فایل با رابط مشترک
+- `FileManager`: ذخیره‌سازی محلی با جلوگیری از خروج مسیر از پوشه ریشه
+- `AIAdapter`: اتصال به تابع هوش مصنوعی دلخواه (sync یا async)
+- `CloudStorageAdapter`: اتصال به سرویس ابری دلخواه با callbackهای upload/download
+- `AutoReconnect`: تلاش مجدد با تأخیر افزایشی برای client.start()
+- `WebhookAdapter`: اعتبارسنجی secret و تحویل update به handler
+- `DeveloperConsole`: راه‌اندازی logging استاندارد
+- `SmartErrorHandler`: ثبت خطا و callback اختیاری برای مدیریت آن
+
+نمونه:
+
+```python
+from irubix import (
+    RateLimiter, BotStats, CommandPermissions,
+    ConversationManager, MessageBuilder, FileManager,
+)
+
+limiter = RateLimiter(rate=5, per=1)
+stats = BotStats()
+permissions = CommandPermissions()
+conversations = ConversationManager()
+files = FileManager("./bot_files")
+
+# داخل handler:
+# await limiter.acquire(event.chat_id)
+# stats.record_message("rubika")
+# if permissions.allows(event.sender_id, "admin_command"): ...
+# conversations.begin(event.chat_id)
+# await MessageBuilder("Hello!").send(bot, event.chat_id)
+```
+
+راهنمای کامل: [docs/features.md](docs/features.md)
+
+نکات مهم:
+- افزونه‌های Python کد اجرایی هستند؛ فقط افزونه‌های مورد اعتماد را بارگذاری کنید.
+- AI و Cloud Storage به سرویس‌دهنده خاصی وابسته نیستند؛ callbackهای خودتان را به adapter می‌دهید.
+- `WebhookAdapter` یک HTTP server نیست؛ آن را در چارچوب وب موردنظر خود mount کنید.
+- `FileManager` فضای ابری نیست و فقط روی دیسک محلی کار می‌کند.
+- وضعیت مکالمه و آمار در حافظه‌اند و با خاموش‌شدن برنامه پاک می‌شوند.
