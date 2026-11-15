@@ -4,6 +4,7 @@ from types import ModuleType
 
 from .bot import Bot, Event, IRubix as _RubikaClient, RubikaAPIError
 from .multibot import MultiBot
+from .filters import Filter, Text, ChatTypeFilter, FromUser, IsImage, IsVideo, IsVoice, Command
 from .models import (APIModel, AuxData, Bot as BotModel, BotCommand, ButtonType, Chat, ChatKeypadType, ChatType, ContactMessage, File, FileType, ForwardedFrom, InlineMessage, Keypad, KeypadRow, Location, Message, Metadata, MetadataPart, Poll, PollStatus, Update, UpdateType)
 __author__ = "mahdishami"
 __version__ = "0.12.0"
@@ -12,7 +13,7 @@ from ._update import check_for_updates
 check_for_updates(__version__)
 
 __all__ = [
-    "Rubika", "Bot", "Event", "RubikaAPIError",
+    "Rubika", "Bot", "Event", "RubikaAPIError", "Filter", "Text", "ChatTypeFilter", "FromUser", "IsImage", "IsVideo", "IsVoice", "Command",
     "rubika", "bale", "soroush", "telegram",
     "__version__", "__author__", "MultiBot", "APIModel", "File", "Chat",
     "AuxData", "Location", "BotModel", "BotCommand", "ForwardedFrom",
