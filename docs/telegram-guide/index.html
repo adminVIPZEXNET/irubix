@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>راهنمای ربات تلگرام | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../telegram-methods/">متدهای تلگرام</a></nav></header>
+<main class="container"><p class="eyebrow">TELEGRAM BOT API</p><h1>ساخت ربات تلگرام با IRubix</h1><p>از BotFather توکن بگیرید. این ماژول با Bot API تلگرام کار می‌کند و وابستگی جانبی ندارد.</p>
+<h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
+<h2>نمونه شروع</h2><pre><code>from irubix import telegram
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
+
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام! ربات تلگرام با IRubix فعال شد ❤️")
+
+@bot.message()
+async def echo(bot, event):
+    if event.text:
+        await event.reply(event.text)
+
+bot.run()</code></pre>
+<h2>ارسال پیام</h2><pre><code>await bot.send_message(chat_id, "سلام از IRubix")</code></pre>
+<h2>دکمه اینلاین</h2><pre><code>keyboard = {"inline_keyboard": [[{"text": "باز کردن", "callback_data": "open"}]]}
+await bot.send_message(chat_id, "یک گزینه انتخاب کن", reply_markup=keyboard)
+
+@bot.callback()
+async def callback(bot, event):
+    await bot.answer_callback_query(event.callback_query_id, text="انتخاب شد")</code></pre>
+<p>دریافت پیام با long polling انجام می‌شود. اگر webhook فعال است، قبل از اجرای polling آن را غیرفعال کنید؛ این دو روش هم‌زمان قابل استفاده نیستند. توکن را محرمانه نگه دارید.</p>
+<p><a href="../telegram-methods/">مشاهده فهرست متدها</a></p></main></body></html>

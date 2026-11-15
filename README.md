@@ -1,16 +1,18 @@
 # IRubix
 
-کتابخانه پایتون برای ساخت ربات در روبیکا، بله و سروش‌پلاس.
+کتابخانه پایتون برای ساخت ربات در تلگرام، روبیکا، بله و سروش‌پلاس.
 
-- کلاینت ربات برای Rubika
-- پشتیبانی از ربات‌های Bale و Soroush Plus
+- کلاینت ربات برای Telegram، Rubika، Bale و Soroush Plus
 - پشتیبانی از async/await و handlerهای رویداد
+- بدون وابستگی runtime اضافی
 - مستندات فارسی
 
 سازنده: [mahdishami](https://github.com/mahdishami)
 
 ## مستندات
 - [وب‌سایت](https://adminvipzexnet.github.io/irubix/)
+- [راهنمای تلگرام](https://adminvipzexnet.github.io/irubix/telegram-guide/)
+- [متدهای تلگرام](https://adminvipzexnet.github.io/irubix/telegram-methods/)
 - [راهنمای روبیکا](https://adminvipzexnet.github.io/irubix/bot-guide/)
 - [متدهای روبیکا](https://adminvipzexnet.github.io/irubix/bot-methods/)
 - [راهنمای بله](https://adminvipzexnet.github.io/irubix/bale-guide/)
@@ -23,11 +25,10 @@
 pip install --upgrade irubix
 ```
 
-## نمونه استفاده
+## نمونه ربات تلگرام
 ```python
-from irubix import IRubix
-
-bot = IRubix("BOT_TOKEN")
+from irubix import telegram
+bot = telegram.IRubix("TELEGRAM_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):

@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>متدهای تلگرام | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../telegram-guide/">راهنمای تلگرام</a></nav></header>
+<main class="container"><p class="eyebrow">TELEGRAM BOT API</p><h1>مرجع کلاس Telegram</h1><p>کلاس اصلی <code>telegram.IRubix(token)</code> و نام مستعار <code>telegram.Bot(token)</code> است.</p>
+<h2>متدها</h2><ul><li><code>request(method, payload=None)</code> — فراخوانی Bot API</li><li><code>get_me()</code> — اطلاعات ربات</li><li><code>get_chat(chat_id)</code> — اطلاعات گفتگو</li><li><code>get_updates(offset=None, limit=100, timeout=30)</code> — دریافت آپدیت</li><li><code>send_message(chat_id, text, **kwargs)</code> — ارسال متن</li><li><code>send_photo(chat_id, photo, caption=None, **kwargs)</code> — ارسال عکس با file_id یا URL</li><li><code>send_document(chat_id, document, caption=None, **kwargs)</code> — ارسال سند با file_id یا URL</li><li><code>forward_message(chat_id, from_chat_id, message_id)</code> — فوروارد</li><li><code>edit_message_text(chat_id, message_id, text, **kwargs)</code> — ویرایش متن</li><li><code>delete_message(chat_id, message_id)</code> — حذف پیام</li><li><code>answer_callback_query(callback_query_id, **kwargs)</code> — پاسخ callback</li></ul>
+<h2>مدیریت رویداد</h2><ul><li><code>command(names)</code> — ثبت دستور</li><li><code>message(flt=None)</code> — ثبت پیام با فیلتر اختیاری</li><li><code>callback()</code> — ثبت callback</li><li><code>start(timeout=30, retry_delay=2)</code>، <code>stop()</code> و <code>run()</code> — کنترل polling</li></ul>
+<h2>ویژگی Event</h2><p><code>event.text</code>، <code>event.chat_id</code>، <code>event.message_id</code>، <code>event.sender_id</code>، <code>event.button_id</code>، <code>event.callback_query_id</code> و <code>await event.reply(text)</code>.</p>
+<pre><code>from irubix import telegram
+bot = telegram.IRubix("TOKEN")
+@bot.command("start")
+async def start(bot, event):
+    await event.reply("سلام")
+bot.run()</code></pre></main></body></html>
