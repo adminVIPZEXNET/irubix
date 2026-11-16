@@ -7,7 +7,7 @@ from .multibot import MultiBot
 from .filters import Filter, Text, ChatTypeFilter, FromUser, IsImage, IsVideo, IsVoice, Command
 from .models import (APIModel, AuxData, Bot as BotModel, BotCommand, ButtonType, Chat, ChatKeypadType, ChatType, ContactMessage, File, FileType, ForwardedFrom, InlineMessage, Keypad, KeypadRow, Location, Message, Metadata, MetadataPart, Poll, PollStatus, Update, UpdateType)
 __author__ = "mahdishami"
-__version__ = "0.12.0"
+__version__ = "0.12.1"
 
 from ._update import check_for_updates
 check_for_updates(__version__)
