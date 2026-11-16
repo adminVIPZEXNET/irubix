@@ -504,10 +504,10 @@ class IRubix(RubikaAPIMethods):
                 offset = saved.get("offset_id")
         except (OSError, ValueError, TypeError):
             pass
-        # The previous IRubix versions did not persist offsets. On the first
-        # run after upgrading, establish a clean cursor and discard the old
-        # pending backlog instead of replaying old commands.
-        initialize_cursor = offset is None
+        # Every fresh process start establishes a clean polling boundary.
+        # Updates accumulated while the bot process was stopped are discarded;
+        # only updates arriving after polling has started are dispatched.
+        initialize_cursor = True
 
         def save_offset(value):
             if value is None:
