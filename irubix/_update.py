@@ -28,7 +28,7 @@ def _color(text: str, color: str) -> str:
 
 
 def _version_key(version: str) -> tuple[int, ...]:
-    parts = tuple(int(part) for part in re.findall(r"\\d+", str(version)))
+    parts = tuple(int(part) for part in re.findall(r"\d+", str(version)))
     return parts or (0,)
 
 
@@ -57,7 +57,7 @@ def _latest_github_version() -> str:
             raise
         source = _read_source(ssl.create_default_context(cafile=certifi.where()))
 
-    match = re.search(r'^__version__\\s*=\\s*["\\']([^"\\']+)["\\']', source, re.MULTILINE)
+    match = re.search(r'^__version__\s*=\s*["\']([^"\']+)["\']', source, re.MULTILINE)
     if not match:
         raise ValueError("Could not read IRubix version from GitHub")
     return match.group(1)
@@ -81,7 +81,7 @@ def _check(installed: str) -> None:
                 ),
                 "",
             ]
-            print("\\n".join(lines), file=sys.stderr, flush=True)
+            print("\n".join(lines), file=sys.stderr, flush=True)
         elif _version_key(latest) == _version_key(installed):
             print(_color(f"[IRubix] You are using the latest version ({installed}).", _GREEN), flush=True)
     except Exception as exc:
