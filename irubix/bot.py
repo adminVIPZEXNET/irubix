@@ -84,7 +84,7 @@ class IRubix(RubikaAPIMethods):
     """Async Rubika Bot API client. Uses only the Python standard library."""
 
     API_URL = "https://botapi.rubika.ir/v3"
-    __version__ = "0.12.1"
+    __version__ = "0.12.2"
 
     def __init__(
         self,
@@ -153,6 +153,15 @@ class IRubix(RubikaAPIMethods):
     async def get_file(self, file_id: str):
         """Get a file download URL using getFile."""
         return await self.request("getFile", {"file_id": file_id})
+
+    async def get_updates(self, limit: int = 100, offset_id: str | None = None):
+        """Fetch pending updates using the official getUpdates endpoint."""
+        if not 1 <= limit <= 100:
+            raise ValueError("limit must be between 1 and 100.")
+        payload = {"limit": limit}
+        if offset_id is not None:
+            payload["offset_id"] = offset_id
+        return await self.request("getUpdates", payload)
 
     async def send_text(self, chat_id: str, text: str, **kwargs):
         """Send a text message. Supports keypad and reply options."""
