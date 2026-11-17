@@ -54,7 +54,7 @@ class Ertebat(BotAPIMethods):
 
     API_URL = "https://api.splus.ir"
     FILE_URL = "https://api.splus.ir/file"
-    __version__ = "0.5.0"
+    __version__ = "0.1.0"
 
     def __init__(self, token: str | None = None, *, timeout: float = 40,
                  base_url: Optional[str] = None):

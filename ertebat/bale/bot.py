@@ -58,7 +58,7 @@ class Ertebat(BotAPIMethods):
 
     API_URL = "https://tapi.bale.ai"
     FILE_URL = "https://tapi.bale.ai/file"
-    __version__ = "0.4.0"
+    __version__ = "0.1.0"
 
     def __init__(self, token: str | None = None, *, timeout: float = 40, base_url: str | None = None):
         self.token = resolve_token(token, "Bale")
