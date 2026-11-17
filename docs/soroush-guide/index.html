@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>راهنمای سروش‌پلاس | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bot-guide/">روبیکا</a><a href="../bale-guide/">بله</a><a href="../soroush-methods/">متدهای سروش‌پلاس</a></nav></header>
-<main class="container"><p class="eyebrow">SOROUSH PLUS BOT API</p><h1>ساخت ربات سروش‌پلاس با IRubix</h1>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>راهنمای سروش‌پلاس | Ertebat</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">Ertebat</a><nav><a href="../">خانه</a><a href="../bot-guide/">روبیکا</a><a href="../bale-guide/">بله</a><a href="../soroush-methods/">متدهای سروش‌پلاس</a></nav></header>
+<main class="container"><p class="eyebrow">SOROUSH PLUS BOT API</p><h1>ساخت ربات سروش‌پلاس با Ertebat</h1>
 <p>از نسخه 0.5.0 می‌توانید با ماژول مستقل سروش‌پلاس، ربات خود را با رابط async و decorator بسازید. توکن ربات را از <a href="https://splus.ir/botfather">BotFather سروش‌پلاس</a> دریافت کنید.</p>
-<h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
-<h2>اولین ربات</h2><pre><code>from irubix import soroush
+<h2>نصب</h2><pre><code>pip install --upgrade ertebat</code></pre>
+<h2>اولین ربات</h2><pre><code>from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -17,7 +17,7 @@ bot.run()</code></pre>
 async def all_messages(bot, event):
     print(event.text, event.chat_id)
     await event.reply("پیامت دریافت شد.")</code></pre>
-<h2>ارسال پیام به یک چت</h2><pre><code>await bot.send_message(chat_id, "سلام از IRubix")</code></pre>
+<h2>ارسال پیام به یک چت</h2><pre><code>await bot.send_message(chat_id, "سلام از Ertebat")</code></pre>
 <h2>دکمه‌های callback</h2><pre><code>@bot.callback()
 async def buttons(bot, event):
     print(event.button_id)

@@ -1,10 +1,10 @@
-"""Tests for IRubix version comparison and update notices."""
+"""Tests for Ertebat version comparison and update notices."""
 import io
 import unittest
 from contextlib import redirect_stderr
 from unittest.mock import patch
 
-from irubix._update import _check, _is_newer, _latest_github_version
+from ertebat._update import _check, _is_newer, _latest_github_version
 
 
 class _FakeResponse:
@@ -34,24 +34,24 @@ class UpdateCheckTests(unittest.TestCase):
     def test_older_version_is_not_newer(self):
         self.assertFalse(_is_newer("0.8.0", "0.8.1"))
 
-    @patch("irubix._update.urlopen")
+    @patch("ertebat._update.urlopen")
     def test_reads_version_from_github(self, mock_urlopen):
         mock_urlopen.return_value = _FakeResponse('__version__ = "0.9.4"')
         self.assertEqual(_latest_github_version(), "0.9.4")
 
-    @patch("irubix._update.urlopen")
+    @patch("ertebat._update.urlopen")
     def test_prints_english_notice_for_github_update(self, mock_urlopen):
         mock_urlopen.return_value = _FakeResponse('__version__ = "0.9.4"')
         output = io.StringIO()
         with redirect_stderr(output):
             _check("0.9.3")
         message = output.getvalue()
-        self.assertIn("[IRubix] A new version is available!", message)
+        self.assertIn("[Ertebat] A new version is available!", message)
         self.assertIn("Current version: 0.9.3", message)
         self.assertIn("Latest version: 0.9.4", message)
-        self.assertIn("github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip", message)
+        self.assertIn("github.com/adminVIPZEXNET/ertebat/archive/refs/heads/main.zip", message)
 
-    @patch("irubix._update.urlopen")
+    @patch("ertebat._update.urlopen")
     def test_no_notice_when_already_up_to_date(self, mock_urlopen):
         mock_urlopen.return_value = _FakeResponse('__version__ = "0.9.4"')
         output = io.StringIO()

@@ -1,4 +1,4 @@
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("RUBIKA_BOT_TOKEN")
 

@@ -1,4 +1,4 @@
-name: IRubix tests
+name: Ertebat tests
 on:
   push:
     branches: [main]

@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="fa" dir="rtl">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای بله | IRubix</title><link rel="stylesheet" href="../style.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای بله | Ertebat</title><link rel="stylesheet" href="../style.css"></head>
 <body>
-<header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../bale-guide/">راهنمای بله</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
+<header class="site-header"><a href="../">Ertebat</a><nav><a href="../">خانه</a><a href="../bale-guide/">راهنمای بله</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
 <main class="container">
-<p class="eyebrow">BALE BOT API · IRUBIX 0.4.0</p><h1>مرجع کامل متدهای بله</h1>
-<p>این صفحه بر اساس سورس واقعی <code>irubix/bale/bot.py</code> نوشته شده است. فقط موارد زیر در کلاینت فعلی پیاده‌سازی شده‌اند؛ وجود یک endpoint در API بله به‌تنهایی به معنی وجود متد آماده برای آن در IRubix نیست.</p>
+<p class="eyebrow">BALE BOT API · ERTEBAT 0.4.0</p><h1>مرجع کامل متدهای بله</h1>
+<p>این صفحه بر اساس سورس واقعی <code>ertebat/bale/bot.py</code> نوشته شده است. فقط موارد زیر در کلاینت فعلی پیاده‌سازی شده‌اند؛ وجود یک endpoint در API بله به‌تنهایی به معنی وجود متد آماده برای آن در Ertebat نیست.</p>
 <h2>ساخت کلاینت و خطا</h2>
-<pre><code>from irubix import bale
+<pre><code>from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN", timeout=40)
 # base_url اختیاری است: bale("TOKEN", base_url="https://tapi.bale.ai")</code></pre>
-<p>سازنده: <code>IRubix(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>BaleAPIError</code> · نام مستعار کلاس: <code>bale.Bot</code>.</p>
+<p>سازنده: <code>Ertebat(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>BaleAPIError</code> · نام مستعار کلاس: <code>bale.Bot</code>.</p>
 <h2>درخواست و اطلاعات</h2>
 <ul>
 <li><code>await bot.request(method, payload=None)</code> — فراخوانی مستقیم متد Bot API بله. نام متد نباید خالی یا شامل <code>/</code> باشد.</li>
@@ -34,7 +34,7 @@ bot = bale("BALE_BOT_TOKEN", timeout=40)
 <li><code>@bot.callback()</code> — ثبت handler برای callback query.</li>
 </ul>
 <p>فیلدهای Event: <code>raw</code> و <code>update</code> (داده خام)، <code>message</code>، <code>chat</code>، <code>chat_id</code>، <code>message_id</code>، <code>text</code>، <code>sender</code>، <code>sender_id</code>، <code>callback_query</code>، <code>button_id</code> و <code>type</code>.</p>
-<pre><code>from irubix import bale
+<pre><code>from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 

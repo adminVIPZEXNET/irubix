@@ -1,4 +1,4 @@
-name: Deploy IRubix documentation
+name: Deploy Ertebat documentation
 
 on:
   push:

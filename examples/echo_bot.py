@@ -1,11 +1,11 @@
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
 
 @bot.command("start")
 async def start(bot, event):
-    await event.reply("سلام! ربات IRubix فعاله 👋")
+    await event.reply("سلام! ربات Ertebat فعاله 👋")
 
 
 @bot.message()

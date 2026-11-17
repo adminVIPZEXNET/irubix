@@ -1,4 +1,4 @@
-from irubix import bale
+from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 

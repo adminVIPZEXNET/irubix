@@ -1,4 +1,4 @@
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 

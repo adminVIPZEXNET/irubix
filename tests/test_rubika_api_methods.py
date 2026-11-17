@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import AsyncMock
 
-from irubix import Rubika, BotModel, Chat, File, Message, Update
+from ertebat import Rubika, BotModel, Chat, File, Message, Update
 
 
 class RubikaAPIMethodTests(unittest.IsolatedAsyncioTestCase):
@@ -136,7 +136,7 @@ class RubikaAPIMethodTests(unittest.IsolatedAsyncioTestCase):
 
 class RubikaModelTests(unittest.TestCase):
     def test_client_version_matches_package_version(self):
-        from irubix import __version__
+        from ertebat import __version__
         self.assertEqual(self.bot.__version__, __version__)
 
     def test_models_are_exported(self):

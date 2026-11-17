@@ -1,6 +1,6 @@
 # Multi-platform Bot API methods
 
-IRubix exposes a common asynchronous interface for Rubika, Bale, Soroush Plus,
+Ertebat exposes a common asynchronous interface for Rubika, Bale, Soroush Plus,
 and Telegram. The platform clients remain independent: an endpoint is executed
 by the selected platform's server, so a method name being callable does not
 mean that every platform implements that endpoint.
@@ -11,7 +11,7 @@ All three clients (Bale, Soroush Plus, Telegram) provide dynamic API access.
 Snake-case names are converted to the native endpoint name:
 
 ```python
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_TOKEN")
 
@@ -76,18 +76,18 @@ The documented Soroush Plus Bot API method set includes:
 ## Bale
 
 Bale's Bot API is Telegram-Bot-API-like, but support and parameter availability
-must be checked against Bale's own documentation and server response. IRubix
+must be checked against Bale's own documentation and server response. Ertebat
 lets you call endpoint names directly; unsupported endpoints are returned as
 Bale API errors rather than being simulated locally.
 
 ## Upload and download files
 
 Pass a `pathlib.Path`, `bytes`, or a `(filename, bytes)` pair for a file
-parameter. IRubix automatically switches the request to multipart form data.
+parameter. Ertebat automatically switches the request to multipart form data.
 
 ```python
 from pathlib import Path
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_TOKEN")
 

@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>راهنمای ربات تلگرام | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../telegram-methods/">متدهای تلگرام</a></nav></header>
-<main class="container"><p class="eyebrow">TELEGRAM BOT API</p><h1>ساخت ربات تلگرام با IRubix</h1><p>از BotFather توکن بگیرید. این ماژول با Bot API تلگرام کار می‌کند و وابستگی جانبی ندارد.</p>
-<h2>نصب</h2><pre><code>pip install --upgrade irubix</code></pre>
-<h2>نمونه شروع</h2><pre><code>from irubix import telegram
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>راهنمای ربات تلگرام | Ertebat</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">Ertebat</a><nav><a href="../">خانه</a><a href="../telegram-methods/">متدهای تلگرام</a></nav></header>
+<main class="container"><p class="eyebrow">TELEGRAM BOT API</p><h1>ساخت ربات تلگرام با Ertebat</h1><p>از BotFather توکن بگیرید. این ماژول با Bot API تلگرام کار می‌کند و وابستگی جانبی ندارد.</p>
+<h2>نصب</h2><pre><code>pip install --upgrade ertebat</code></pre>
+<h2>نمونه شروع</h2><pre><code>from ertebat import telegram
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
 @bot.command("start")
 async def start(bot, event):
-    await event.reply("سلام! ربات تلگرام با IRubix فعال شد ❤️")
+    await event.reply("سلام! ربات تلگرام با Ertebat فعال شد ❤️")
 
 @bot.message()
 async def echo(bot, event):
@@ -16,7 +16,7 @@ async def echo(bot, event):
         await event.reply(event.text)
 
 bot.run()</code></pre>
-<h2>ارسال پیام</h2><pre><code>await bot.send_message(chat_id, "سلام از IRubix")</code></pre>
+<h2>ارسال پیام</h2><pre><code>await bot.send_message(chat_id, "سلام از Ertebat")</code></pre>
 <h2>دکمه اینلاین</h2><pre><code>keyboard = {"inline_keyboard": [[{"text": "باز کردن", "callback_data": "open"}]]}
 await bot.send_message(chat_id, "یک گزینه انتخاب کن", reply_markup=keyboard)
 

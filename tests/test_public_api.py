@@ -1,12 +1,12 @@
-"""Offline unit tests for the public IRubix API (no real bot token or network)."""
+"""Offline unit tests for the public Ertebat API (no real bot token or network)."""
 import asyncio
 import unittest
 from unittest.mock import AsyncMock
 
-from irubix import Rubika, Event, RubikaAPIError
+from ertebat import Rubika, Event, RubikaAPIError
 
 
-class FakeBot(Rubika.IRubix):
+class FakeBot(Rubika.Ertebat):
     def __init__(self):
         super().__init__("TEST_TOKEN")
         self.calls = []
@@ -162,7 +162,7 @@ class PublicMethodsTests(unittest.IsolatedAsyncioTestCase):
 
     def test_empty_token_rejected(self):
         with self.assertRaises(ValueError):
-            Rubika.IRubix("  ")
+            Rubika.Ertebat("  ")
 
 
 if __name__ == "__main__":

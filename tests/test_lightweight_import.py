@@ -7,11 +7,11 @@ import unittest
 class LightweightImportTests(unittest.TestCase):
     def test_core_import_does_not_load_optional_dependencies(self):
         code = (
-            "import sys, irubix; "
+            "import sys, ertebat; "
             "assert 'aiohttp' not in sys.modules; "
             "assert not any(name == 'Crypto' or name.startswith('Crypto.') "
             "for name in sys.modules); "
-            "assert 'irubix.shad' not in sys.modules"
+            "assert 'ertebat.shad' not in sys.modules"
         )
         subprocess.run([sys.executable, "-c", code], check=True)
 

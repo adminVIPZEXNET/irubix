@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای سروش‌پلاس | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../soroush-guide/">راهنمای سروش‌پلاس</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای سروش‌پلاس | Ertebat</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">Ertebat</a><nav><a href="../">خانه</a><a href="../soroush-guide/">راهنمای سروش‌پلاس</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
 <main class="container">
-<p class="eyebrow">SOROUSH PLUS BOT API · IRUBIX 0.5.0</p><h1>مرجع کامل متدهای سروش‌پلاس</h1>
-<p>این مرجع از روی پیاده‌سازی فعلی <code>irubix/soroush/bot.py</code> تهیه شده است. امضاها و گزینه‌ها مطابق wrapper همین نسخه‌اند.</p>
+<p class="eyebrow">SOROUSH PLUS BOT API · ERTEBAT 0.5.0</p><h1>مرجع کامل متدهای سروش‌پلاس</h1>
+<p>این مرجع از روی پیاده‌سازی فعلی <code>ertebat/soroush/bot.py</code> تهیه شده است. امضاها و گزینه‌ها مطابق wrapper همین نسخه‌اند.</p>
 <h2>ساخت کلاینت و خطا</h2>
-<pre><code>from irubix import soroush
+<pre><code>from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN", timeout=40)</code></pre>
-<p>سازنده: <code>IRubix(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>SoroushAPIError</code> · نام مستعار کلاس: <code>soroush.Bot</code>.</p>
+<p>سازنده: <code>Ertebat(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>SoroushAPIError</code> · نام مستعار کلاس: <code>soroush.Bot</code>.</p>
 <h2>درخواست و اطلاعات ربات</h2>
 <ul>
 <li><code>await bot.request(method, payload=None, http_method="POST")</code> — درخواست مستقیم؛ متد HTTP قابل تعیین است.</li>
@@ -37,7 +37,7 @@ bot = soroush("SOROUSH_BOT_TOKEN", timeout=40)</code></pre>
 <h2>ثبت handler و Event</h2>
 <ul><li><code>@bot.command(names)</code> — ثبت یک یا چند فرمان.</li><li><code>@bot.message(flt=None)</code> — ثبت handler پیام با فیلتر callable اختیاری.</li><li><code>@bot.callback()</code> — ثبت handler callback query.</li></ul>
 <p>فیلدهای Event: <code>raw</code>، <code>update</code>، <code>message</code>، <code>chat</code>، <code>chat_id</code>، <code>message_id</code>، <code>text</code>، <code>sender</code>، <code>sender_id</code>، <code>callback_query</code>، <code>button_id</code> و <code>type</code>. شناسه callback از <code>event.callback_query["id"]</code> قابل دریافت است.</p>
-<pre><code>from irubix import soroush
+<pre><code>from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 

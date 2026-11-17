@@ -1,16 +1,16 @@
 """Offline tests for the Soroush Plus client."""
 import unittest
 from unittest.mock import AsyncMock
-from irubix import soroush
+from ertebat import soroush
 
 
 class SoroushTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
-        self.bot = soroush.IRubix("TEST_TOKEN")
+        self.bot = soroush.Ertebat("TEST_TOKEN")
         self.bot.request = AsyncMock(return_value=[{"update_id": 1}])
 
     async def test_import_and_alias(self):
-        self.assertIs(soroush.Bot, soroush.IRubix)
+        self.assertIs(soroush.Bot, soroush.Ertebat)
         self.assertEqual(self.bot.base_url, "https://api.splus.ir")
 
     async def test_get_me(self):
@@ -52,7 +52,7 @@ class SoroushTests(unittest.IsolatedAsyncioTestCase):
 
     def test_empty_token(self):
         with self.assertRaises(ValueError):
-            soroush.IRubix(" ")
+            soroush.Ertebat(" ")
 
 
 if __name__ == "__main__":

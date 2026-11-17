@@ -1,7 +1,7 @@
 """Offline tests for the MultiBot manager."""
 import unittest
 
-from irubix import MultiBot
+from ertebat import MultiBot
 
 
 class MultiBotTests(unittest.TestCase):

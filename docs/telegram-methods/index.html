@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای تلگرام | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="site-header"><a href="../">IRubix</a><nav><a href="../">خانه</a><a href="../telegram-guide/">راهنمای تلگرام</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>مرجع کامل متدهای تلگرام | Ertebat</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="site-header"><a href="../">Ertebat</a><nav><a href="../">خانه</a><a href="../telegram-guide/">راهنمای تلگرام</a><a href="../classes/">همه کلاس‌ها</a></nav></header>
 <main class="container">
-<p class="eyebrow">TELEGRAM BOT API · IRUBIX 0.1.0</p><h1>مرجع کامل متدهای تلگرام</h1>
-<p>این صفحه با سورس فعلی <code>irubix/telegram/bot.py</code> تطبیق داده شده است. این فهرست، wrapperهای آماده IRubix را نشان می‌دهد؛ برای endpointهای دیگر Bot API از <code>request()</code> استفاده کنید.</p>
+<p class="eyebrow">TELEGRAM BOT API · ERTEBAT 0.1.0</p><h1>مرجع کامل متدهای تلگرام</h1>
+<p>این صفحه با سورس فعلی <code>ertebat/telegram/bot.py</code> تطبیق داده شده است. این فهرست، wrapperهای آماده Ertebat را نشان می‌دهد؛ برای endpointهای دیگر Bot API از <code>request()</code> استفاده کنید.</p>
 <h2>ساخت کلاینت و خطا</h2>
-<pre><code>from irubix import telegram
+<pre><code>from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN", timeout=40)</code></pre>
-<p>سازنده: <code>IRubix(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>TelegramAPIError</code> · نام مستعار کلاس: <code>telegram.Bot</code>.</p>
+<p>سازنده: <code>Ertebat(token=None, *, timeout=40, base_url=None)</code> · خطا: <code>TelegramAPIError</code> · نام مستعار کلاس: <code>telegram.Bot</code>.</p>
 <h2>درخواست و دریافت اطلاعات</h2>
 <ul>
 <li><code>await bot.request(method, payload=None)</code> — فراخوانی مستقیم Telegram Bot API.</li>
@@ -30,7 +30,7 @@ bot = telegram("TELEGRAM_BOT_TOKEN", timeout=40)</code></pre>
 <h2>ثبت handler و Event</h2>
 <ul><li><code>@bot.command(names)</code> — ثبت یک یا چند فرمان.</li><li><code>@bot.message(flt=None)</code> — ثبت handler پیام با فیلتر callable اختیاری.</li><li><code>@bot.callback()</code> — ثبت handler callback query.</li></ul>
 <p>فیلدهای Event: <code>raw</code> و <code>update</code>، <code>message</code>، <code>chat</code>، <code>chat_id</code>، <code>message_id</code>، <code>text</code>، <code>sender</code>، <code>sender_id</code>، <code>callback_query</code>، <code>button_id</code>، <code>callback_query_id</code> و <code>type</code>.</p>
-<pre><code>from irubix import telegram
+<pre><code>from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -52,6 +52,6 @@ async def buttons(bot, event):
 bot.run()</code></pre>
 <h2>اجرای polling</h2>
 <ul><li><code>await bot.start(*, timeout=30, retry_delay=2)</code> — شروع long polling.</li><li><code>bot.stop()</code> — درخواست توقف polling.</li><li><code>bot.run(*, timeout=30, retry_delay=2)</code> — اجرای ساده؛ اگر event loop فعال باشد coroutine شروع را برمی‌گرداند.</li></ul>
-<p><strong>محدودیت مهم:</strong> در Telegram Bot API، استفاده از <code>getUpdates</code> و webhook هم‌زمان ممکن نیست. در کلاینت فعلی IRubix متدهای اختصاصی <code>set_webhook</code>، <code>delete_webhook</code>، <code>get_webhook_info</code>، <code>send_audio</code>، <code>send_video</code>، <code>send_location</code> و <code>send_file</code> وجود ندارند؛ برای endpointهای دیگر می‌توانید از <code>request()</code> با پارامترهای مستند API استفاده کنید.</p>
+<p><strong>محدودیت مهم:</strong> در Telegram Bot API، استفاده از <code>getUpdates</code> و webhook هم‌زمان ممکن نیست. در کلاینت فعلی Ertebat متدهای اختصاصی <code>set_webhook</code>، <code>delete_webhook</code>، <code>get_webhook_info</code>، <code>send_audio</code>، <code>send_video</code>، <code>send_location</code> و <code>send_file</code> وجود ندارند؛ برای endpointهای دیگر می‌توانید از <code>request()</code> با پارامترهای مستند API استفاده کنید.</p>
 <p><a href="https://core.telegram.org/bots/api">مستندات رسمی Telegram Bot API</a> · <a href="../telegram-guide/">راهنمای شروع سریع</a> · <a href="../classes/">نمونه‌کدهای همه کلاس‌ها</a></p>
 </main></body></html>

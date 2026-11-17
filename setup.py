@@ -7,13 +7,13 @@ ROOT = Path(__file__).parent
 README = (ROOT / "README.md").read_text(encoding="utf-8")
 
 setup(
-    name="irubix",
-    version="0.12.2",
+    name="ertebat",
+    version="0.1.0",
     author="mahdishami",
     description="Async multi-platform bot clients for Rubika, Bale, Soroush Plus and Telegram",
     long_description=README,
     long_description_content_type="text/markdown",
-    url="https://github.com/adminVIPZEXNET/irubix",
+    url="https://github.com/adminVIPZEXNET/ertebat",
     packages=find_packages(),
     python_requires=">=3.10",
     install_requires=[],

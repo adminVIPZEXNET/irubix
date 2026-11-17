@@ -1,18 +1,18 @@
 import unittest
 from unittest.mock import AsyncMock
-from irubix import telegram
+from ertebat import telegram
 
 class TelegramTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
-        self.bot = telegram.IRubix("TEST_TOKEN")
+        self.bot = telegram.Ertebat("TEST_TOKEN")
         self.bot.request = AsyncMock(return_value={"message_id": 10})
 
     async def test_import_alias_and_base_url(self):
-        self.assertIs(telegram.Bot, telegram.IRubix)
+        self.assertIs(telegram.Bot, telegram.Ertebat)
         self.assertEqual(self.bot.base_url, "https://api.telegram.org")
 
     async def test_empty_token(self):
-        with self.assertRaises(ValueError): telegram.IRubix(" ")
+        with self.assertRaises(ValueError): telegram.Ertebat(" ")
 
     async def test_get_me(self):
         await self.bot.get_me()

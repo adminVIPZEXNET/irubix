@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="600" viewBox="0 0 1600 600" role="img" aria-labelledby="title desc">
+<title id="title">Ertebat — Python Library for Rubika Bot API</title>
+<desc id="desc">سربرگ تیره و آبی مستندات کتابخانه Ertebat</desc>
+<defs>
+ <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#071426"/><stop offset=".55" stop-color="#050d1a"/><stop offset="1" stop-color="#071d3c"/></linearGradient>
+ <linearGradient id="blue" x2="1" y2="1"><stop stop-color="#16c7ed"/><stop offset="1" stop-color="#1676ff"/></linearGradient>
+ <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#234d83"/><stop offset="1" stop-color="#071a36"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1600" height="600" rx="30" fill="url(#bg)"/>
+<path d="M0 500 Q230 420 450 520 T900 510 T1600 460 V600 H0Z" fill="#06275b" opacity=".65"/>
+<path d="M0 530 Q240 455 470 545 T950 525 T1600 490" fill="none" stroke="url(#blue)" stroke-width="5" opacity=".8"/>
+<g fill="#1676ff" opacity=".4"><circle cx="40" cy="38" r="3"/><circle cx="68" cy="38" r="3"/><circle cx="96" cy="38" r="3"/><circle cx="124" cy="38" r="3"/><circle cx="152" cy="38" r="3"/><circle cx="180" cy="38" r="3"/><circle cx="208" cy="38" r="3"/><circle cx="40" cy="66" r="3"/><circle cx="68" cy="66" r="3"/><circle cx="96" cy="66" r="3"/><circle cx="124" cy="66" r="3"/><circle cx="152" cy="66" r="3"/><circle cx="180" cy="66" r="3"/><circle cx="208" cy="66" r="3"/><circle cx="40" cy="94" r="3"/><circle cx="68" cy="94" r="3"/><circle cx="96" cy="94" r="3"/><circle cx="124" cy="94" r="3"/><circle cx="152" cy="94" r="3"/><circle cx="180" cy="94" r="3"/><circle cx="208" cy="94" r="3"/><circle cx="40" cy="122" r="3"/><circle cx="68" cy="122" r="3"/><circle cx="96" cy="122" r="3"/><circle cx="124" cy="122" r="3"/><circle cx="152" cy="122" r="3"/><circle cx="180" cy="122" r="3"/><circle cx="208" cy="122" r="3"/></g>
+<g transform="translate(105 170)">
+ <path d="M12 95 Q12 30 82 30 H160 Q220 30 220 92 Q220 140 165 152 L90 169 Q38 180 38 226" fill="none" stroke="url(#blue)" stroke-width="26" stroke-linecap="round"/>
+ <path d="M48 235 L88 190 L128 235" fill="none" stroke="#138cff" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+ <circle cx="65" cy="12" r="18" fill="#12b8ef"/>
+</g>
+<path d="M390 120 V405" stroke="#8ca6c4" stroke-width="2" opacity=".7"/>
+<text x="455" y="265" fill="#f4f8ff" font-family="Arial,sans-serif" font-size="112" font-weight="700">IR<tspan fill="#159cf0">ubix</tspan></text>
+<text x="460" y="330" fill="#c5d5e9" font-family="Arial,sans-serif" font-size="30">Fast Python Library for Rubika Bot API</text>
+<text x="460" y="382" fill="#91a9c6" font-family="Tahoma,Arial,sans-serif" font-size="27">کتابخانه پایتون برای ساخت ربات روبیکا</text>
+<g transform="translate(1080 125)">
+ <rect x="90" y="15" width="300" height="300" rx="55" fill="url(#glass)" stroke="#3476c5" stroke-width="3" transform="rotate(8 240 165)"/>
+ <g filter="url(#glow)">
+  <rect x="35" y="60" width="280" height="230" rx="90" fill="#e8f3ff" stroke="#7cbaff" stroke-width="7"/>
+  <rect x="65" y="90" width="220" height="165" rx="66" fill="#061a35"/>
+  <path d="M115 160 Q135 125 155 160 M195 160 Q215 125 235 160" fill="none" stroke="#24caff" stroke-width="10" stroke-linecap="round"/>
+  <path d="M155 195 Q175 215 195 195" fill="none" stroke="#24caff" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="28" cy="170" r="20" fill="#8ed4ff"/><circle cx="322" cy="170" r="20" fill="#8ed4ff"/>
+ </g>
+ <path d="M160 290 L145 365 L205 365 L220 290" fill="#d8eaff" stroke="#76baff" stroke-width="5"/>
+ <path d="M75 365 Q180 325 285 365" fill="none" stroke="#168fff" stroke-width="12" stroke-linecap="round"/>
+ <path d="M125 375 L170 350 L215 375" fill="none" stroke="#ffd34d" stroke-width="12" stroke-linecap="round"/>
+</g>
+<g font-family="Arial,sans-serif" font-size="22" fill="#d4e4f7">
+ <text x="455" y="475">⚡ Simple API</text><text x="690" y="475">↗ High Performance</text><text x="1010" y="475">&lt;/&gt; Full Documentation</text>
+</g>
+<text x="1280" y="545" text-anchor="middle" fill="#159cf0" font-family="Arial,sans-serif" font-size="35" font-style="italic">Build Better Bots</text>
+</svg>

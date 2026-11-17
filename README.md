@@ -1,28 +1,28 @@
-# IRubix
+# Ertebat
 
 کتابخانه‌ای سبک برای ساخت ربات در **روبیکا، بله، سروش‌پلاس و تلگرام** با Python و `async/await`.
 
 ## نصب
 
 ```bash
-python -m pip install --upgrade irubix
+python -m pip install --upgrade ertebat
 ```
 
 برای نصب آخرین نسخه مخزن (بدون نیاز به Git):
 
 ```bash
-python -m pip install --upgrade https://github.com/adminVIPZEXNET/irubix/archive/refs/heads/main.zip
+python -m pip install --upgrade https://github.com/adminVIPZEXNET/ertebat/archive/refs/heads/main.zip
 ```
 
 ## شروع سریع
 
-در همه پیام‌رسان‌ها کلاینت مستقیماً ساخته می‌شود؛ نیازی به `.IRubix` نیست. واردکردن توکن اختیاری است: اگر توکن را ننویسید، IRubix آن را به‌صورت مخفی در ترمینال درخواست می‌کند.
+در همه پیام‌رسان‌ها کلاینت مستقیماً ساخته می‌شود؛ نیازی به `.Ertebat` نیست. واردکردن توکن اختیاری است: اگر توکن را ننویسید، Ertebat آن را به‌صورت مخفی در ترمینال درخواست می‌کند.
 
 فقط ماژول پیام‌رسان موردنظر را انتخاب کنید.
 
 **روبیکا**
 ```python
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika()  # توکن در ترمینال پرسیده می‌شود
 
@@ -35,7 +35,7 @@ bot.run()
 
 **بله**
 ```python
-from irubix import bale
+from ertebat import bale
 
 bot = bale()  # توکن در ترمینال پرسیده می‌شود
 
@@ -48,7 +48,7 @@ bot.run()
 
 **سروش‌پلاس**
 ```python
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush()  # توکن در ترمینال پرسیده می‌شود
 
@@ -61,7 +61,7 @@ bot.run()
 
 **تلگرام**
 ```python
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram()  # توکن در ترمینال پرسیده می‌شود
 
@@ -77,7 +77,7 @@ bot.run()
 با `MultiBot` می‌توانید چند ربات از پیام‌رسان‌های مختلف را در یک برنامه اجرا کنید:
 
 ```python
-from irubix import MultiBot
+from ertebat import MultiBot
 
 app = MultiBot()
 rubika = app.add("rubika", "RUBIKA_TOKEN")
@@ -106,25 +106,25 @@ second = app.add("bale", "TOKEN_2", name="bale_backup")
 
 ## مستندات
 
-- [راهنمای کامل همه کلاس‌ها و نمونه‌کدها](https://adminvipzexnet.github.io/irubix/classes/)
+- [راهنمای کامل همه کلاس‌ها و نمونه‌کدها](https://adminvipzexnet.github.io/ertebat/classes/)
 - [مستندات کامل API روبیکا v3، متدها و مدل‌ها](docs/rubika-api-v3.md)
 - [دسترسی به متدهای API بله، سروش‌پلاس و تلگرام](docs/platform-api-methods.md)
 
 | پیام‌رسان | راهنما | متدها |
 |---|---|---|
-| روبیکا | [شروع سریع](https://adminvipzexnet.github.io/irubix/bot-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/bot-methods/) |
-| بله | [شروع سریع](https://adminvipzexnet.github.io/irubix/bale-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/bale-methods/) |
-| سروش‌پلاس | [شروع سریع](https://adminvipzexnet.github.io/irubix/soroush-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/soroush-methods/) |
-| تلگرام | [شروع سریع](https://adminvipzexnet.github.io/irubix/telegram-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/irubix/telegram-methods/) |
+| روبیکا | [شروع سریع](https://adminvipzexnet.github.io/ertebat/bot-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/ertebat/bot-methods/) |
+| بله | [شروع سریع](https://adminvipzexnet.github.io/ertebat/bale-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/ertebat/bale-methods/) |
+| سروش‌پلاس | [شروع سریع](https://adminvipzexnet.github.io/ertebat/soroush-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/ertebat/soroush-methods/) |
+| تلگرام | [شروع سریع](https://adminvipzexnet.github.io/ertebat/telegram-guide/) | [فهرست متدها](https://adminvipzexnet.github.io/ertebat/telegram-methods/) |
 
-- [وب‌سایت مستندات](https://adminvipzexnet.github.io/irubix/)
-- [نمونه خروجی‌ها](https://adminvipzexnet.github.io/irubix/outputs/)
-- [سؤالات متداول](https://adminvipzexnet.github.io/irubix/faq/)
+- [وب‌سایت مستندات](https://adminvipzexnet.github.io/ertebat/)
+- [نمونه خروجی‌ها](https://adminvipzexnet.github.io/ertebat/outputs/)
+- [سؤالات متداول](https://adminvipzexnet.github.io/ertebat/faq/)
 
 ## ساختار پروژه
 
 ```text
-irubix/
+ertebat/
 ├── __init__.py       # ورودی اصلی کتابخانه
 ├── bot.py            # پیاده‌سازی کلاینت روبیکا
 ├── _update.py        # بررسی نسخه جدید
@@ -141,12 +141,12 @@ tests/                # تست‌ها
 ## نکات
 
 - سازنده مستقیم هر پیام‌رسان: `Rubika("TOKEN")`، `bale("TOKEN")`، `soroush("TOKEN")` و `telegram("TOKEN")`.
-- برای سازگاری با کدهای قبلی، ویژگی‌های `.IRubix` و `.Bot` همچنان به‌عنوان alias در دسترس‌اند.
+- برای سازگاری با کدهای قبلی، ویژگی‌های `.Ertebat` و `.Bot` همچنان به‌عنوان alias در دسترس‌اند.
 
 - تمام درخواست‌های API به‌صورت async اجرا می‌شوند.
 - هسته کتابخانه به کتابخانه جانبی نیاز ندارد.
 - هر پیام‌رسان فقط API و قابلیت‌های رسمی خودش را ارائه می‌کند.
-- برای غیرفعال‌کردن بررسی نسخه جدید، متغیر محیطی `IRUBIX_DISABLE_UPDATE_CHECK=1` را تنظیم کنید.
+- برای غیرفعال‌کردن بررسی نسخه جدید، متغیر محیطی `ERTEBAT_DISABLE_UPDATE_CHECK=1` را تنظیم کنید.
 
 ## اجرای تست‌ها
 

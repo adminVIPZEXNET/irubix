@@ -1,17 +1,17 @@
-# Rubika Bot API v3 — IRubix
+# Rubika Bot API v3 — Ertebat
 
 The Rubika client exposes the documented API through asynchronous Python methods.
 The direct constructor remains:
 
 ```python
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 ```
 
 ## Complete endpoint coverage
 
-| Rubika endpoint | IRubix method |
+| Rubika endpoint | Ertebat method |
 |---|---|
 | `getMe` | `get_me()` |
 | `sendMessage` | `send_message(chat_id, text, **kwargs)`, `send_text(...)` |
@@ -114,7 +114,7 @@ await bot.edit_inline_keypad(CHAT_ID, MESSAGE_ID, keypad)
 
 ## Models
 
-The package exports lightweight data models from `irubix.models` and the package
+The package exports lightweight data models from `ertebat.models` and the package
 root: `File`, `Chat`, `BotModel`, `BotCommand`, `Message`, `Update`,
 `InlineMessage`, `Location`, `AuxData`, `Poll`, `PollStatus`,
 `ForwardedFrom`, `ContactMessage`, `Metadata`, `MetadataPart`,
@@ -122,7 +122,7 @@ root: `File`, `Chat`, `BotModel`, `BotCommand`, `Message`, `Update`,
 `FileType`, `ChatKeypadType`, `UpdateType`, and `ButtonType`.
 
 ```python
-from irubix import Chat, File, Message, Update, FileType
+from ertebat import Chat, File, Message, Update, FileType
 
 chat = Chat.from_dict({"chat_id": "CHAT_ID", "chat_type": "Group"})
 print(chat.chat_id, FileType.IMAGE)
@@ -134,7 +134,7 @@ update = Update.from_dict({"type": "NewMessage", "new_message": message.to_dict(
 ## Documentation notes
 
 - Rubika's prose calls the inline-keypad endpoint `editMessageKeypad`, but its
-  own cURL example calls `editInlineKeypad`. IRubix uses the example's endpoint.
+  own cURL example calls `editInlineKeypad`. Ertebat uses the example's endpoint.
 - The endpoint update method is named `updateBotEndpoints` in the supplied
   documentation; the client uses that exact spelling.
 - `send_file()` is the convenience upload workflow; `send_file_id()` sends a
@@ -157,7 +157,7 @@ webhook endpoint types at the following paths: `update`, `inline`,
 ## Filters, middleware and plugins
 
 ```python
-from irubix import Rubika, Text, FromUser, Command
+from ertebat import Rubika, Text, FromUser, Command
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -186,7 +186,7 @@ exposing `setup(bot)`.
 ## Scope and API limitations
 
 Quiz mode is not implemented because the currently referenced Bot API method
-list documents polls, not a quiz endpoint. IRubix does not start an HTTP server:
+list documents polls, not a quiz endpoint. Ertebat does not start an HTTP server:
 deploy a public HTTPS route using your web framework and pass its parsed body
 to `process_webhook()`. User-account/Userbot methods are intentionally outside
 the token-based Bot API client.

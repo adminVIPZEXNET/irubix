@@ -1,4 +1,4 @@
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 

@@ -1,16 +1,16 @@
 """Offline tests for the Bale client."""
 import unittest
 from unittest.mock import AsyncMock
-from irubix import bale
+from ertebat import bale
 
 
 class BaleTests(unittest.IsolatedAsyncioTestCase):
     async def asyncSetUp(self):
-        self.bot = bale.IRubix("TEST_TOKEN")
+        self.bot = bale.Ertebat("TEST_TOKEN")
         self.bot.request = AsyncMock(return_value=[{"update_id": 1}])
 
     async def test_import_and_alias(self):
-        self.assertIs(bale.Bot, bale.IRubix)
+        self.assertIs(bale.Bot, bale.Ertebat)
         self.assertEqual(self.bot.base_url, "https://tapi.bale.ai")
 
     async def test_get_me(self):
@@ -52,7 +52,7 @@ class BaleTests(unittest.IsolatedAsyncioTestCase):
 
     def test_empty_token(self):
         with self.assertRaises(ValueError):
-            bale.IRubix(" ")
+            bale.Ertebat(" ")
 
 
 if __name__ == "__main__":

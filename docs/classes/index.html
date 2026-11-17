@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>همه کلاس‌ها و نمونه‌کدها | IRubix</title><link rel="stylesheet" href="../style.css"></head>
-<body><header class="top"><nav class="nav"><a class="brand" href="../"><img src="../assets/irubix-logo.svg" alt="IRubix"><span>IRubix</span></a><button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button><div class="links"><a href="../">خانه</a><a class="active" href="./">همه کلاس‌ها</a><a href="../bot-guide/">روبیکا</a><a href="../bale-guide/">بله</a><a href="../soroush-guide/">سروش‌پلاس</a><a href="../telegram-guide/">تلگرام</a><a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></div></nav></header>
-<main class="wrap"><div class="pagehead"><span class="tag">API Reference</span><h1>تمام کلاس‌ها و نمونه‌کدها</h1><p>راهنمای یکپارچه چهار کلاینت موجود در IRubix.</p></div>
-<section class="card"><h2>نصب</h2><pre class="code">python -m pip install --upgrade irubix</pre><p>نصب آخرین نسخه مخزن:</p><pre class="code">python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/irubix.git</pre><p>متدهای شبکه‌ای async هستند و باید با <code>await</code> فراخوانی شوند.</p></section>
+<html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>همه کلاس‌ها و نمونه‌کدها | Ertebat</title><link rel="stylesheet" href="../style.css"></head>
+<body><header class="top"><nav class="nav"><a class="brand" href="../"><img src="../assets/ertebat-logo.svg" alt="Ertebat"><span>Ertebat</span></a><button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false">☰</button><div class="links"><a href="../">خانه</a><a class="active" href="./">همه کلاس‌ها</a><a href="../bot-guide/">روبیکا</a><a href="../bale-guide/">بله</a><a href="../soroush-guide/">سروش‌پلاس</a><a href="../telegram-guide/">تلگرام</a><a href="https://github.com/adminVIPZEXNET/ertebat">GitHub</a></div></nav></header>
+<main class="wrap"><div class="pagehead"><span class="tag">API Reference</span><h1>تمام کلاس‌ها و نمونه‌کدها</h1><p>راهنمای یکپارچه چهار کلاینت موجود در Ertebat.</p></div>
+<section class="card"><h2>نصب</h2><pre class="code">python -m pip install --upgrade ertebat</pre><p>نصب آخرین نسخه مخزن:</p><pre class="code">python -m pip install --upgrade git+https://github.com/adminVIPZEXNET/ertebat.git</pre><p>متدهای شبکه‌ای async هستند و باید با <code>await</code> فراخوانی شوند.</p></section>
 <section class="card"><h2>انتخاب پیام‌رسان</h2><div class="grid"><article class="card"><h3>روبیکا</h3><a href="#rubika">نمونه و متدها</a></article><article class="card"><h3>بله</h3><a href="#bale">نمونه و متدها</a></article><article class="card"><h3>سروش‌پلاس</h3><a href="#soroush">نمونه و متدها</a></article><article class="card"><h3>تلگرام</h3><a href="#telegram">نمونه و متدها</a></article></div></section>
 
-<section class="card" id="rubika"><h2>۱. روبیکا</h2><p>واردسازی: <code>from irubix import Rubika</code> · کلاس جایگزین: <code>Bot</code> · خطا: <code>RubikaAPIError</code></p>
-<h3>ساخت ربات، دستور و دریافت پیام</h3><pre class="code">from irubix import Rubika
+<section class="card" id="rubika"><h2>۱. روبیکا</h2><p>واردسازی: <code>from ertebat import Rubika</code> · کلاس جایگزین: <code>Bot</code> · خطا: <code>RubikaAPIError</code></p>
+<h3>ساخت ربات، دستور و دریافت پیام</h3><pre class="code">from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -25,18 +25,18 @@ async def buttons(bot, event):
 
 bot.run()</pre>
 <h3>ارسال پیام مستقل</h3><pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
 
 async def main():
-    result = await bot.send_text(CHAT_ID, "سلام از IRubix")
+    result = await bot.send_text(CHAT_ID, "سلام از Ertebat")
     print(result)
 
 asyncio.run(main())</pre>
 <h3>ارسال فایل محلی (send_file)</h3><pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
@@ -54,8 +54,8 @@ asyncio.run(main())</pre>
 <p>پارامتر <code>path</code> مسیر فایل یا داده باینری است. برای داده باینری می‌توانید نام را با <code>file_name</code> تعیین کنید.</p>
 <h3>متدهای موجود</h3><ul><li><code>request(method, input=None)</code></li><li><code>get_me()</code>، <code>get_chat(chat_id)</code>، <code>get_file(file_id)</code></li><li><code>send_text(chat_id, text, **kwargs)</code>، <code>send_message(chat_id, text, **kwargs)</code></li><li><code>send_file(chat_id, path, text=None, file_type="File", **kwargs)</code></li><li><code>send_poll(chat_id, question, options)</code>؛ <code>send_quiz()</code> فعلاً پیاده‌سازی نشده است.</li><li><code>forward_message(...)</code>، <code>edit_message_text(...)</code>، <code>delete_message(...)</code></li><li><code>ban_chat_member(...)</code>، <code>unban_chat_member(...)</code></li><li><code>command(names)</code>، <code>message(flt=None)</code>، <code>callback()</code></li><li><code>start(poll_interval=1.0, limit=100)</code>، <code>stop()</code>، <code>run(...)</code>، <code>event.reply(text, **kwargs)</code></li></ul><p><a href="../bot-guide/">راهنمای روبیکا</a> · <a href="../bot-methods/">مرجع متدها</a></p></section>
 
-<section class="card" id="bale"><h2>۲. بله</h2><p>واردسازی: <code>from irubix import bale</code> · کلاس: <code>bale</code> یا <code>bale.Bot</code> · خطا: <code>BaleAPIError</code></p>
-<h3>ساخت ربات و دریافت پیام</h3><pre class="code">from irubix import bale
+<section class="card" id="bale"><h2>۲. بله</h2><p>واردسازی: <code>from ertebat import bale</code> · کلاس: <code>bale</code> یا <code>bale.Bot</code> · خطا: <code>BaleAPIError</code></p>
+<h3>ساخت ربات و دریافت پیام</h3><pre class="code">from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 
@@ -74,7 +74,7 @@ async def buttons(bot, event):
 
 bot.run()</pre>
 <h3>ارسال متن، عکس و سند</h3><pre class="code">import asyncio
-from irubix import bale
+from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
@@ -87,8 +87,8 @@ async def main():
 asyncio.run(main())</pre>
 <h3>متدهای موجود</h3><ul><li><code>request(method, payload=None)</code>، <code>get_me()</code>، <code>get_updates(offset=None, limit=100, timeout=30, ...)</code></li><li><code>send_message(chat_id, text, **kwargs)</code></li><li><code>send_photo(chat_id, photo, caption=None, **kwargs)</code>، <code>send_document(chat_id, document, caption=None, **kwargs)</code></li><li><code>edit_message_text(chat_id, message_id, text, **kwargs)</code>، <code>delete_message(chat_id, message_id)</code></li><li><code>command(names)</code>، <code>message(flt=None)</code>، <code>callback()</code></li><li><code>start(timeout=30, retry_delay=2)</code>، <code>stop()</code>، <code>run(...)</code>، <code>event.reply(text, **kwargs)</code></li></ul><p>برای عکس و سند از file_id یا URL استفاده کنید؛ آپلود فایل محلی با <code>send_file</code> در این کلاینت موجود نیست. <a href="../bale-guide/">راهنما</a> · <a href="../bale-methods/">متدها</a></p></section>
 
-<section class="card" id="soroush"><h2>۳. سروش‌پلاس</h2><p>واردسازی: <code>from irubix import soroush</code> · کلاس: <code>soroush</code> یا <code>soroush.Bot</code> · خطا: <code>SoroushAPIError</code></p>
-<h3>ساخت ربات و دریافت پیام</h3><pre class="code">from irubix import soroush
+<section class="card" id="soroush"><h2>۳. سروش‌پلاس</h2><p>واردسازی: <code>from ertebat import soroush</code> · کلاس: <code>soroush</code> یا <code>soroush.Bot</code> · خطا: <code>SoroushAPIError</code></p>
+<h3>ساخت ربات و دریافت پیام</h3><pre class="code">from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -109,7 +109,7 @@ async def buttons(bot, event):
 
 bot.run()</pre>
 <h3>ارسال متن، عکس و سند</h3><pre class="code">import asyncio
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
@@ -122,8 +122,8 @@ async def main():
 asyncio.run(main())</pre>
 <h3>متدهای موجود</h3><ul><li><code>request(method, payload=None, http_method="POST")</code>، <code>get_me()</code>، <code>log_out()</code>، <code>close()</code></li><li><code>get_updates(offset=None, limit=100, timeout=30, allowed_updates=None)</code></li><li><code>set_webhook(url, **kwargs)</code>، <code>delete_webhook(drop_pending_updates=None)</code>، <code>get_webhook_info()</code></li><li><code>send_message(...)</code>، <code>forward_message(...)</code>، <code>send_photo(...)</code>، <code>send_document(...)</code></li><li><code>edit_message_text(...)</code>، <code>delete_message(...)</code>، <code>answer_callback_query(...)</code></li><li><code>command(names)</code>، <code>message(flt=None)</code>، <code>callback()</code></li><li><code>start(timeout=30, retry_delay=2)</code>، <code>stop()</code>، <code>run(...)</code>، <code>event.reply(text, **kwargs)</code></li></ul><p>برای رسانه از file_id یا URL استفاده کنید؛ <code>send_file</code> برای آپلود فایل محلی در این کلاینت وجود ندارد. Long polling و webhook را هم‌زمان فعال نکنید. <a href="../soroush-guide/">راهنما</a> · <a href="../soroush-methods/">متدها</a></p></section>
 
-<section class="card" id="telegram"><h2>۴. تلگرام</h2><p>واردسازی: <code>from irubix import telegram</code> · کلاس: <code>telegram</code> یا <code>telegram.Bot</code> · خطا: <code>TelegramAPIError</code></p>
-<h3>ساخت ربات و دریافت پیام</h3><pre class="code">from irubix import telegram
+<section class="card" id="telegram"><h2>۴. تلگرام</h2><p>واردسازی: <code>from ertebat import telegram</code> · کلاس: <code>telegram</code> یا <code>telegram.Bot</code> · خطا: <code>TelegramAPIError</code></p>
+<h3>ساخت ربات و دریافت پیام</h3><pre class="code">from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -142,7 +142,7 @@ async def buttons(bot, event):
 
 bot.run()</pre>
 <h3>ارسال متن، عکس و سند</h3><pre class="code">import asyncio
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 CHAT_ID = "YOUR_CHAT_ID"
@@ -163,20 +163,20 @@ async def handle(bot, event):
     await event.reply("پیام دریافت شد")</pre><p>برای فیلتر پیام:</p><pre class="code">@bot.message(lambda event: event.text == "سلام")
 async def hello(bot, event):
     await event.reply("سلام به شما!")</pre><p>فیلدهای Event بسته به پیام‌رسان متفاوت‌اند؛ برای داده کامل رویداد از <code>event.raw</code> استفاده کنید.</p></section>
-<section class="card"><h2>نکات</h2><ul><li>روبیکا از <code>from irubix import Rubika</code> استفاده می‌کند؛ بقیه از ماژول اختصاصی خودشان.</li><li>برای اجرای ربات از <code>bot.run()</code> استفاده کنید.</li><li>توکن را در GitHub یا کد عمومی قرار ندهید.</li><li>متد <code>send_file</code> برای ارسال فایل محلی فعلاً مختص روبیکاست.</li></ul></section>
+<section class="card"><h2>نکات</h2><ul><li>روبیکا از <code>from ertebat import Rubika</code> استفاده می‌کند؛ بقیه از ماژول اختصاصی خودشان.</li><li>برای اجرای ربات از <code>bot.run()</code> استفاده کنید.</li><li>توکن را در GitHub یا کد عمومی قرار ندهید.</li><li>متد <code>send_file</code> برای ارسال فایل محلی فعلاً مختص روبیکاست.</li></ul></section>
 
 <section class="card" id="all-method-examples">
 <h2>مثال کدنویسی تمام متدها</h2>
 <p>در این بخش برای تک‌تک متدهای عمومی هر کلاینت، نمونه فراخوانی قرار داده شده است. مقادیر نمونه مثل توکن، شناسه گفتگو، شناسه پیام و file_id را با اطلاعات واقعی خود جایگزین کنید. نمونه‌های مدیریتی را فقط در گروهی که مجاز به مدیریت آن هستید اجرا کنید.</p>
 
-<h3>روبیکا · IRubix</h3>
+<h3>روبیکا · Ertebat</h3>
 <p>ساخت کلاینت با timeout و آدرس پیش‌فرض:</p>
-<pre class="code">from irubix import Rubika
+<pre class="code">from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN", timeout=30)</pre>
 <p><code>request</code>، اطلاعات ربات و گفتگو، و دریافت اطلاعات فایل:</p>
 <pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -192,7 +192,7 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>send_text</code> و نام جایگزین <code>send_message</code>:</p>
 <pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -208,7 +208,7 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>send_file</code> برای فایل محلی یا داده باینری:</p>
 <pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -224,7 +224,7 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>send_poll</code> برای نظرسنجی:</p>
 <pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -239,7 +239,7 @@ async def main():
 asyncio.run(main())</pre>
 <p><code>forward_message</code>، ویرایش و حذف پیام:</p>
 <pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -260,7 +260,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>مسدودکردن و رفع مسدودیت کاربر (نمونه‌ها عمداً غیرفعال‌اند):</p>
 <pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -272,7 +272,7 @@ async def main():
 
 asyncio.run(main())</pre>
 <p>Decoratorها، پاسخ رویداد و اجرای ربات:</p>
-<pre class="code">from irubix import Rubika
+<pre class="code">from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -296,7 +296,7 @@ async def callback_handler(bot, event):
 bot.run(poll_interval=1.0, limit=100)</pre>
 <p>اجرای دستی polling و توقف:</p>
 <pre class="code">import asyncio
-from irubix import Rubika
+from ertebat import Rubika
 
 bot = Rubika("YOUR_BOT_TOKEN")
 
@@ -312,12 +312,12 @@ asyncio.run(main())</pre>
 
 <h3>بله · bale</h3>
 <p>ساخت کلاینت:</p>
-<pre class="code">from irubix import bale
+<pre class="code">from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN", timeout=40)</pre>
 <p><code>request</code>، اطلاعات ربات و دریافت Update:</p>
 <pre class="code">import asyncio
-from irubix import bale
+from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 
@@ -330,7 +330,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>ارسال پیام با گزینه‌های اختیاری:</p>
 <pre class="code">import asyncio
-from irubix import bale
+from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 
@@ -346,7 +346,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>ارسال عکس و سند با file_id یا URL:</p>
 <pre class="code">import asyncio
-from irubix import bale
+from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 
@@ -362,7 +362,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>ویرایش و حذف پیام:</p>
 <pre class="code">import asyncio
-from irubix import bale
+from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 
@@ -376,7 +376,7 @@ async def main():
 
 asyncio.run(main())</pre>
 <p>Decoratorها، پاسخ رویداد، شروع و توقف:</p>
-<pre class="code">from irubix import bale
+<pre class="code">from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 
@@ -400,7 +400,7 @@ async def callbacks(bot, event):
 bot.run(timeout=30, retry_delay=2)</pre>
 <p>اجرای دستی و توقف:</p>
 <pre class="code">import asyncio
-from irubix import bale
+from ertebat import bale
 
 bot = bale("BALE_BOT_TOKEN")
 
@@ -414,12 +414,12 @@ asyncio.run(main())</pre>
 
 <h3>سروش‌پلاس · soroush</h3>
 <p>ساخت کلاینت:</p>
-<pre class="code">from irubix import soroush
+<pre class="code">from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN", timeout=40)</pre>
 <p><code>request</code>، اطلاعات ربات، خروج و بستن نشست:</p>
 <pre class="code">import asyncio
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -435,7 +435,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>دریافت Update و مدیریت Webhook:</p>
 <pre class="code">import asyncio
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -453,7 +453,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>ارسال پیام با گزینه‌های قالب‌بندی و پاسخ:</p>
 <pre class="code">import asyncio
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -469,7 +469,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>ارسال عکس و سند با file_id یا URL:</p>
 <pre class="code">import asyncio
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -485,7 +485,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>فوروارد، ویرایش، حذف و پاسخ به Callback:</p>
 <pre class="code">import asyncio
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -504,7 +504,7 @@ async def main():
 
 asyncio.run(main())</pre>
 <p>Decoratorها، Event و اجرای polling:</p>
-<pre class="code">from irubix import soroush
+<pre class="code">from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -529,7 +529,7 @@ async def callbacks(bot, event):
 bot.run(timeout=30, retry_delay=2)</pre>
 <p>اجرای دستی و توقف:</p>
 <pre class="code">import asyncio
-from irubix import soroush
+from ertebat import soroush
 
 bot = soroush("SOROUSH_BOT_TOKEN")
 
@@ -543,12 +543,12 @@ asyncio.run(main())</pre>
 
 <h3>تلگرام · telegram</h3>
 <p>ساخت کلاینت:</p>
-<pre class="code">from irubix import telegram
+<pre class="code">from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN", timeout=40)</pre>
 <p><code>request</code>، اطلاعات ربات و گفتگو، و دریافت Update:</p>
 <pre class="code">import asyncio
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -562,7 +562,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>ارسال پیام و عکس و سند:</p>
 <pre class="code">import asyncio
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -584,7 +584,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>فوروارد، ویرایش و حذف پیام:</p>
 <pre class="code">import asyncio
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -603,7 +603,7 @@ async def main():
 asyncio.run(main())</pre>
 <p>پاسخ به Callback Query:</p>
 <pre class="code">import asyncio
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -617,7 +617,7 @@ async def main():
 
 asyncio.run(main())</pre>
 <p>Decoratorها، Event و اجرای polling:</p>
-<pre class="code">from irubix import telegram
+<pre class="code">from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -644,7 +644,7 @@ async def callbacks(bot, event):
 bot.run(timeout=30, retry_delay=2)</pre>
 <p>اجرای دستی و توقف:</p>
 <pre class="code">import asyncio
-from irubix import telegram
+from ertebat import telegram
 
 bot = telegram("TELEGRAM_BOT_TOKEN")
 
@@ -666,7 +666,7 @@ asyncio.run(main())</pre>
 </ul>
 </section>
 
-</main><footer class="foot">Rubika · <a href="https://github.com/adminVIPZEXNET/irubix">GitHub</a></footer>
+</main><footer class="foot">Rubika · <a href="https://github.com/adminVIPZEXNET/ertebat">GitHub</a></footer>
 <script>
 document.querySelectorAll("pre.code").forEach((pre)=>{const wrap=document.createElement("div");wrap.className="code-wrap";pre.parentNode.insertBefore(wrap,pre);wrap.appendChild(pre);const button=document.createElement("button");button.className="copy-btn";button.type="button";button.textContent="کپی کد";button.addEventListener("click",async()=>{try{await navigator.clipboard.writeText(pre.innerText);button.textContent="کپی شد ✓";setTimeout(()=>button.textContent="کپی کد",1500)}catch(_){button.textContent="کپی ناموفق"}});wrap.appendChild(button)});
 const menuButton=document.querySelector(".menu-toggle"),nav=document.querySelector(".nav");if(menuButton&&nav)menuButton.addEventListener("click",()=>{const opened=nav.classList.toggle("menu-open");menuButton.setAttribute("aria-expanded",String(opened));menuButton.textContent=opened?"×":"☰"});

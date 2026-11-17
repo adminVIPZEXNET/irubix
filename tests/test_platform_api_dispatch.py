@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from irubix._bot_api import BotAPIMethods, encode_request_payload
+from ertebat._bot_api import BotAPIMethods, encode_request_payload
 
 
 class FakeBot(BotAPIMethods):
@@ -49,13 +49,13 @@ class BotAPIDispatchTests(unittest.IsolatedAsyncioTestCase):
     async def test_file_path_uses_multipart(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "photo.jpg"
-            path.write_bytes(b"IRUBIX-FILE-CONTENT")
+            path.write_bytes(b"ERTEBAT-FILE-CONTENT")
             body, content_type = encode_request_payload({
                 "chat_id": 123, "photo": path, "caption": "hello"
             })
         self.assertTrue(content_type.startswith("multipart/form-data; boundary="))
         self.assertIn(b'filename="photo.jpg"', body)
-        self.assertIn(b"IRUBIX-FILE-CONTENT", body)
+        self.assertIn(b"ERTEBAT-FILE-CONTENT", body)
         self.assertIn(b'name="caption"', body)
 
     async def test_json_payload_without_files(self):
