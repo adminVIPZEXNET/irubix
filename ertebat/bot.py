@@ -84,7 +84,7 @@ class Ertebat(RubikaAPIMethods):
     """Async Rubika Bot API client. Uses only the Python standard library."""
 
     API_URL = "https://botapi.rubika.ir/v3"
-    __version__ = "0.12.2"
+    __version__ = "0.1.0"
 
     def __init__(
         self,
