@@ -1,1 +1,1 @@
-# IRubix core uses only the Python standard library.
+# Ertebat core uses only the Python standard library.
